@@ -1,3 +1,111 @@
+# Installation Instructions
+
+## Requirements
+
+- PHP >= 8.0
+- Composer
+- MySQL/MariaDB or PostgreSQL
+- Git
+
+## Deployment
+
+### 1. Clone the repository from Git
+```bash
+git clone https://github.com/Nirjhor3029/coaching-management.git
+cd <project-folder>
+```
+
+### 2. Copy the example environment file and configure it
+```bash
+cp .env.example .env
+```
+
+Then edit your `.env` file with database credentials and other settings.
+
+### 3. Install PHP dependencies
+```bash
+composer install
+```
+
+### 4. Run database migrations with seeding
+```bash
+php artisan migrate --seed
+```
+
+**Note:** The `--seed` flag is important as it will create the first admin user for you.
+
+### 5. Generate application key
+```bash
+php artisan key:generate
+```
+
+### 6. Create storage symlink (if you have file/photo fields)
+```bash
+php artisan storage:link
+```
+
+### 7. Start the development server (optional)
+```bash
+php artisan serve
+```
+
+Then go to `http://localhost:8000` in your browser.
+
+## Default Credentials
+
+- **Username:** `admin@admin.com`
+- **Password:** `password`
+
+**⚠️ Important:** Make sure to change the default admin password after your first login for security purposes.
+
+## Additional Information
+
+For more information, potential errors, and related links, please read the [detailed installation guide](more-detailed-installation-guide-here).
+
+## Troubleshooting
+
+If you encounter any issues during installation:
+
+1. Make sure all requirements are met
+2. Check file permissions (storage and bootstrap/cache folders should be writable)
+3. Verify your database credentials in the `.env` file
+4. Clear cache if needed: `php artisan cache:clear` and `php artisan config:clear`
+
+## Support
+
+For support and issues, please contact the development team or create an issue in the repository.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+============================================
+
+
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
