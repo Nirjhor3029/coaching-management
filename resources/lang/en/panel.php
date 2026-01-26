@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'site_title' => 'Student Management System 2',
-
+    'site_title' => 'Excellentors Academy',
+    
 ];

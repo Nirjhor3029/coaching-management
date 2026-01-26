@@ -8,7 +8,6 @@
 - Git
 
 ## Deployment
-
 ### 1. Clone the repository from Git
 ```bash
 git clone https://github.com/Nirjhor3029/coaching-management.git
