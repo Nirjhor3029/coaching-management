@@ -12,7 +12,7 @@
 ### 1. Clone the repository from Git
 ```bash
 git clone https://github.com/Nirjhor3029/coaching-management.git
-cd <project-folder>
+cd coaching-management
 ```
 
 ### 2. Copy the example environment file and configure it
