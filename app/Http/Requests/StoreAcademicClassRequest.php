@@ -1,0 +1,46 @@
+<?php
+
+namespace App\Http\Requests;
+
+use App\Models\AcademicClass;
+use Gate;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Response;
+
+class StoreAcademicClassRequest extends FormRequest
+{
+    public function authorize()
+    {
+        return Gate::allows('academic_class_create');
+    }
+
+    public function rules()
+    {
+        return [
+            'class_name' => [
+                'string',
+                'required',
+            ],
+            'academic_year' => [
+                'date_format:' . config('panel.date_format'),
+                'nullable',
+            ],
+            'class_code' => [
+                'string',
+                'nullable',
+            ],
+            'class_sections.*' => [
+                'integer',
+            ],
+            'class_sections' => [
+                'array',
+            ],
+            'class_shifts.*' => [
+                'integer',
+            ],
+            'class_shifts' => [
+                'array',
+            ],
+        ];
+    }
+}

@@ -1,0 +1,65 @@
+<?php
+
+namespace App\Http\Requests;
+
+use App\Models\StudentBasicInfo;
+use Gate;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Response;
+
+class UpdateStudentBasicInfoRequest extends FormRequest
+{
+    public function authorize()
+    {
+        return Gate::allows('student_basic_info_edit');
+    }
+
+    public function rules()
+    {
+        return [
+            'roll' => [
+                'nullable',
+                'integer',
+                'min:-2147483648',
+                'max:2147483647',
+            ],
+            'id_no' => [
+                'string',
+                'nullable',
+            ],
+            'first_name' => [
+                'string',
+                'required',
+            ],
+            'last_name' => [
+                'string',
+                'required',
+            ],
+            'gender' => [
+                'required',
+            ],
+            'contact_number' => [
+                'string',
+                'required',
+            ],
+            'email' => [
+                'string',
+                'nullable',
+            ],
+            'dob' => [
+                'required',
+                'date_format:' . config('panel.date_format'),
+            ],
+            'joining_date' => [
+                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
+                'nullable',
+            ],
+            'subjects.*' => [
+                'integer',
+            ],
+            'subjects' => [
+                'array',
+            ],
+        ];
+    }
+}
