@@ -51,7 +51,7 @@ class StoreStudentBasicInfoRequest extends FormRequest
                 'date_format:' . config('panel.date_format'),
             ],
             'joining_date' => [
-                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
+                'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
             'subjects.*' => [

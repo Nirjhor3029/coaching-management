@@ -51,14 +51,32 @@
                     </button>
                 </div>
             </div>
+
+
+
             <!-- Main Form Card -->
-            <form
+            <form method="POST" action="{{ route('admin.student-basic-infos.store') }}" enctype="multipart/form-data"
                 class="bg-white dark:bg-[#1a2632] rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+                @csrf
                 <!-- Personal Information -->
                 <div class="p-6 md:p-8 border-b border-slate-200 dark:border-slate-700">
-                    <div class="flex items-center gap-2 mb-6 text-primary">
-                        <span class="material-symbols-outlined">person</span>
-                        <h3 class="text-lg font-bold text-slate-900 dark:text-white">Personal Information</h3>
+                    <div class="flex items-center justify-between gap-2 mb-6 text-primary">
+                        <div class="flex">
+                            <span class="material-symbols-outlined">person</span>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white">Personal Information</h3>
+                        </div>
+                        <div>
+                            <div class="flex items-center">
+                                <input class="h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary"
+                                    type="checkbox" name="need_login" id="need_login" />
+                                <label class="ml-2 mb-0 text-sm font-medium text-slate-700 dark:text-slate-300"
+                                    for="need_login">
+                                    <strong class="text-primary">
+                                        Need user for login ?
+                                    </strong>
+                                </label>
+                            </div>
+                        </div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
                         <!-- Photo Upload -->
@@ -83,72 +101,217 @@
                                         </label>
                                         <p class="pl-1">or drag and drop</p>
                                     </div>
-                                    <p class="text-xs text-slate-500">PNG, JPG, GIF up to 5MB</p>
+                                    <p class="text-xs text-slate-500">PNG, JPG, GIF up to 2MB</p>
                                 </div>
                             </div>
+
+                            {{-- <div class="flex items-center gap-2">
+                            <label class="switch">
+                                <input type="checkbox" name="status" class="sr-only" {{ (isset($studentBasicInfo->status) && $studentBasicInfo->status) ? 'checked' : '' }}>
+                                <span class="slider rounded-full bg-green-600 dark:bg-red-600"></span>
+                            </label>
+                            <span class="text-sm font-medium {{ (isset($studentBasicInfo->status) && $studentBasicInfo->status) ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400' }}">
+                                {{ (isset($studentBasicInfo->status) && $studentBasicInfo->status) ? 'Active' : 'Inactive' }}
+                            </span>
+                        </div> --}}
+
                         </div>
+
+
+
+
                         <!-- Inputs -->
                         <div class="md:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                            {{-- first_name --}}
                             <div class="col-span-1">
-                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300"
-                                    for="first-name">First Name</label>
+
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 required"
+                                    for="first_name">{{ trans('cruds.studentBasicInfo.fields.first_name') }}</label>
+                                <input
+                                    class=" {{ $errors->has('first_name') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
+                                    id="first_name" name="first_name" placeholder="e.g. John" type="text"
+                                    value="{{ old('first_name', '') }}" required />
+                                @if ($errors->has('first_name'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('first_name') }}
+                                    </div>
+                                @endif
+                                <span
+                                    class="help-block">{{ trans('cruds.studentBasicInfo.fields.first_name_helper') }}</span>
+                            </div>
+
+                            {{-- last_name --}}
+                            <div class="col-span-1">
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 required"
+                                    for="last_name">{{ trans('cruds.studentBasicInfo.fields.last_name') }}</label>
+                                <input
+                                    class=" {{ $errors->has('last_name') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
+                                    id="last_name" name="last_name" placeholder="e.g. Doe" type="text"
+                                    value="{{ old('last_name', '') }}" required />
+                                @if ($errors->has('last_name'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('last_name') }}
+                                    </div>
+                                @endif
+                                <span
+                                    class="help-block">{{ trans('cruds.studentBasicInfo.fields.last_name_helper') }}</span>
+                            </div>
+
+
+                            {{-- contact_number --}}
+                            <div class="col-span-1">
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 required"
+                                    for="contact_number">{{ trans('cruds.studentBasicInfo.fields.contact_number') }}</label>
+                                <input
+                                    class=" {{ $errors->has('contact_number') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
+                                    id="contact_number" name="contact_number" placeholder="e.g. 01685******"
+                                    value="{{ old('contact_number', '') }}" type="text" required />
+                                @if ($errors->has('contact_number'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('contact_number') }}
+                                    </div>
+                                @endif
+                                <span
+                                    class="help-block">{{ trans('cruds.studentBasicInfo.fields.contact_number_helper') }}</span>
+                            </div>
+
+                            {{-- email --}}
+                            <div class="col-span-1">
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 required"
+                                    for="email">{{ trans('cruds.studentBasicInfo.fields.email') }}</label>
+                                <input
+                                    class=" {{ $errors->has('email') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
+                                    id="email" name="email" placeholder="e.g. email@example.com" type="email"
+                                    value="{{ old('email', '') }}" required />
+                                @if ($errors->has('email'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('email') }}
+                                    </div>
+                                @endif
+                                <span class="help-block">{{ trans('cruds.studentBasicInfo.fields.email_helper') }}</span>
+                            </div>
+
+                            {{-- password --}}
+                            <div class="col-span-1 d-none" id="password-field">
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 "
+                                    for="password">{{ trans('cruds.studentBasicInfo.fields.password') }}</label>
+                                <input
+                                    class=" {{ $errors->has('password') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
+                                    id="password" name="password" placeholder="8 characters minimum and uppercase + lowercase letter"
+                                    type="password" value="{{ old('password', '') }}"  />
+                                @if ($errors->has('password'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('password') }}
+                                    </div>
+                                @endif
+                                <span
+                                    class="help-block">{{ trans('cruds.studentBasicInfo.fields.password_helper') }}</span>
+                            </div>
+
+
+                            {{-- dob: date of birth --}}
+                            <div class="col-span-1">
+                                <label
+                                    class=" {{ $errors->has('dob') ? 'is-invalid' : '' }} block text-sm font-medium text-slate-700 dark:text-slate-300 required"
+                                    for="dob">{{ trans('cruds.studentBasicInfo.fields.dob') }}</label>
                                 <input
                                     class="mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                    id="first-name" name="first-name" placeholder="e.g. John" type="text" />
+                                    id="dob" name="dob" type="date" value="{{ old('dob', '') }}"
+                                    required />
+                                @if ($errors->has('dob'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('dob') }}
+                                    </div>
+                                @endif
+                                <span class="help-block">{{ trans('cruds.studentBasicInfo.fields.dob_helper') }}</span>
                             </div>
+
+                            {{-- gender --}}
                             <div class="col-span-1">
-                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300"
-                                    for="last-name">Last Name</label>
-                                <input
-                                    class="mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                    id="last-name" name="last-name" placeholder="e.g. Doe" type="text" />
-                            </div>
-                            <div class="col-span-1">
-                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300"
-                                    for="dob">Date of Birth</label>
-                                <input
-                                    class="mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                    id="dob" name="dob" type="date" />
-                            </div>
-                            <div class="col-span-1">
-                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300"
-                                    for="gender">Gender</label>
+                                <label
+                                    class="{{ $errors->has('gender') ? 'is-invalid' : '' }}  block text-sm font-medium text-slate-700 dark:text-slate-300 required"
+                                    for="gender">{{ trans('cruds.studentBasicInfo.fields.gender') }}</label>
                                 <select
                                     class="mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                    id="gender" name="gender">
+                                    id="gender" name="gender" required>
                                     <option>Select Gender</option>
-                                    <option>Male</option>
+                                    @foreach (App\Models\StudentBasicInfo::GENDER_RADIO as $key => $label)
+                                        <option value="{{ $key }}"
+                                            {{ old('gender') == $key ? 'selected' : '' }}>{{ $label }}</option>
+                                    @endforeach
+                                    {{-- <option>Male</option>
                                     <option>Female</option>
-                                    <option>Other</option>
+                                    <option>Other</option> --}}
                                 </select>
+                                @if ($errors->has('gender'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('gender') }}
+                                    </div>
+                                @endif
+                                <span class="help-block">{{ trans('cruds.studentBasicInfo.fields.gender_helper') }}</span>
                             </div>
+
+                            {{-- student_blood_group --}}
                             <div class="col-span-1">
-                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300"
-                                    for="blood-group">Blood Group</label>
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 required"
+                                    for="student_blood_group">{{ trans('cruds.studentDetailsInformation.fields.student_blood_group') }}</label>
                                 <select
-                                    class="mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                    id="blood-group" name="blood-group">
+                                    class="{{ $errors->has('student_blood_group') ? 'is-invalid' : '' }}  mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
+                                    id="student_blood_group" name="student_blood_group" required>
                                     <option>Select</option>
-                                    <option>A+</option>
-                                    <option>A-</option>
-                                    <option>B+</option>
-                                    <option>B-</option>
-                                    <option>O+</option>
-                                    <option>O-</option>
-                                    <option>AB+</option>
-                                    <option>AB-</option>
+                                    <option value="A+" {{ old('student_blood_group') == 'A+' ? 'selected' : '' }}>A+
+                                    </option>
+                                    <option value="A-" {{ old('student_blood_group') == 'A-' ? 'selected' : '' }}>A-
+                                    </option>
+                                    <option value="B+" {{ old('student_blood_group') == 'B+' ? 'selected' : '' }}>B+
+                                    </option>
+                                    <option value="B-" {{ old('student_blood_group') == 'B-' ? 'selected' : '' }}>B-
+                                    </option>
+                                    <option value="O+" {{ old('student_blood_group') == 'O+' ? 'selected' : '' }}>O+
+                                    </option>
+                                    <option value="O-" {{ old('student_blood_group') == 'O-' ? 'selected' : '' }}>O-
+                                    </option>
+                                    <option value="AB+" {{ old('student_blood_group') == 'AB+' ? 'selected' : '' }}>AB+
+                                    </option>
+                                    <option value="AB-" {{ old('student_blood_group') == 'AB-' ? 'selected' : '' }}>AB-
+                                    </option>
                                 </select>
+                                @if ($errors->has('student_blood_group'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('student_blood_group') }}
+                                    </div>
+                                @endif
+                                <span
+                                    class="help-block">{{ trans('cruds.studentDetailsInformation.fields.student_blood_group_helper') }}</span>
                             </div>
+
+                            {{-- religion --}}
                             <div class="col-span-1">
                                 <label class="block text-sm font-medium text-slate-700 dark:text-slate-300"
-                                    for="religion">Religion</label>
+                                    for="religion">
+                                    Religion
+                                </label>
                                 <input
-                                    class="mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                    id="religion" name="religion" placeholder="e.g. Christian" type="text" />
+                                    class=" {{ $errors->has('religion') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
+                                    id="religion" name="religion" placeholder="e.g. Muslim" type="text"
+                                    value="{{ old('religion', '') }}" />
+                                @if ($errors->has('religion'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('religion') }}
+                                    </div>
+                                @endif
+                                <span
+                                    class="help-block">{{ trans('cruds.studentDetailsInformation.fields.religion_helper') }}</span>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
+
+
+
                 <!-- Academic Details -->
                 <div class="p-6 md:p-8 border-b border-slate-200 dark:border-slate-700">
                     <div class="flex items-center gap-2 mb-6 text-primary">
@@ -156,72 +319,141 @@
                         <h3 class="text-lg font-bold text-slate-900 dark:text-white">Academic Details</h3>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                        {{-- id_no --}}
                         <div class="col-span-1">
                             <label class="block text-sm font-medium text-slate-700 dark:text-slate-300"
-                                for="admission-id">Admission ID</label>
+                                for="id_no">{{ trans('cruds.studentBasicInfo.fields.id_no') }}</label>
                             <div class="mt-1 relative rounded-md shadow-sm">
                                 <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                                     <span class="text-slate-500 sm:text-sm">#</span>
                                 </div>
                                 <input
                                     class="block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-slate-900 dark:text-white pl-7 shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                    id="admission-id" name="admission-id" readonly="" type="text"
-                                    value="ST-2023-001" />
+                                    id="id_no" name="id_no" readonly="" type="text"
+                                    value="   ST-{{ date('Y') }}-{{ date('m') }}-{{ \App\Models\StudentBasicInfo::count() + 1 }}" />
                             </div>
                         </div>
+
+                        {{-- class_id --}}
                         <div class="col-span-1">
                             <label class="block text-sm font-medium text-slate-700 dark:text-slate-300"
-                                for="class">Class</label>
+                                for="class_id">{{ trans('cruds.studentBasicInfo.fields.class') }}</label>
                             <select
-                                class="mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                id="class" name="class">
-                                <option>Select Class</option>
-                                <option>Grade 1</option>
+                                class="{{ $errors->has('class') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
+                                id="class_id" name="class_id">
+                                @foreach ($classes as $id => $entry)
+                                    <option value="{{ $id }}" {{ old('class_id') == $id ? 'selected' : '' }}>
+                                        {{ $entry }}
+                                    </option>
+                                @endforeach
+                                {{-- <option>Select Class</option> --}}
+                                {{-- <option>Grade 1</option>
                                 <option>Grade 2</option>
                                 <option>Grade 3</option>
                                 <option>Grade 4</option>
                                 <option>Grade 5</option>
-                                <option>Grade 6</option>
+                                <option>Grade 6</option> --}}
                             </select>
+                            @if ($errors->has('class'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('class') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.studentBasicInfo.fields.class_helper') }}</span>
                         </div>
+
+
+
+                        {{-- section_id --}}
                         <div class="col-span-1">
-                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300"
-                                for="section">Section</label>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300" for="section_id">
+                                {{ trans('cruds.studentBasicInfo.fields.section') }}
+                            </label>
                             <select
-                                class="mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                id="section" name="section">
-                                <option>Select Section</option>
+                                class=" {{ $errors->has('section') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
+                                id="section_id" name="section_id">
+                                @foreach ($sections as $id => $entry)
+                                    <option value="{{ $id }}" {{ old('section_id') == $id ? 'selected' : '' }}>
+                                        {{ $entry }}</option>
+                                @endforeach
+                                {{-- <option>Select Section</option>
                                 <option>A</option>
                                 <option>B</option>
-                                <option>C</option>
+                                <option>C</option> --}}
                             </select>
+                            @if ($errors->has('section'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('section') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.studentBasicInfo.fields.section_helper') }}</span>
                         </div>
+
+
+                        {{-- shift_id --}}
                         <div class="col-span-1">
-                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300"
-                                for="shift">Shift</label>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300" for="shift_id">
+                                {{ trans('cruds.studentBasicInfo.fields.shift') }}
+                            </label>
                             <select
-                                class="mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                id="shift" name="shift">
-                                <option>Morning</option>
-                                <option>Afternoon</option>
+                                class="{{ $errors->has('shift') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
+                                id="shift_id" name="shift_id">
+                                @foreach ($shifts as $id => $entry)
+                                    <option value="{{ $id }}" {{ old('shift_id') == $id ? 'selected' : '' }}>
+                                        {{ $entry }}</option>
+                                @endforeach
+                                {{-- <option>Morning</option>
+                                <option>Afternoon</option> --}}
                             </select>
+                            @if ($errors->has('shift'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('shift') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.studentBasicInfo.fields.shift_helper') }}</span>
                         </div>
+
+
+                        {{-- roll --}}
                         <div class="col-span-1">
-                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300"
-                                for="roll-no">Roll Number</label>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 "
+                                for="roll">{{ trans('cruds.studentBasicInfo.fields.roll') }}</label>
                             <input
-                                class="mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                id="roll-no" name="roll-no" placeholder="e.g. 15" type="number" />
+                                class=" {{ $errors->has('roll') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
+                                id="roll" name="roll" placeholder="e.g. 15" type="number"
+                                value="{{ old('roll', '') }}" />
+                            @if ($errors->has('roll'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('roll') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.studentBasicInfo.fields.roll_helper') }}</span>
                         </div>
+
+                        {{-- joining_date --}}
                         <div class="col-span-1">
-                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300"
-                                for="admission-date">Admission Date</label>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 required"
+                                for="joining_date">{{ trans('cruds.studentBasicInfo.fields.joining_date') }}</label>
                             <input
-                                class="mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                id="admission-date" name="admission-date" type="date" />
+                                class=" {{ $errors->has('joining_date') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
+                                id="joining_date" name="joining_date" type="date"
+                                value="{{ old('joining_date', '') }}" required />
+
+                            @if ($errors->has('joining_date'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('joining_date') }}
+                                </div>
+                            @endif
+                            <span
+                                class="help-block">{{ trans('cruds.studentBasicInfo.fields.joining_date_helper') }}</span>
                         </div>
                     </div>
                 </div>
+
+
+
+
                 <!-- Guardian Information -->
                 <div class="p-6 md:p-8">
                     <div class="flex items-center gap-2 mb-6 text-primary">
@@ -229,33 +461,75 @@
                         <h3 class="text-lg font-bold text-slate-900 dark:text-white">Guardian / Contact Info</h3>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                        {{-- guardian_name --}}
                         <div class="col-span-1 md:col-span-2">
-                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300"
-                                for="guardian-name">Parent / Guardian Name</label>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 required"
+                                for="guardian_name">{{ trans('cruds.studentDetailsInformation.fields.guardian_name') }}</label>
                             <input
-                                class="mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                id="guardian-name" name="guardian-name" placeholder="Full Name" type="text" />
+                                class=" {{ $errors->has('guardian_name') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
+                                id="guardian_name" name="guardian_name" placeholder="Full Name" type="text"
+                                value="{{ old('guardian_name', '') }}" required />
+                            @if ($errors->has('guardian_name'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('guardian_name') }}
+                                </div>
+                            @endif
+                            <span
+                                class="help-block">{{ trans('cruds.studentDetailsInformation.fields.guardian_name_helper') }}</span>
                         </div>
+
+                        {{-- guardian_email --}}
                         <div class="col-span-1">
                             <label class="block text-sm font-medium text-slate-700 dark:text-slate-300"
-                                for="email">Email Address</label>
+                                for="guardian_email">{{ trans('cruds.studentDetailsInformation.fields.guardian_email') }}</label>
                             <input
-                                class="mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                id="email" name="email" placeholder="email@example.com" type="email" />
+                                class=" {{ $errors->has('guardian_email') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
+                                id="guardian_email" name="guardian_email" placeholder="email@example.com"
+                                value="{{ old('guardian_email', '') }}" type="email" />
+
+                            @if ($errors->has('guardian_email'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('guardian_email') }}
+                                </div>
+                            @endif
+                            <span
+                                class="help-block">{{ trans('cruds.studentDetailsInformation.fields.guardian_email_helper') }}</span>
                         </div>
+
+                        {{-- guardian_contact_number --}}
                         <div class="col-span-1">
-                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300"
-                                for="phone">Phone Number</label>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 required"
+                                for="guardian_contact_number">{{ trans('cruds.studentDetailsInformation.fields.guardian_contact_number') }}</label>
                             <input
-                                class="mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                id="phone" name="phone" placeholder="+1 (555) 000-0000" type="tel" />
+                                class=" {{ $errors->has('guardian_contact_number') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
+                                id="guardian_contact_number" name="guardian_contact_number"
+                                value="{{ old('guardian_contact_number', '') }}" placeholder="e.g. 01xxxxxxxxx"
+                                type="tel" required />
+                            @if ($errors->has('guardian_contact_number'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('guardian_contact_number') }}
+                                </div>
+                            @endif
+                            <span
+                                class="help-block">{{ trans('cruds.studentDetailsInformation.fields.guardian_contact_number_helper') }}</span>
                         </div>
+
+                        {{-- address --}}
                         <div class="col-span-1 md:col-span-2">
-                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300"
-                                for="address">Current Address</label>
+                            <label
+                                class=" {{ $errors->has('address') ? 'is-invalid' : '' }} block text-sm font-medium text-slate-700 dark:text-slate-300"
+                                for="address">{{ trans('cruds.studentDetailsInformation.fields.address') }}</label>
                             <textarea
                                 class="mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                id="address" name="address" placeholder="Enter full address..." rows="3"></textarea>
+                                id="address" name="address" placeholder="Enter full address..." rows="3">{{ old('address', '') }}</textarea>
+                            @if ($errors->has('address'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('address') }}
+                                </div>
+                            @endif
+                            <span
+                                class="help-block">{{ trans('cruds.studentDetailsInformation.fields.address_helper') }}</span>
                         </div>
                     </div>
                 </div>
@@ -269,7 +543,7 @@
                     </button>
                     <button
                         class="inline-flex items-center px-6 py-2 text-sm font-medium text-white bg-primary border border-transparent rounded-lg shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-                        type="button">
+                        type="submit">
                         Submit Registration
                     </button>
                 </div>
@@ -280,43 +554,15 @@
 
 @section('scripts')
     <script>
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const themeIcon = themeToggleBtn.querySelector('span');
 
-        // Check for saved user preference, if any, on load of the website
-        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia(
-                '(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-            themeIcon.textContent = 'light_mode';
-        } else {
-            document.documentElement.classList.remove('dark');
-            themeIcon.textContent = 'dark_mode';
-        }
-
-        themeToggleBtn.addEventListener('click', function() {
-            // if set via local storage previously
-            if (localStorage.getItem('color-theme')) {
-                if (localStorage.getItem('color-theme') === 'light') {
-                    document.documentElement.classList.add('dark');
-                    localStorage.setItem('color-theme', 'dark');
-                    themeIcon.textContent = 'light_mode';
+        $(document).ready(function () {
+            $("#need_login").change(function () {
+                if ($(this).is(":checked")) {
+                    $("#password-field").removeClass("d-none");
                 } else {
-                    document.documentElement.classList.remove('dark');
-                    localStorage.setItem('color-theme', 'light');
-                    themeIcon.textContent = 'dark_mode';
+                    $("#password-field").addClass("d-none");
                 }
-            } else {
-                // if NOT set via local storage previously
-                if (document.documentElement.classList.contains('dark')) {
-                    document.documentElement.classList.remove('dark');
-                    localStorage.setItem('color-theme', 'light');
-                    themeIcon.textContent = 'dark_mode';
-                } else {
-                    document.documentElement.classList.add('dark');
-                    localStorage.setItem('color-theme', 'dark');
-                    themeIcon.textContent = 'light_mode';
-                }
-            }
+            });
         });
 
         // Image Upload Logic

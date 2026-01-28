@@ -158,6 +158,8 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.studentBasicInfo.fields.section_helper') }}</span>
             </div>
+
+            
             <div class="form-group">
                 <label for="shift_id">{{ trans('cruds.studentBasicInfo.fields.shift') }}</label>
                 <select class="form-control select2 {{ $errors->has('shift') ? 'is-invalid' : '' }}" name="shift_id" id="shift_id">

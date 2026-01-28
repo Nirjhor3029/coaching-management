@@ -12,10 +12,12 @@ use App\Models\AcademicClass;
 use App\Models\Section;
 use App\Models\Shift;
 use App\Models\StudentBasicInfo;
+use App\Models\StudentDetailsInformation;
 use App\Models\Subject;
 use App\Models\User;
-use Gate;
+// use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
@@ -106,10 +108,60 @@ class StudentBasicInfoController extends Controller
 
     public function store(StoreStudentBasicInfoRequest $request)
     {
-        $studentBasicInfo = StudentBasicInfo::create($request->all());
+        // return $request->all();
+        // $studentBasicInfo = StudentBasicInfo::create($request->all());
+
+
+
+        $studentBasicInfo = new StudentBasicInfo();
+        $studentBasicInfo->roll = $request->roll;
+        $studentBasicInfo->id_no = $request->id_no;
+        $studentBasicInfo->first_name = $request->first_name;
+        $studentBasicInfo->last_name = $request->last_name;
+        $studentBasicInfo->gender = $request->gender;
+        $studentBasicInfo->dob = $request->dob;
+        $studentBasicInfo->contact_number = $request->contact_number;
+        $studentBasicInfo->email = $request->email;
+
+        $studentBasicInfo->class_id = $request->class_id;
+        $studentBasicInfo->section_id = $request->section_id;
+        $studentBasicInfo->shift_id = $request->shift_id;
+
+        $studentBasicInfo->joining_date = $request->joining_date;
+        $studentBasicInfo->status = $request->status;
+
+        // $studentBasicInfo->user_id = $request->user_id;
+
+        $studentBasicInfo->save();
+
+
+
+        if (!isset($studentBasicInfo)) {
+            return redirect()->back()->with('error', 'Student Basic Info not created successfully.');
+        }
+
+        if ($request->need_login) {
+            $user = User::create([
+                'name' => $request->first_name . ' ' . $request->last_name,
+                'email' => $request->email,
+                'password' =>  isset($request->password) && !empty($request->password) ? bcrypt($request->password) :  bcrypt($request->email),
+            ]);
+            $studentBasicInfo->user_id = $user->id;
+            $studentBasicInfo->save();
+        }
+
+        $studentDetails = new StudentDetailsInformation();
+        $studentDetails->student_id = $studentBasicInfo->id;
+        $studentDetails->guardian_name = $request->guardian_name;
+        $studentDetails->guardian_contact_number = $request->guardian_contact_number;
+        $studentDetails->guardian_email = $request->guardian_email;
+        $studentDetails->address = $request->address;
+        $studentDetails->student_blood_group = $request->student_blood_group;
+        $studentDetails->save();
+
         $studentBasicInfo->subjects()->sync($request->input('subjects', []));
-        if ($request->input('image', false)) {
-            $studentBasicInfo->addMedia(storage_path('tmp/uploads/' . basename($request->input('image'))))->toMediaCollection('image');
+        if ($request->input('file-upload', false)) {
+            $studentBasicInfo->addMedia(storage_path('tmp/uploads/' . basename($request->input('file-upload'))))->toMediaCollection('file-upload');
         }
 
         if ($media = $request->input('ck-media', false)) {
