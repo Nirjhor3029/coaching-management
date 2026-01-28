@@ -28,12 +28,18 @@
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
 
 
+
     <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;600;700&amp;display=swap"
         rel="stylesheet" />
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+
+
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 
     <script id="tailwind-config">
@@ -47,7 +53,8 @@
                         "background-dark": "#101622",
                     },
                     fontFamily: {
-                        "display": ["Inter", "sans-serif"]
+                        "display": ["Lexend", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"]
                     },
                     borderRadius: {
                         "DEFAULT": "0.25rem",
@@ -60,8 +67,12 @@
         }
     </script>
     <style>
-        body {
+        /* body {
             font-family: 'Inter', sans-serif;
+        } */
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
 
         /* Custom scrollbar for modern feel */
@@ -70,13 +81,22 @@
             height: 8px;
         }
 
-        ::-webkit-scrollbar-track {
+        /* ::-webkit-scrollbar-track {
             background: #111318;
+        } */
+
+        /* ::-webkit-scrollbar-thumb {
+            background: #282e39;
+            border-radius: 4px;
+        } */
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #282e39;
-            border-radius: 4px;
+            background: #cbd5e1;
+            border-radius: 3px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
@@ -103,6 +123,7 @@
                 <i class="fas fa-fw fa-bars"></i>
             </button>
 
+
             <ul class="c-header-nav ml-auto">
                 @if (count(config('panel.available_languages', [])) > 1)
                     <li class="c-header-nav-item dropdown d-md-down-none">
@@ -114,17 +135,42 @@
                             @foreach (config('panel.available_languages') as $langLocale => $langName)
                                 <a class="dropdown-item"
                                     href="{{ url()->current() }}?change_language={{ $langLocale }}">{{ strtoupper($langLocale) }}
-                                    ({{ $langName }})</a>
+                                    ({{ $langName }})
+                                </a>
                             @endforeach
                         </div>
                     </li>
                 @endif
-
-
             </ul>
+
+            <div class="flex items-center gap-4 w-full max-w-md mx-4 hidden md:flex">
+                <div class="relative w-full">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <span class="material-symbols-outlined text-slate-400 text-[20px]">search</span>
+                    </div>
+                    <input
+                        class="block w-full pl-10 pr-3 py-2 border border-slate-200 dark:border-slate-600 rounded-lg leading-5 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:bg-white focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm"
+                        placeholder="Search students, teachers, records..." type="text" />
+                </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button
+                    class="relative p-2 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-full transition-colors">
+                    <span class="material-symbols-outlined">notifications</span>
+                    <span
+                        class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-[#1a2632]"></span>
+                </button>
+                <button id="theme-toggle"
+                    class="p-2 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-full transition-colors">
+                    <span class="material-symbols-outlined">dark_mode</span>
+                </button>
+
+
+            </div>
         </header>
 
-        <div class="c-body bg-[#101622]">
+        <div class="c-body">
             <main class="c-main">
 
 
