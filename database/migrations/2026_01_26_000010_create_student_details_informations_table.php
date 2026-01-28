@@ -10,13 +10,14 @@ class CreateStudentDetailsInformationsTable extends Migration
     {
         Schema::create('student_details_informations', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('fathers_name');
+            $table->string('fathers_name')->nullable();
             $table->string('mothers_name')->nullable();
             $table->string('fathers_nid')->nullable();
             $table->string('mothers_nid')->nullable();
             $table->string('guardian_name');
             $table->string('guardian_relation')->nullable();
             $table->string('guardian_contact_number');
+            $table->string('guardian_email')->nullable();
             $table->string('student_birth_no')->nullable();
             $table->string('student_blood_group')->nullable();
             $table->string('address')->nullable();

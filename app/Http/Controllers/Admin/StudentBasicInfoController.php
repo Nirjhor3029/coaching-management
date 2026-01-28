@@ -15,6 +15,7 @@ use App\Models\StudentBasicInfo;
 use App\Models\StudentDetailsInformation;
 use App\Models\Subject;
 use App\Models\User;
+use Carbon\Carbon;
 // use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -127,7 +128,9 @@ class StudentBasicInfoController extends Controller
         $studentBasicInfo->section_id = $request->section_id;
         $studentBasicInfo->shift_id = $request->shift_id;
 
-        $studentBasicInfo->joining_date = $request->joining_date;
+        // return $request->joining_date;
+
+        $studentBasicInfo->joining_date = $request->joining_date ? Carbon::createFromFormat('Y-m-d', $request->joining_date)->format('Y-m-d H:i:s') : null;
         $studentBasicInfo->status = $request->status;
 
         // $studentBasicInfo->user_id = $request->user_id;
