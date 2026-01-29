@@ -115,8 +115,9 @@
 
 <body class="c-app">
     @include('partials.menu')
-    <div class="c-wrapper">
-        <header class="c-header c-header-fixed px-3">
+    <div class="c-wrapper bg-slate-50 dark:bg-background-dark transition-colors duration-300">
+        <header
+            class="c-header c-header-fixed px-3 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 transition-colors duration-300">
             <button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar"
                 data-class="c-sidebar-show">
                 <i class="fas fa-fw fa-bars"></i>
@@ -132,13 +133,14 @@
             <ul class="c-header-nav ml-auto">
                 @if (count(config('panel.available_languages', [])) > 1)
                     <li class="c-header-nav-item dropdown d-md-down-none">
-                        <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
-                            aria-haspopup="true" aria-expanded="false">
+                        <a class="c-header-nav-link text-slate-700 dark:text-slate-300" data-toggle="dropdown" href="#"
+                            role="button" aria-haspopup="true" aria-expanded="false">
                             {{ strtoupper(app()->getLocale()) }}
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right">
+                        <div
+                            class="dropdown-menu dropdown-menu-right bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700">
                             @foreach (config('panel.available_languages') as $langLocale => $langName)
-                                <a class="dropdown-item"
+                                <a class="dropdown-item text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
                                     href="{{ url()->current() }}?change_language={{ $langLocale }}">{{ strtoupper($langLocale) }}
                                     ({{ $langName }})
                                 </a>
@@ -164,7 +166,7 @@
                     class="relative p-2 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-full transition-colors">
                     <span class="material-symbols-outlined">notifications</span>
                     <span
-                        class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-[#1a2632]"></span>
+                        class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-slate-900"></span>
                 </button>
                 <button id="theme-toggle"
                     class="p-2 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-full transition-colors">
@@ -210,7 +212,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/perfect-scrollbar.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/perfect-scrollbar.min.js"></script>
     <script src="https://unpkg.com/@coreui/coreui@3.2/dist/js/coreui.min.js"></script>
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
@@ -227,7 +230,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
     <script
         src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js">
-    </script>
+        </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
     <script src="{{ asset('js/main.js') }}"></script>
@@ -238,7 +241,7 @@
 
         // Check for saved user preference, if any, on load of the website
         if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia(
-                '(prefers-color-scheme: dark)').matches)) {
+            '(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
             themeIcon.textContent = 'light_mode';
         } else {
@@ -246,7 +249,7 @@
             themeIcon.textContent = 'dark_mode';
         }
 
-        themeToggleBtn.addEventListener('click', function() {
+        themeToggleBtn.addEventListener('click', function () {
             // if set via local storage previously
             if (localStorage.getItem('color-theme')) {
                 if (localStorage.getItem('color-theme') === 'light') {
@@ -273,7 +276,7 @@
         });
     </script>
     <script>
-        $(function() {
+        $(function () {
             let copyButtonTrans = '{{ trans('global.datatables.copy') }}'
             let csvButtonTrans = '{{ trans('global.datatables.csv') }}'
             let excelButtonTrans = '{{ trans('global.datatables.excel') }}'
@@ -312,76 +315,76 @@
                 pageLength: 100,
                 dom: 'lBfrtip<"actions">',
                 buttons: [{
-                        extend: 'selectAll',
-                        className: 'btn-primary',
-                        text: selectAllButtonTrans,
-                        exportOptions: {
-                            columns: ':visible'
-                        },
-                        action: function(e, dt) {
-                            e.preventDefault()
-                            dt.rows().deselect();
-                            dt.rows({
-                                search: 'applied'
-                            }).select();
-                        }
+                    extend: 'selectAll',
+                    className: 'btn-primary',
+                    text: selectAllButtonTrans,
+                    exportOptions: {
+                        columns: ':visible'
                     },
-                    {
-                        extend: 'selectNone',
-                        className: 'btn-primary',
-                        text: selectNoneButtonTrans,
-                        exportOptions: {
-                            columns: ':visible'
-                        }
-                    },
-                    {
-                        extend: 'copy',
-                        className: 'btn-default',
-                        text: copyButtonTrans,
-                        exportOptions: {
-                            columns: ':visible'
-                        }
-                    },
-                    {
-                        extend: 'csv',
-                        className: 'btn-default',
-                        text: csvButtonTrans,
-                        exportOptions: {
-                            columns: ':visible'
-                        }
-                    },
-                    {
-                        extend: 'excel',
-                        className: 'btn-default',
-                        text: excelButtonTrans,
-                        exportOptions: {
-                            columns: ':visible'
-                        }
-                    },
-                    {
-                        extend: 'pdf',
-                        className: 'btn-default',
-                        text: pdfButtonTrans,
-                        exportOptions: {
-                            columns: ':visible'
-                        }
-                    },
-                    {
-                        extend: 'print',
-                        className: 'btn-default',
-                        text: printButtonTrans,
-                        exportOptions: {
-                            columns: ':visible'
-                        }
-                    },
-                    {
-                        extend: 'colvis',
-                        className: 'btn-default',
-                        text: colvisButtonTrans,
-                        exportOptions: {
-                            columns: ':visible'
-                        }
+                    action: function (e, dt) {
+                        e.preventDefault()
+                        dt.rows().deselect();
+                        dt.rows({
+                            search: 'applied'
+                        }).select();
                     }
+                },
+                {
+                    extend: 'selectNone',
+                    className: 'btn-primary',
+                    text: selectNoneButtonTrans,
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                },
+                {
+                    extend: 'copy',
+                    className: 'btn-default',
+                    text: copyButtonTrans,
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                },
+                {
+                    extend: 'csv',
+                    className: 'btn-default',
+                    text: csvButtonTrans,
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                },
+                {
+                    extend: 'excel',
+                    className: 'btn-default',
+                    text: excelButtonTrans,
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    className: 'btn-default',
+                    text: pdfButtonTrans,
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                },
+                {
+                    extend: 'print',
+                    className: 'btn-default',
+                    text: printButtonTrans,
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                },
+                {
+                    extend: 'colvis',
+                    className: 'btn-default',
+                    text: colvisButtonTrans,
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                }
                 ]
             });
 
