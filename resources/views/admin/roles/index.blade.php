@@ -9,14 +9,15 @@
         </div>
     </div>
 @endcan
-<div class="card">
+<div class="card bg-white dark:bg-slate-800 dark:text-white transition-colors duration-300">
     <div class="card-header">
         {{ trans('cruds.role.title_singular') }} {{ trans('global.list') }}
     </div>
 
     <div class="card-body">
         <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-Role">
+            {{-- <table class=" table table-bordered table-striped table-hover datatable datatable-Role"> --}}
+            <table class=" dark:text-white dark:bg-slate-800 table table-bordered  table-hover datatable datatable-Role">
                 <thead>
                     <tr>
                         <th width="10">
@@ -36,9 +37,9 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody >
                     @foreach($roles as $key => $role)
-                        <tr data-entry-id="{{ $role->id }}">
+                        <tr data-entry-id="{{ $role->id }}" class="dark:text-white dark:bg-slate-800">
                             <td>
 
                             </td>

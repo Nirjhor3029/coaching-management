@@ -88,7 +88,7 @@ table.dataTable thead .sorting_desc {
     border-color: #d1dbe1;
 }
 
-.btn-group-xs > .btn,
+.btn-group-xs>.btn,
 .btn-xs {
     padding: 1px 5px;
     font-size: 12px;
@@ -99,16 +99,20 @@ table.dataTable thead .sorting_desc {
 .searchable-title {
     font-weight: bold;
 }
+
 .searchable-fields {
-    padding-left:5px;
+    padding-left: 5px;
 }
+
 .searchable-link {
-    padding:0 5px 0 5px;
+    padding: 0 5px 0 5px;
 }
-.searchable-link:hover   {
+
+.searchable-link:hover {
     cursor: pointer;
     background: #eaeaea;
 }
+
 .select2-results__option {
     padding-left: 0px;
     padding-right: 0px;
@@ -119,7 +123,7 @@ table.dataTable thead .sorting_desc {
     color: red;
 }
 
-.form-check.is-invalid ~ .invalid-feedback {
+.form-check.is-invalid~.invalid-feedback {
     display: block;
 }
 
@@ -130,3 +134,65 @@ table.dataTable thead .sorting_desc {
 .custom-select.form-control-sm {
     padding: 0.25rem 1.5rem;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+/*  : Start*/
+
+html.dark .card {
+    background-color: #1e293b;
+    color: white;
+    border-color: #334155;
+}
+
+html.dark .card-header {
+    background-color: #0f172a;
+    color: white;
+}
+
+html.dark .table {
+    background-color: #1e293b;
+    color: white;
+}
+
+html.dark .table thead {
+    background-color: #0f172a;
+}
+
+html.dark .table tbody tr:hover {
+    background-color: #334155;
+}
+
+html.dark .table-striped tbody tr:nth-of-type(even) {
+    background-color: #334155;
+}
+
+html.dark .dataTables_wrapper,
+html.dark .dataTables_filter,
+html.dark .dataTables_info {
+    color: white;
+}
+
+html.dark input,
+html.dark select {
+    background-color: #1e293b;
+    color: white;
+    border-color: #475569;
+}
+
+html.dark label {
+    /* background-color: #1e293b; */
+    color: white;
+    /* border-color: #475569; */
+}
+
+/*  : End*/

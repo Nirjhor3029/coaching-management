@@ -33,6 +33,7 @@
     </div>
 
 
+    {{-- All the layout scripts --}}
     @include('layouts._partials.footer_scripts')
 
     @yield('scripts')
