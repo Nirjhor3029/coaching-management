@@ -470,23 +470,28 @@
 
 
     {{-- Related Data --}}
-    <div class="card">
-        <div class="card-header">
-            {{ trans('global.relatedData') }}
-        </div>
-        <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
-            <li class="nav-item">
-                <a class="nav-link" href="#student_earnings" role="tab" data-toggle="tab">
-                    {{ trans('cruds.earning.title') }}
-                </a>
-            </li>
-        </ul>
-        <div class="tab-content">
-            <div class="tab-pane" role="tabpanel" id="student_earnings">
-                @includeIf('admin.studentBasicInfos.relationships.studentEarnings', [
-                    'earnings' => $studentBasicInfo->studentEarnings,
-                ])
+    <div class="p-8 max-w-6xl mx-auto w-full">
+
+
+        <div class="card ">
+            <div class="card-header">
+                {{ trans('global.relatedData') }}
+            </div>
+            <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
+                <li class="nav-item">
+                    <a class="nav-link" href="#student_earnings" role="tab" data-toggle="tab">
+                        {{ trans('cruds.earning.title') }}
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane" role="tabpanel" id="student_earnings">
+                    @includeIf('admin.studentBasicInfos.relationships.studentEarnings', [
+                        'earnings' => $studentBasicInfo->studentEarnings,
+                    ])
+                </div>
             </div>
         </div>
+
     </div>
 @endsection
