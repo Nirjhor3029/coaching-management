@@ -1,7 +1,306 @@
 @extends('layouts.admin')
 @section('content')
+    <!-- Profile View Content -->
+    <div class="p-8 max-w-6xl mx-auto w-full">
+        <!-- Action Toolbar -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+            <div class="flex items-center gap-2">
+                <button
+                    class="p-2 bg-white dark:bg-slate-800 border border-[#e7edf3] dark:border-slate-700 rounded-lg text-slate-600 hover:text-primary transition-colors">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                </button>
+                <h2 class="text-2xl font-bold tracking-tight">Student Profile Preview</h2>
+            </div>
+            <div class="flex gap-2">
+                <button
+                    class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-[#e7edf3] dark:border-slate-700 rounded-lg text-sm font-bold hover:bg-slate-50 transition-colors shadow-sm">
+                    <span class="material-symbols-outlined text-[20px]">print</span>
+                    Print ID
+                </button>
+                <button
+                    class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-[#e7edf3] dark:border-slate-700 rounded-lg text-sm font-bold hover:bg-slate-50 transition-colors shadow-sm">
+                    <span class="material-symbols-outlined text-[20px]">description</span>
+                    Report Card
+                </button>
+                <button
+                    class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg text-sm font-bold hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20">
+                    <span class="material-symbols-outlined text-[20px]">edit</span>
+                    Edit Profile
+                </button>
+            </div>
+        </div>
+        <!-- Profile Header Card -->
+        <div class="bg-white dark:bg-slate-800 rounded-xl border border-[#e7edf3] dark:border-slate-700 p-6 mb-8 shadow-sm">
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <div class="relative">
+                    <div class="size-32 rounded-full border-4 border-primary/10 overflow-hidden bg-slate-100"
+                        data-alt="Student profile portrait"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBNSbjr_RsKsVXtdjcWYF1Qo5cH4imFsoTfQScr3lkC_uQ7hq4qufx4eN4Q6_PP1vmNF_jb7AUvIBmMWd99BTQbr2HutL7MmS5uLYRtutlKSTneFN43T-0YdSB_3H4ghZ58IqtCpT48Lsf03nPkZ9pkSzbr_3LmaOMzFlX6TOt2SH4M7KafUpkWf7Wgng0Uxyb2sBH3csYYtR12hxItpuTO1RGjzWv6wik6eMD0a5bYIskExlsNQ4rpUzp6_iro0-C8MClHZrfiqor1"); background-position: center; background-size: cover;'>
+                    </div>
+                    <div
+                        class="absolute bottom-1 right-1 bg-green-500 size-6 rounded-full border-4 border-white dark:border-slate-800">
+                    </div>
+                </div>
+                <div class="flex flex-col text-center md:text-left">
+                    <h1 class="text-3xl font-bold text-[#0d141b] dark:text-white mb-1">Emily R. Henderson</h1>
+                    <div class="flex flex-wrap justify-center md:justify-start items-center gap-x-4 gap-y-2">
+                        <span class="text-[#4c739a] font-medium flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[18px]">badge</span>
+                            Roll No: #2023-001
+                        </span>
+                        <span
+                            class="px-3 py-1 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 text-xs font-bold rounded-full uppercase tracking-wider">Active
+                            Student</span>
+                        <span class="text-[#4c739a] font-medium flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[18px]">location_on</span>
+                            Queens, New York
+                        </span>
+                    </div>
+                </div>
+                <div class="md:ml-auto grid grid-cols-2 gap-4">
+                    <div class="bg-background-light dark:bg-slate-700/50 p-4 rounded-lg text-center min-w-[120px]">
+                        <p class="text-[#4c739a] text-xs font-medium uppercase mb-1">Attendance</p>
+                        <p class="text-xl font-bold text-primary">94.5%</p>
+                    </div>
+                    <div class="bg-background-light dark:bg-slate-700/50 p-4 rounded-lg text-center min-w-[120px]">
+                        <p class="text-[#4c739a] text-xs font-medium uppercase mb-1">GPA Score</p>
+                        <p class="text-xl font-bold text-primary">3.85</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Main Info Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Left Column: Primary Details -->
+            <div class="lg:col-span-2 flex flex-col gap-8">
+                <!-- Academic Information -->
+                <div
+                    class="bg-white dark:bg-slate-800 rounded-xl border border-[#e7edf3] dark:border-slate-700 overflow-hidden shadow-sm">
+                    <div class="px-6 py-4 border-b border-[#e7edf3] dark:border-slate-700 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">school</span>
+                        <h3 class="font-bold text-lg">Academic Information</h3>
+                    </div>
+                    <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-12">
+                        <div>
+                            <p class="text-[#4c739a] text-sm font-medium mb-1 uppercase tracking-tight">Current
+                                Class</p>
+                            <p class="font-bold text-[#0d141b] dark:text-white">Grade 10 - Science Stream</p>
+                        </div>
+                        <div>
+                            <p class="text-[#4c739a] text-sm font-medium mb-1 uppercase tracking-tight">Section
+                                &amp; Shift</p>
+                            <p class="font-bold text-[#0d141b] dark:text-white">Section B • Morning Shift</p>
+                        </div>
+                        <div>
+                            <p class="text-[#4c739a] text-sm font-medium mb-1 uppercase tracking-tight">Student
+                                ID No.</p>
+                            <p class="font-bold text-[#0d141b] dark:text-white">EDU-2023-9988</p>
+                        </div>
+                        <div>
+                            <p class="text-[#4c739a] text-sm font-medium mb-1 uppercase tracking-tight">
+                                Admission Date</p>
+                            <p class="font-bold text-[#0d141b] dark:text-white">January 15, 2023</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Personal Details -->
+                <div
+                    class="bg-white dark:bg-slate-800 rounded-xl border border-[#e7edf3] dark:border-slate-700 overflow-hidden shadow-sm">
+                    <div class="px-6 py-4 border-b border-[#e7edf3] dark:border-slate-700 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">person</span>
+                        <h3 class="font-bold text-lg">Personal Details</h3>
+                    </div>
+                    <div class="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <p class="text-[#4c739a] text-sm font-medium mb-1 uppercase tracking-tight">Date of
+                                Birth</p>
+                            <p class="font-bold text-[#0d141b] dark:text-white">12 May 2008</p>
+                        </div>
+                        <div>
+                            <p class="text-[#4c739a] text-sm font-medium mb-1 uppercase tracking-tight">Gender
+                            </p>
+                            <p class="font-bold text-[#0d141b] dark:text-white">Female</p>
+                        </div>
+                        <div>
+                            <p class="text-[#4c739a] text-sm font-medium mb-1 uppercase tracking-tight">Blood
+                                Group</p>
+                            <p class="font-bold text-[#0d141b] dark:text-white">O Positive (O+)</p>
+                        </div>
+                        <div>
+                            <p class="text-[#4c739a] text-sm font-medium mb-1 uppercase tracking-tight">Phone
+                                Number</p>
+                            <p class="font-bold text-[#0d141b] dark:text-white">+1 (555) 0123-456</p>
+                        </div>
+                        <div class="md:col-span-2">
+                            <p class="text-[#4c739a] text-sm font-medium mb-1 uppercase tracking-tight">Email
+                                Address</p>
+                            <p class="font-bold text-[#0d141b] dark:text-white">emily.henderson@example.edu</p>
+                        </div>
+                        <div class="md:col-span-3">
+                            <p class="text-[#4c739a] text-sm font-medium mb-1 uppercase tracking-tight">
+                                Residential Address</p>
+                            <p class="font-bold text-[#0d141b] dark:text-white">4582 Oakwood Ave, Apt 4C,
+                                Queens, NY 11375</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Payment History Table -->
+                <div
+                    class="bg-white dark:bg-slate-800 rounded-xl border border-[#e7edf3] dark:border-slate-700 overflow-hidden shadow-sm">
+                    <div
+                        class="px-6 py-4 border-b border-[#e7edf3] dark:border-slate-700 flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">payments</span>
+                            <h3 class="font-bold text-lg">Recent Payment History</h3>
+                        </div>
+                        <a class="text-primary text-sm font-bold hover:underline" href="#">View All History</a>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead>
+                                <tr class="bg-background-light dark:bg-slate-700/50">
+                                    <th class="px-6 py-3 text-[#4c739a] text-xs font-bold uppercase">Date</th>
+                                    <th class="px-6 py-3 text-[#4c739a] text-xs font-bold uppercase">Description
+                                    </th>
+                                    <th class="px-6 py-3 text-[#4c739a] text-xs font-bold uppercase">Amount</th>
+                                    <th class="px-6 py-3 text-[#4c739a] text-xs font-bold uppercase">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-[#e7edf3] dark:divide-slate-700">
+                                <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                                    <td class="px-6 py-4 text-sm font-medium">Oct 05, 2023</td>
+                                    <td class="px-6 py-4 text-sm">Monthly Tuition Fee - Oct</td>
+                                    <td class="px-6 py-4 text-sm font-bold">$450.00</td>
+                                    <td class="px-6 py-4">
+                                        <span
+                                            class="px-2 py-1 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 text-[10px] font-bold rounded uppercase">Paid</span>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                                    <td class="px-6 py-4 text-sm font-medium">Sep 04, 2023</td>
+                                    <td class="px-6 py-4 text-sm">Monthly Tuition Fee - Sep</td>
+                                    <td class="px-6 py-4 text-sm font-bold">$450.00</td>
+                                    <td class="px-6 py-4">
+                                        <span
+                                            class="px-2 py-1 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 text-[10px] font-bold rounded uppercase">Paid</span>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                                    <td class="px-6 py-4 text-sm font-medium">Aug 15, 2023</td>
+                                    <td class="px-6 py-4 text-sm">Annual Sports Club Fee</td>
+                                    <td class="px-6 py-4 text-sm font-bold">$125.00</td>
+                                    <td class="px-6 py-4">
+                                        <span
+                                            class="px-2 py-1 bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400 text-[10px] font-bold rounded uppercase">Pending</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- Right Column: Secondary Details -->
+            <div class="flex flex-col gap-8">
+                <!-- Guardian Information -->
+                <div
+                    class="bg-white dark:bg-slate-800 rounded-xl border border-[#e7edf3] dark:border-slate-700 overflow-hidden shadow-sm">
+                    <div class="px-6 py-4 border-b border-[#e7edf3] dark:border-slate-700 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">family_restroom</span>
+                        <h3 class="font-bold text-lg">Guardian Details</h3>
+                    </div>
+                    <div class="p-6 flex flex-col gap-6">
+                        <div>
+                            <p class="text-[#4c739a] text-xs font-medium mb-1 uppercase tracking-tight">Father's
+                                Name</p>
+                            <p class="font-bold text-[#0d141b] dark:text-white">Robert Henderson</p>
+                            <p class="text-xs text-[#4c739a]">NID: 458-22-99812</p>
+                        </div>
+                        <div class="border-t border-slate-100 dark:border-slate-700 pt-4">
+                            <p class="text-[#4c739a] text-xs font-medium mb-1 uppercase tracking-tight">Mother's
+                                Name</p>
+                            <p class="font-bold text-[#0d141b] dark:text-white">Martha Henderson</p>
+                            <p class="text-xs text-[#4c739a]">NID: 458-22-99815</p>
+                        </div>
+                        <div class="bg-primary/5 dark:bg-primary/10 p-4 rounded-lg">
+                            <p class="text-primary text-xs font-bold mb-2 uppercase tracking-wide flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]">emergency_share</span>
+                                Emergency Contact
+                            </p>
+                            <p class="font-bold text-sm">Robert Henderson (Father)</p>
+                            <p class="text-primary text-sm font-bold">+1 (555) 0987-654</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Enrolled Subjects -->
+                <div
+                    class="bg-white dark:bg-slate-800 rounded-xl border border-[#e7edf3] dark:border-slate-700 overflow-hidden shadow-sm">
+                    <div class="px-6 py-4 border-b border-[#e7edf3] dark:border-slate-700 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">auto_stories</span>
+                        <h3 class="font-bold text-lg">Enrolled Subjects</h3>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-3">
+                            <li
+                                class="flex items-center justify-between p-3 bg-background-light dark:bg-slate-700/30 rounded-lg group hover:bg-primary/10 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <span
+                                        class="material-symbols-outlined text-slate-400 group-hover:text-primary">calculate</span>
+                                    <span class="text-sm font-bold">Advanced Mathematics</span>
+                                </div>
+                                <span class="text-xs font-medium text-slate-500">MTH-102</span>
+                            </li>
+                            <li
+                                class="flex items-center justify-between p-3 bg-background-light dark:bg-slate-700/30 rounded-lg group hover:bg-primary/10 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <span
+                                        class="material-symbols-outlined text-slate-400 group-hover:text-primary">biotech</span>
+                                    <span class="text-sm font-bold">Physics &amp; Mechanics</span>
+                                </div>
+                                <span class="text-xs font-medium text-slate-500">PHY-301</span>
+                            </li>
+                            <li
+                                class="flex items-center justify-between p-3 bg-background-light dark:bg-slate-700/30 rounded-lg group hover:bg-primary/10 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <span
+                                        class="material-symbols-outlined text-slate-400 group-hover:text-primary">language</span>
+                                    <span class="text-sm font-bold">English Literature</span>
+                                </div>
+                                <span class="text-xs font-medium text-slate-500">ENG-101</span>
+                            </li>
+                            <li
+                                class="flex items-center justify-between p-3 bg-background-light dark:bg-slate-700/30 rounded-lg group hover:bg-primary/10 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <span
+                                        class="material-symbols-outlined text-slate-400 group-hover:text-primary">history_edu</span>
+                                    <span class="text-sm font-bold">World History</span>
+                                </div>
+                                <span class="text-xs font-medium text-slate-500">HIS-205</span>
+                            </li>
+                            <li
+                                class="flex items-center justify-between p-3 bg-background-light dark:bg-slate-700/30 rounded-lg group hover:bg-primary/10 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <span
+                                        class="material-symbols-outlined text-slate-400 group-hover:text-primary">computer</span>
+                                    <span class="text-sm font-bold">Computer Science</span>
+                                </div>
+                                <span class="text-xs font-medium text-slate-500">CS-110</span>
+                            </li>
+                        </ul>
+                        <button
+                            class="w-full mt-6 py-2 border-2 border-dashed border-[#e7edf3] dark:border-slate-700 rounded-lg text-sm text-[#4c739a] font-bold hover:border-primary/50 hover:text-primary transition-colors flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined text-[18px]">add</span>
+                            Manage Subjects
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<div class="card">
+
+
+
+    {{-- <div class="card">
     <div class="card-header">
         {{ trans('global.show') }} {{ trans('cruds.studentBasicInfo.title') }}
     </div>
@@ -108,7 +407,7 @@
                             {{ trans('cruds.studentBasicInfo.fields.image') }}
                         </th>
                         <td>
-                            @if($studentBasicInfo->image)
+                            @if ($studentBasicInfo->image)
                                 <a href="{{ $studentBasicInfo->image->getUrl() }}" target="_blank" style="display: inline-block">
                                     <img src="{{ $studentBasicInfo->image->getUrl('thumb') }}">
                                 </a>
@@ -152,7 +451,7 @@
                             {{ trans('cruds.studentBasicInfo.fields.subject') }}
                         </th>
                         <td>
-                            @foreach($studentBasicInfo->subjects as $key => $subject)
+                            @foreach ($studentBasicInfo->subjects as $key => $subject)
                                 <span class="label label-info">{{ $subject->name }}</span>
                             @endforeach
                         </td>
@@ -166,24 +465,28 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.relatedData') }}
-    </div>
-    <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
-        <li class="nav-item">
-            <a class="nav-link" href="#student_earnings" role="tab" data-toggle="tab">
-                {{ trans('cruds.earning.title') }}
-            </a>
-        </li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="student_earnings">
-            @includeIf('admin.studentBasicInfos.relationships.studentEarnings', ['earnings' => $studentBasicInfo->studentEarnings])
+
+
+    {{-- Related Data --}}
+    <div class="card">
+        <div class="card-header">
+            {{ trans('global.relatedData') }}
+        </div>
+        <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
+            <li class="nav-item">
+                <a class="nav-link" href="#student_earnings" role="tab" data-toggle="tab">
+                    {{ trans('cruds.earning.title') }}
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane" role="tabpanel" id="student_earnings">
+                @includeIf('admin.studentBasicInfos.relationships.studentEarnings', [
+                    'earnings' => $studentBasicInfo->studentEarnings,
+                ])
+            </div>
         </div>
     </div>
-</div>
-
 @endsection
