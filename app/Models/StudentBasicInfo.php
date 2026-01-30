@@ -133,4 +133,9 @@ class StudentBasicInfo extends Model implements HasMedia
     {
         return $this->belongsToMany(Subject::class);
     }
+
+    public function studentDetails(){
+        return $this->hasOne(StudentDetailsInformation::class, 'student_id', 'id');
+    }
+
 }

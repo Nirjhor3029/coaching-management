@@ -41,30 +41,42 @@
                         class="absolute bottom-1 right-1 bg-green-500 size-6 rounded-full border-4 border-white dark:border-slate-800">
                     </div>
                 </div>
-                <div class="flex flex-col text-center md:text-left">
-                    <h1 class="text-3xl font-bold text-[#0d141b] dark:text-white mb-1">Emily R. Henderson</h1>
+                <div class="flex flex-col text-left md:text-left">
+                    <h1 class="text-3xl font-bold text-[#0d141b] dark:text-white mb-1">
+                        {{ $studentBasicInfo->first_name }} {{ $studentBasicInfo->last_name }}
+                    </h1>
                     <div class="flex flex-wrap justify-center md:justify-start items-center gap-x-4 gap-y-2">
                         <span class="text-[#4c739a] font-medium flex items-center gap-1">
                             <span class="material-symbols-outlined text-[18px]">badge</span>
-                            Roll No: #2023-001
+                            Academic ID: {{ $studentBasicInfo->id_no }}
                         </span>
+                        @php
+                            $StatusColor =
+                                isset($studentBasicInfo->status) && $studentBasicInfo->status ? 'green' : 'red';
+                        @endphp
                         <span
-                            class="px-3 py-1 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 text-xs font-bold rounded-full uppercase tracking-wider">Active
-                            Student</span>
-                        <span class="text-[#4c739a] font-medium flex items-center gap-1">
-                            <span class="material-symbols-outlined text-[18px]">location_on</span>
-                            Queens, New York
+                            class="px-3 py-1 bg-{{ $StatusColor }}-100 text-{{ $StatusColor }}-700 dark:bg-{{ $StatusColor }}-900/30 dark:text-{{ $StatusColor }}-400 text-xs font-bold rounded-full uppercase tracking-wider">
+                            {{ $studentBasicInfo->status == 1 ? 'Active' : 'Inactive' }} Student
                         </span>
                     </div>
+                    <span class="text-[#4c739a] font-medium flex items-center gap-1">
+                        <span class="material-symbols-outlined text-[18px]">badge</span>
+                        Roll No: {{ $studentBasicInfo->roll }}
+                    </span>
+                    <span class="text-[#4c739a] font-medium flex items-center gap-1">
+                        <span class="material-symbols-outlined text-[18px]">location_on</span>
+                        {{-- Address:  --}}
+                        {{ $studentBasicInfo->studentDetails->address ?? 'N/A' }}
+                    </span>
                 </div>
                 <div class="md:ml-auto grid grid-cols-2 gap-4">
                     <div class="bg-background-light dark:bg-slate-700/50 p-4 rounded-lg text-center min-w-[120px]">
                         <p class="text-[#4c739a] text-xs font-medium uppercase mb-1">Attendance</p>
-                        <p class="text-xl font-bold text-primary">94.5%</p>
+                        <p class="text-xl font-bold text-primary">{{ $attendancePercent }}%</p>
                     </div>
                     <div class="bg-background-light dark:bg-slate-700/50 p-4 rounded-lg text-center min-w-[120px]">
                         <p class="text-[#4c739a] text-xs font-medium uppercase mb-1">GPA Score</p>
-                        <p class="text-xl font-bold text-primary">3.85</p>
+                        <p class="text-xl font-bold text-primary">{{ $score }}</p>
                     </div>
                 </div>
             </div>
@@ -78,13 +90,16 @@
                     class="bg-white dark:bg-slate-800 rounded-xl border border-[#e7edf3] dark:border-slate-700 overflow-hidden shadow-sm">
                     <div class="px-6 py-4 border-b border-[#e7edf3] dark:border-slate-700 flex items-center gap-2">
                         <span class="material-symbols-outlined text-primary">school</span>
-                        <h3 class="font-bold text-lg">Academic Information</h3>
+                        <h3 class="font-bold text-lg text-[#0d141b] dark:text-white">Academic Information</h3>
                     </div>
                     <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-12">
                         <div>
-                            <p class="text-[#4c739a] text-sm font-medium mb-1 uppercase tracking-tight">Current
-                                Class</p>
-                            <p class="font-bold text-[#0d141b] dark:text-white">Grade 10 - Science Stream</p>
+                            <p class="text-[#4c739a] text-sm font-medium mb-1 uppercase tracking-tight">
+                                Current Class
+                            </p>
+                            <p class="font-bold text-[#0d141b] dark:text-white">
+                                {{ $studentBasicInfo->class->class_name ?? 'N/A' }}
+                            </p>
                         </div>
                         <div>
                             <p class="text-[#4c739a] text-sm font-medium mb-1 uppercase tracking-tight">Section
@@ -108,7 +123,7 @@
                     class="bg-white dark:bg-slate-800 rounded-xl border border-[#e7edf3] dark:border-slate-700 overflow-hidden shadow-sm">
                     <div class="px-6 py-4 border-b border-[#e7edf3] dark:border-slate-700 flex items-center gap-2">
                         <span class="material-symbols-outlined text-primary">person</span>
-                        <h3 class="font-bold text-lg">Personal Details</h3>
+                        <h3 class="font-bold text-lg text-[#0d141b] dark:text-white">Personal Details</h3>
                     </div>
                     <div class="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div>
@@ -151,12 +166,12 @@
                         class="px-6 py-4 border-b border-[#e7edf3] dark:border-slate-700 flex items-center justify-between">
                         <div class="flex items-center gap-2">
                             <span class="material-symbols-outlined text-primary">payments</span>
-                            <h3 class="font-bold text-lg">Recent Payment History</h3>
+                            <h3 class="font-bold text-lg text-[#0d141b] dark:text-white">Recent Payment History</h3>
                         </div>
                         <a class="text-primary text-sm font-bold hover:underline" href="#">View All History</a>
                     </div>
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left">
+                        <table class="w-full text-left text-[#0d141b] dark:text-white">
                             <thead>
                                 <tr class="bg-background-light dark:bg-slate-700/50">
                                     <th class="px-6 py-3 text-[#4c739a] text-xs font-bold uppercase">Date</th>
@@ -206,18 +221,20 @@
                     class="bg-white dark:bg-slate-800 rounded-xl border border-[#e7edf3] dark:border-slate-700 overflow-hidden shadow-sm">
                     <div class="px-6 py-4 border-b border-[#e7edf3] dark:border-slate-700 flex items-center gap-2">
                         <span class="material-symbols-outlined text-primary">family_restroom</span>
-                        <h3 class="font-bold text-lg">Guardian Details</h3>
+                        <h3 class="font-bold text-lg text-[#0d141b] dark:text-white">Guardian Details</h3>
                     </div>
                     <div class="p-6 flex flex-col gap-6">
                         <div>
-                            <p class="text-[#4c739a] text-xs font-medium mb-1 uppercase tracking-tight">Father's
-                                Name</p>
+                            <p class="text-[#4c739a] text-xs font-medium mb-1 uppercase tracking-tight">
+                                Father's Name
+                            </p>
                             <p class="font-bold text-[#0d141b] dark:text-white">Robert Henderson</p>
                             <p class="text-xs text-[#4c739a]">NID: 458-22-99812</p>
                         </div>
                         <div class="border-t border-slate-100 dark:border-slate-700 pt-4">
-                            <p class="text-[#4c739a] text-xs font-medium mb-1 uppercase tracking-tight">Mother's
-                                Name</p>
+                            <p class="text-[#4c739a] text-xs font-medium mb-1 uppercase tracking-tight">
+                                Mother's Name
+                            </p>
                             <p class="font-bold text-[#0d141b] dark:text-white">Martha Henderson</p>
                             <p class="text-xs text-[#4c739a]">NID: 458-22-99815</p>
                         </div>
@@ -226,7 +243,7 @@
                                 <span class="material-symbols-outlined text-[14px]">emergency_share</span>
                                 Emergency Contact
                             </p>
-                            <p class="font-bold text-sm">Robert Henderson (Father)</p>
+                            <p class="font-bold text-sm text-[#0d141b] dark:text-white">Robert Henderson (Father)</p>
                             <p class="text-primary text-sm font-bold">+1 (555) 0987-654</p>
                         </div>
                     </div>
@@ -236,10 +253,10 @@
                     class="bg-white dark:bg-slate-800 rounded-xl border border-[#e7edf3] dark:border-slate-700 overflow-hidden shadow-sm">
                     <div class="px-6 py-4 border-b border-[#e7edf3] dark:border-slate-700 flex items-center gap-2">
                         <span class="material-symbols-outlined text-primary">auto_stories</span>
-                        <h3 class="font-bold text-lg">Enrolled Subjects</h3>
+                        <h3 class="font-bold text-lg text-[#0d141b] dark:text-white">Enrolled Subjects</h3>
                     </div>
                     <div class="p-6">
-                        <ul class="space-y-3">
+                        <ul class="space-y-3 text-[#0d141b] dark:text-white">
                             <li
                                 class="flex items-center justify-between p-3 bg-background-light dark:bg-slate-700/30 rounded-lg group hover:bg-primary/10 transition-colors">
                                 <div class="flex items-center gap-3">

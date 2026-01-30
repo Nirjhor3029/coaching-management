@@ -131,7 +131,7 @@ class StudentBasicInfoController extends Controller
         // return $request->joining_date;
 
         $studentBasicInfo->joining_date = $request->joining_date ? Carbon::createFromFormat('Y-m-d', $request->joining_date)->format('Y-m-d H:i:s') : null;
-        $studentBasicInfo->status = $request->status;
+        $studentBasicInfo->status = $request->status ? $request->status : 1;
 
         // $studentBasicInfo->user_id = $request->user_id;
 
@@ -215,9 +215,12 @@ class StudentBasicInfoController extends Controller
     {
         abort_if(Gate::denies('student_basic_info_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $studentBasicInfo->load('class', 'section', 'shift', 'user', 'subjects', 'studentEarnings');
+        $studentBasicInfo->load('class', 'section', 'shift', 'user', 'subjects', 'studentEarnings', 'studentDetails');
 
-        return view('admin.studentBasicInfos.show', compact('studentBasicInfo'));
+        $attendancePercent = 0; 
+        $score = 0;
+
+        return view('admin.studentBasicInfos.show', compact('studentBasicInfo', 'attendancePercent', 'score'));
     }
 
     public function destroy(StudentBasicInfo $studentBasicInfo)
