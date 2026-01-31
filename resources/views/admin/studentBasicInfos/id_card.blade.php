@@ -98,14 +98,13 @@
                                     <path d="M24 4H42V17.3333V30.6667H24V44H6V30.6667V17.3333H24V4Z"></path>
                                 </svg>
                             </div>
-                            <span class="text-white font-bold text-xs uppercase tracking-tight">Horizon International
-                                School</span>
+                            <span class="text-white font-bold text-xs uppercase tracking-tight">{{ config('app.name', 'School Name') }}</span>
                         </div>
                         <!-- Card Body -->
                         <div class="flex p-4 gap-4 flex-1">
                             <div class="flex flex-col gap-2">
                                 <div class="size-24 rounded-lg bg-slate-100 border-2 border-slate-200 overflow-hidden">
-                                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuChnpyrsjpapDHdKq577ODVKp4stjdqbmVE3q0K6CTHQhMxFGDhOUc0nRZzmBy95PmJ_BeyVyGmOcjt1Ixd4d709Xs0D6G6spye7JwPGUDnHLYIbw0jGwHEs59UnOLZIC8FZKbupvSjz3cEL258CwsbDV69aZAL5vhqmeAvSUNbjD3IB9yyh0mWTWTrA9xVxpxXNklucSnlEPzBk2ykqGhiEiSeez5_Vg7sSdNL5oUzfk6hX0frCQ0rMx0MySY2C0M-nWN3wlFlrr7O"
+                                    <img src="{{ $student->image ? $student->image->getUrl('preview') : 'https://ui-avatars.com/api/?name=' . urlencode($student->first_name . ' ' . $student->last_name) . '&background=random' }}"
                                         alt="Student portrait photo" class="w-full h-full object-cover">
                                 </div>
                                 <div
@@ -113,23 +112,27 @@
                                     STUDENT</div>
                             </div>
                             <div class="flex flex-col justify-center gap-1">
-                                <h3 class="text-primary font-black text-lg leading-tight uppercase">Johnathan Doe</h3>
+                                <h3 class="text-primary font-black text-sm leading-tight uppercase">
+                                    {{ $student->first_name }} {{ $student->last_name }}</h3>
                                 <div class="grid grid-cols-2 gap-x-4 gap-y-1 mt-1">
                                     <div>
                                         <p class="text-[8px] text-slate-400 font-bold uppercase">Roll Number</p>
-                                        <p class="text-[11px] font-bold text-slate-700">2023-HIS-045</p>
+                                        <p class="text-[11px] font-bold text-slate-700">{{ $student->roll }}</p>
                                     </div>
                                     <div>
                                         <p class="text-[8px] text-slate-400 font-bold uppercase">Class</p>
-                                        <p class="text-[11px] font-bold text-slate-700">10th Grade</p>
+                                        <p class="text-[11px] font-bold text-slate-700">
+                                            {{ $student->class->class_name ?? 'N/A' }}</p>
                                     </div>
                                     <div>
                                         <p class="text-[8px] text-slate-400 font-bold uppercase">Section</p>
-                                        <p class="text-[11px] font-bold text-slate-700">A (Science)</p>
+                                        <p class="text-[11px] font-bold text-slate-700">
+                                            {{ $student->section->section_name ?? 'N/A' }}</p>
                                     </div>
                                     <div>
                                         <p class="text-[8px] text-slate-400 font-bold uppercase">Validity</p>
-                                        <p class="text-[11px] font-bold text-slate-700">2024-25</p>
+                                        <p class="text-[11px] font-bold text-slate-700">
+                                            {{ date('Y') }}-{{ date('y', strtotime('+1 year')) }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -148,8 +151,9 @@
                                 <div>
                                     <p class="text-[8px] text-slate-400 font-bold uppercase mb-0.5">Permanent Address
                                     </p>
-                                    <p class="text-[9px] font-medium text-slate-600 leading-tight">123 Education Lane,
-                                        Knowledge Park, Academic District, NY 10021</p>
+                                    <p class="text-[9px] font-medium text-slate-600 leading-tight">
+                                        {{ $student->studentDetails->address ?? 'N/A' }}
+                                    </p>
                                 </div>
 
                                 <div class="grid grid-cols-2 gap-3">
@@ -159,17 +163,18 @@
                                         <div class="flex flex-col gap-0.5">
                                             <p class="text-[9px] font-bold text-slate-700 flex items-center gap-1">
                                                 <span class="material-symbols-outlined text-[10px] text-primary">call</span>
-                                                +1 555-0100
+                                                {{ $student->contact_number }}
                                             </p>
                                             <p class="text-[8px] text-slate-600 flex items-center gap-1">
                                                 <span class="material-symbols-outlined text-[10px] text-primary">mail</span>
-                                                j.doe@school.edu
+                                                {{ $student->email }}
                                             </p>
                                         </div>
                                     </div>
                                     <div>
                                         <p class="text-[8px] text-slate-400 font-bold uppercase mb-0.5">Blood Group</p>
-                                        <p class="text-xs font-black text-red-600">O+</p>
+                                        <p class="text-xs font-black text-red-600">
+                                            {{ $student->studentDetails->student_blood_group ?? 'N/A' }}</p>
                                     </div>
                                 </div>
 
@@ -177,8 +182,11 @@
                                     <p class="text-[8px] text-slate-400 font-bold uppercase mb-0.5">Guardian / Emergency
                                         Contact</p>
                                     <div class="bg-slate-50 p-1.5 rounded border border-slate-100">
-                                        <p class="text-[9px] font-bold text-slate-700">Jane Doe (Mother)</p>
-                                        <p class="text-[9px] text-slate-700 font-medium">+1 555-0199</p>
+                                        <p class="text-[9px] font-bold text-slate-700">
+                                            {{ $student->studentDetails->guardian_name ?? 'N/A' }}
+                                            ({{ $student->studentDetails->guardian_relation ?? 'Guardian' }})</p>
+                                        <p class="text-[9px] text-slate-700 font-medium">
+                                            {{ $student->studentDetails->guardian_contact_number ?? 'N/A' }}</p>
                                     </div>
                                 </div>
 
@@ -198,7 +206,7 @@
                                 <div class="size-16 bg-white p-1 border border-slate-200"
                                     data-alt="QR Code for digital student verification">
                                     <img alt="QR Code" class="w-full h-full"
-                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMWKLQtvfBTLdreszEK3zy509YvWr2gv1NG7Dq_yV9a2uljDgpVQ233RYf1arlT3RK_MrjKnOtoFrMXXFBexmQg9N2KAEeUWDu7RGZfHy81hRieNJM4tXHdQ5QCWWXn_Y6GZFujwX1YiSxp7at0sqADhGlt5ZmS7xt6r76abmfWTJ3MFdyZZhC2liIjhL6qPgn0vOdGCWDWfGzOlDn1aqm5ZflWc6KoVsqIB5EHta4oHHbS3W8ygggVyqv0mJ2J3o4Vf37i2CLRuJD" />
+                                        src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ urlencode(route('admin.student-basic-infos.show', $student->id)) }}" />
                                 </div>
                                 <p class="text-[6px] font-bold text-center text-slate-400 uppercase">Scan to Verify</p>
                             </div>
