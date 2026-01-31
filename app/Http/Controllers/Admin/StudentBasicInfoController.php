@@ -264,4 +264,15 @@ class StudentBasicInfoController extends Controller
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
+
+    public function printIdCard($id)
+    {
+        abort_if(Gate::denies('student_basic_info_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $studentId = explode(',', $id);
+
+        $student = StudentBasicInfo::where('id', $studentId)->first();
+
+        return view('admin.studentBasicInfos.id_card', compact('student'));
+    }
 }

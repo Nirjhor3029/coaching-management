@@ -1,5 +1,5 @@
 <header
-    class="c-header c-header-fixed px-3 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 transition-colors duration-300">
+    class="c-header c-header-fixed px-3 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 transition-colors duration-300 no-print">
     <button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar"
         data-class="c-sidebar-show">
         <i class="fas fa-fw fa-bars"></i>

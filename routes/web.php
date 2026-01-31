@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\StudentBasicInfoController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -62,6 +63,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('student-basic-infos/ckmedia', 'StudentBasicInfoController@storeCKEditorImages')->name('student-basic-infos.storeCKEditorImages');
     Route::post('student-basic-infos/parse-csv-import', 'StudentBasicInfoController@parseCsvImport')->name('student-basic-infos.parseCsvImport');
     Route::post('student-basic-infos/process-csv-import', 'StudentBasicInfoController@processCsvImport')->name('student-basic-infos.processCsvImport');
+    Route::get('student-basic-infos/print-id-card/{id}',[StudentBasicInfoController::class, 'printIdCard'])->name('student-basic-infos.printIdCard');
     Route::resource('student-basic-infos', 'StudentBasicInfoController');
 
     // Student Details Information

@@ -8,7 +8,7 @@
                 <ol class="inline-flex items-center space-x-1 md:space-x-3">
                     <li class="inline-flex items-center">
                         <a class="inline-flex items-center text-sm font-medium text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-white"
-                            href="#">
+                            href="{{ route('admin.home') }}">
                             <span class="material-symbols-outlined text-[18px] mr-2">home</span>
                             Home
                         </a>
@@ -17,7 +17,7 @@
                         <div class="flex items-center">
                             <span class="material-symbols-outlined text-slate-400 text-[18px]">chevron_right</span>
                             <a class="ml-1 text-sm font-medium text-slate-500 hover:text-primary md:ml-2 dark:text-slate-400 dark:hover:text-white"
-                                href="#">Students</a>
+                                href="{{ route('admin.student-basic-infos.index') }}">Students</a>
                         </div>
                     </li>
                     <li aria-current="page">
@@ -37,7 +37,7 @@
                     <p class="mt-1 text-slate-500 dark:text-slate-400">Fill in the details below to register a new
                         student to the database.</p>
                 </div>
-                <div class="flex gap-3">
+                {{-- <div class="flex gap-3">
                     <button
                         class="px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:bg-slate-800 dark:text-slate-300 dark:border-slate-600 dark:hover:bg-slate-700"
                         type="button">
@@ -49,7 +49,7 @@
                         <span class="material-symbols-outlined text-[20px] mr-2">save</span>
                         Save Student
                     </button>
-                </div>
+                </div> --}}
             </div>
 
 

@@ -12,11 +12,11 @@
                 <h2 class="text-2xl font-bold tracking-tight">Student Profile Preview</h2>
             </div>
             <div class="flex gap-2">
-                <button
+                <a href="{{ route('admin.student-basic-infos.printIdCard', $studentBasicInfo->id) }}"
                     class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-[#e7edf3] dark:border-slate-700 rounded-lg text-sm font-bold hover:bg-slate-50 transition-colors shadow-sm">
                     <span class="material-symbols-outlined text-[20px]">print</span>
                     Print ID
-                </button>
+                </a>
                 <button
                     class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-[#e7edf3] dark:border-slate-700 rounded-lg text-sm font-bold hover:bg-slate-50 transition-colors shadow-sm">
                     <span class="material-symbols-outlined text-[20px]">description</span>
