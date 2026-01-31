@@ -106,14 +106,17 @@
                             </div>
 
                             {{-- <div class="flex items-center gap-2">
-                            <label class="switch">
-                                <input type="checkbox" name="status" class="sr-only" {{ (isset($studentBasicInfo->status) && $studentBasicInfo->status) ? 'checked' : '' }}>
-                                <span class="slider rounded-full bg-green-600 dark:bg-red-600"></span>
-                            </label>
-                            <span class="text-sm font-medium {{ (isset($studentBasicInfo->status) && $studentBasicInfo->status) ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400' }}">
-                                {{ (isset($studentBasicInfo->status) && $studentBasicInfo->status) ? 'Active' : 'Inactive' }}
-                            </span>
-                        </div> --}}
+                                <label class="switch">
+                                    <input type="checkbox" name="status" class="sr-only" {{
+                                        (isset($studentBasicInfo->status) && $studentBasicInfo->status) ? 'checked' : '' }}>
+                                    <span class="slider rounded-full bg-green-600 dark:bg-red-600"></span>
+                                </label>
+                                <span
+                                    class="text-sm font-medium {{ (isset($studentBasicInfo->status) && $studentBasicInfo->status) ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400' }}">
+                                    {{ (isset($studentBasicInfo->status) && $studentBasicInfo->status) ? 'Active' :
+                                    'Inactive' }}
+                                </span>
+                            </div> --}}
 
                         </div>
 
@@ -198,15 +201,15 @@
                                     for="password">{{ trans('cruds.studentBasicInfo.fields.password') }}</label>
                                 <input
                                     class=" {{ $errors->has('password') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                    id="password" name="password" placeholder="8 characters minimum and uppercase + lowercase letter"
-                                    type="password" value="{{ old('password', '') }}"  />
+                                    id="password" name="password"
+                                    placeholder="8 characters minimum and uppercase + lowercase letter" type="password"
+                                    value="{{ old('password', '') }}" />
                                 @if ($errors->has('password'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('password') }}
                                     </div>
                                 @endif
-                                <span
-                                    class="help-block">{{ trans('cruds.studentBasicInfo.fields.password_helper') }}</span>
+                                <span class="help-block">{{ trans('cruds.studentBasicInfo.fields.password_helper') }}</span>
                             </div>
 
 
@@ -217,8 +220,7 @@
                                     for="dob">{{ trans('cruds.studentBasicInfo.fields.dob') }}</label>
                                 <input
                                     class="mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                    id="dob" name="dob" type="date" value="{{ old('dob', '') }}"
-                                    required />
+                                    id="dob" name="dob" type="date" value="{{ old('dob', '') }}" required />
                                 @if ($errors->has('dob'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('dob') }}
@@ -235,10 +237,10 @@
                                 <select
                                     class="mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
                                     id="gender" name="gender" required>
-                                    <option>Select Gender</option>
+                                    <option value="{{null}}">Select Gender</option>
                                     @foreach (App\Models\StudentBasicInfo::GENDER_RADIO as $key => $label)
-                                        <option value="{{ $key }}"
-                                            {{ old('gender') == $key ? 'selected' : '' }}>{{ $label }}</option>
+                                        <option value="{{ $key }}" {{ old('gender') == $key ? 'selected' : '' }}>{{ $label }}
+                                        </option>
                                     @endforeach
                                     {{-- <option>Male</option>
                                     <option>Female</option>
@@ -288,8 +290,7 @@
 
                             {{-- religion --}}
                             <div class="col-span-1">
-                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300"
-                                    for="religion">
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300" for="religion">
                                     Religion
                                 </label>
                                 <input
@@ -375,7 +376,8 @@
                                 id="section_id" name="section_id">
                                 @foreach ($sections as $id => $entry)
                                     <option value="{{ $id }}" {{ old('section_id') == $id ? 'selected' : '' }}>
-                                        {{ $entry }}</option>
+                                        {{ $entry }}
+                                    </option>
                                 @endforeach
                                 {{-- <option>Select Section</option>
                                 <option>A</option>
@@ -401,7 +403,8 @@
                                 id="shift_id" name="shift_id">
                                 @foreach ($shifts as $id => $entry)
                                     <option value="{{ $id }}" {{ old('shift_id') == $id ? 'selected' : '' }}>
-                                        {{ $entry }}</option>
+                                        {{ $entry }}
+                                    </option>
                                 @endforeach
                                 {{-- <option>Morning</option>
                                 <option>Afternoon</option> --}}
@@ -421,8 +424,7 @@
                                 for="roll">{{ trans('cruds.studentBasicInfo.fields.roll') }}</label>
                             <input
                                 class=" {{ $errors->has('roll') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                id="roll" name="roll" placeholder="e.g. 15" type="number"
-                                value="{{ old('roll', '') }}" />
+                                id="roll" name="roll" placeholder="e.g. 15" type="number" value="{{ old('roll', '') }}" />
                             @if ($errors->has('roll'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('roll') }}
@@ -437,16 +439,15 @@
                                 for="joining_date">{{ trans('cruds.studentBasicInfo.fields.joining_date') }}</label>
                             <input
                                 class=" {{ $errors->has('joining_date') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                id="joining_date" name="joining_date" type="date"
-                                value="{{ old('joining_date', '') }}" required />
+                                id="joining_date" name="joining_date" type="date" value="{{ old('joining_date', '') }}"
+                                required />
 
                             @if ($errors->has('joining_date'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('joining_date') }}
                                 </div>
                             @endif
-                            <span
-                                class="help-block">{{ trans('cruds.studentBasicInfo.fields.joining_date_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.studentBasicInfo.fields.joining_date_helper') }}</span>
                         </div>
                     </div>
                 </div>
@@ -504,8 +505,8 @@
                             <input
                                 class=" {{ $errors->has('guardian_contact_number') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
                                 id="guardian_contact_number" name="guardian_contact_number"
-                                value="{{ old('guardian_contact_number', '') }}" placeholder="e.g. 01xxxxxxxxx"
-                                type="tel" required />
+                                value="{{ old('guardian_contact_number', '') }}" placeholder="e.g. 01xxxxxxxxx" type="tel"
+                                required />
                             @if ($errors->has('guardian_contact_number'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('guardian_contact_number') }}
@@ -522,7 +523,8 @@
                                 for="address">{{ trans('cruds.studentDetailsInformation.fields.address') }}</label>
                             <textarea
                                 class="mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                id="address" name="address" placeholder="Enter full address..." rows="3">{{ old('address', '') }}</textarea>
+                                id="address" name="address" placeholder="Enter full address..."
+                                rows="3">{{ old('address', '') }}</textarea>
                             @if ($errors->has('address'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('address') }}
@@ -554,94 +556,149 @@
 
 @section('scripts')
     <script>
-
         $(document).ready(function () {
+            // Need Login Toggle
             $("#need_login").change(function () {
                 if ($(this).is(":checked")) {
-                    $("#password-field").removeClass("d-none");
+                    $("#password-field").removeClass("d-none").fadeIn();
                 } else {
-                    $("#password-field").addClass("d-none");
+                    $("#password-field").addClass("d-none").fadeOut();
                 }
             });
-        });
 
-        // Image Upload Logic
-        const fileUpload = document.getElementById('file-upload');
-        const dropZone = document.getElementById('drop-zone');
-        const photoPreview = document.getElementById('photo-preview');
-        const placeholderIcon = document.getElementById('photo-placeholder-icon');
-        const studentForm = fileUpload.closest('form');
+            // Image Upload Control Elements
+            const fileUpload = document.getElementById('file-upload');
+            const dropZone = document.getElementById('drop-zone');
+            const photoPreview = document.getElementById('photo-preview');
+            const placeholderIcon = document.getElementById('photo-placeholder-icon');
+            const studentForm = document.querySelector('form');
 
-        function handleFile(file) {
-            if (file && file.type.startsWith('image/')) {
+            /**
+             * Handles the file selection/drop process
+             * @param {File} file 
+             */
+            function handleFile(file) {
+                if (!file || !file.type.startsWith('image/')) {
+                    alert('Please upload a valid image file.');
+                    return;
+                }
+
+                // UI: Show Preview immediately
                 const reader = new FileReader();
                 reader.onload = (e) => {
                     photoPreview.style.backgroundImage = `url('${e.target.result}')`;
-                    placeholderIcon.classList.add('hidden');
+                    photoPreview.style.backgroundSize = 'cover';
+                    photoPreview.style.backgroundPosition = 'center';
+                    if (placeholderIcon) placeholderIcon.classList.add('hidden');
                 };
                 reader.readAsDataURL(file);
+
+                // Backend: AJAX Upload to temporary storage (matches controller logic)
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('_token', '{{ csrf_token() }}');
+
+                // Visual feedback during upload
+                dropZone.classList.add('opacity-50', 'cursor-wait');
+
+                fetch('{{ route('admin.student-basic-infos.storeMedia') }}', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                    .then(response => {
+                        if (!response.ok) throw new Error('Upload failed');
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.name) {
+                            // Find and remove any existing hidden inputs for this field
+                            const existingHidden = studentForm.querySelectorAll('input[name="file-upload"][type="hidden"]');
+                            existingHidden.forEach(el => el.remove());
+
+                            // Add hidden input with the filename returned from temporary storage
+                            const hiddenInput = document.createElement('input');
+                            hiddenInput.type = 'hidden';
+                            hiddenInput.name = 'file-upload';
+                            hiddenInput.value = data.name;
+                            studentForm.appendChild(hiddenInput);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Failed to upload image. Please try again.');
+                    })
+                    .finally(() => {
+                        dropZone.classList.remove('opacity-50', 'cursor-wait');
+                    });
             }
-        }
 
-        fileUpload.addEventListener('change', (e) => {
-            handleFile(e.target.files[0]);
-        });
-
-        // Trigger file input when clicking the drop zone (except when clicking the label itself which is handled by 'for')
-        dropZone.addEventListener('click', (e) => {
-            if (e.target !== fileUpload && !fileUpload.contains(e.target)) {
-                // fileUpload.click(); // Label 'for' already handles this for the 'Upload a file' text. 
-                // However, clicking the icon or background should also trigger it.
-                if (!e.target.closest('label')) {
-                    fileUpload.click();
-                }
+            if (fileUpload) {
+                fileUpload.addEventListener('change', (e) => {
+                    if (e.target.files.length > 0) {
+                        handleFile(e.target.files[0]);
+                    }
+                });
             }
-        });
 
-        // Drag and Drop
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            dropZone.addEventListener(eventName, (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-            }, false);
-        });
+            if (dropZone) {
+                // Click to trigger file input
+                dropZone.addEventListener('click', (e) => {
+                    if (!e.target.closest('label')) {
+                        fileUpload.click();
+                    }
+                });
 
-        ['dragenter', 'dragover'].forEach(eventName => {
-            dropZone.addEventListener(eventName, () => {
-                dropZone.classList.add('bg-slate-50', 'dark:bg-slate-800');
-            }, false);
-        });
+                // Drag and Drop support
+                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                    dropZone.addEventListener(eventName, (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }, false);
+                });
 
-        ['dragleave', 'drop'].forEach(eventName => {
-            dropZone.addEventListener(eventName, () => {
-                dropZone.classList.remove('bg-slate-50', 'dark:bg-slate-800');
-            }, false);
-        });
+                ['dragenter', 'dragover'].forEach(eventName => {
+                    dropZone.addEventListener(eventName, () => {
+                        dropZone.classList.add('bg-slate-50', 'dark:bg-slate-800/50', 'border-primary');
+                    }, false);
+                });
 
-        dropZone.addEventListener('drop', (e) => {
-            const dt = e.dataTransfer;
-            const file = dt.files[0];
-            handleFile(file);
-            // Also update the input element for form submission if needed (though usually done via FormData)
-        });
+                ['dragleave', 'drop'].forEach(eventName => {
+                    dropZone.addEventListener(eventName, () => {
+                        dropZone.classList.remove('bg-slate-50', 'dark:bg-slate-800/50', 'border-primary');
+                    }, false);
+                });
 
-        // Reset Photo Preview when form is reset
-        studentForm.addEventListener('reset', () => {
-            photoPreview.style.backgroundImage = 'none';
-            placeholderIcon.classList.remove('hidden');
+                dropZone.addEventListener('drop', (e) => {
+                    const dt = e.dataTransfer;
+                    if (dt.files && dt.files.length > 0) {
+                        handleFile(dt.files[0]);
+                    }
+                });
+            }
+
+            // Form Reset handler
+            if (studentForm) {
+                studentForm.addEventListener('reset', () => {
+                    photoPreview.style.backgroundImage = 'none';
+                    if (placeholderIcon) placeholderIcon.classList.remove('hidden');
+                    const hiddenInput = studentForm.querySelector('input[name="file-upload"][type="hidden"]');
+                    if (hiddenInput) hiddenInput.remove();
+                });
+            }
         });
     </script>
 
 
 
-
-    {{-- Old Code --}}
-    {{-- <script>
-        Dropzone.options.imageDropzone = {
-            url: '{{ route('admin.student-basic-infos.storeMedia') }}',
+    <script>
+        var uploadedPaymentProofMap = {}
+        Dropzone.options.paymentProofDropzone = {
+            url: '{{ route("admin.student-basic-infos.storeMedia") }}',
             maxFilesize: 2, // MB
             acceptedFiles: '.jpeg,.jpg,.png,.gif',
-            maxFiles: 1,
             addRemoveLinks: true,
             headers: {
                 'X-CSRF-TOKEN': "{{ csrf_token() }}"
@@ -651,28 +708,35 @@
                 width: 4096,
                 height: 4096
             },
-            success: function(file, response) {
-                $('form').find('input[name="image"]').remove()
-                $('form').append('<input type="hidden" name="image" value="' + response.name + '">')
+            success: function (file, response) {
+                $('form').append('<input type="hidden" name="payment_proof[]" value="' + response.name + '">')
+                uploadedPaymentProofMap[file.name] = response.name
             },
-            removedfile: function(file) {
+            removedfile: function (file) {
+                console.log(file)
                 file.previewElement.remove()
-                if (file.status !== 'error') {
-                    $('form').find('input[name="image"]').remove()
-                    this.options.maxFiles = this.options.maxFiles + 1
+                var name = ''
+                if (typeof file.file_name !== 'undefined') {
+                    name = file.file_name
+                } else {
+                    name = uploadedPaymentProofMap[file.name]
                 }
+                $('form').find('input[name="payment_proof[]"][value="' + name + '"]').remove()
             },
-            init: function() {
-                @if (isset($studentBasicInfo) && $studentBasicInfo->image)
-                    var file = {!! json_encode($studentBasicInfo->image) !!}
-                    this.options.addedfile.call(this, file)
-                    this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
-                    file.previewElement.classList.add('dz-complete')
-                    $('form').append('<input type="hidden" name="image" value="' + file.file_name + '">')
-                    this.options.maxFiles = this.options.maxFiles - 1
+            init: function () {
+                @if (isset($expense) && $expense->payment_proof)
+                    var files = {!! json_encode($expense->payment_proof) !!}
+                    for (var i in files) {
+                        var file = files[i]
+                        this.options.addedfile.call(this, file)
+                        this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
+                        file.previewElement.classList.add('dz-complete')
+                        $('form').append('<input type="hidden" name="payment_proof[]" value="' + file.file_name +
+                            '">')
+                    }
                 @endif
-            },
-            error: function(file, response) {
+                },
+            error: function (file, response) {
                 if ($.type(response) === 'string') {
                     var message = response //dropzone sends it's own error messages in string
                 } else {
@@ -689,5 +753,66 @@
                 return _results
             }
         }
+    </script>
+
+
+
+
+    {{-- Old Code --}}
+    {{--
+    <script>
+        Dropzone.options.imageDropzone = {
+            url: '{{ route('admin.student - basic - infos.storeMedia') }}',
+            maxFilesize: 2, // MB
+            acceptedFiles: '.jpeg,.jpg,.png,.gif',
+            maxFiles: 1,
+            addRemoveLinks: true,
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            params: {
+                size: 2,
+                width: 4096,
+                height: 4096
+            },
+            success: function (file, response) {
+                $('form').find('input[name="image"]').remove()
+                $('form').append('<input type="hidden" name="image" value="' + response.name + '">')
+            },
+            removedfile: function (file) {
+                file.previewElement.remove()
+                if (file.status !== 'error') {
+                    $('form').find('input[name="image"]').remove()
+                    this.options.maxFiles = this.options.maxFiles + 1
+                }
+            },
+            init: function () {
+                @if (isset($studentBasicInfo) && $studentBasicInfo -> image)
+                    var file = {!! json_encode($studentBasicInfo -> image)!!
+            }
+                        this.options.addedfile.call(this, file)
+                        this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
+                        file.previewElement.classList.add('dz-complete')
+                        $('form').append('<input type="hidden" name="image" value="' + file.file_name + '">')
+                        this.options.maxFiles = this.options.maxFiles - 1
+                    @endif
+                },
+        error: function(file, response) {
+            if ($.type(response) === 'string') {
+                var message = response //dropzone sends it's own error messages in string
+            } else {
+                var message = response.errors.file
+            }
+            file.previewElement.classList.add('dz-error')
+            _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+            _results = []
+            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                node = _ref[_i]
+                _results.push(node.textContent = message)
+            }
+
+            return _results
+        }
+            }
     </script> --}}
 @endsection

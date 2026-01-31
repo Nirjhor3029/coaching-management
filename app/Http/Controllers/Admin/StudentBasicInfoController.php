@@ -164,7 +164,10 @@ class StudentBasicInfoController extends Controller
 
         $studentBasicInfo->subjects()->sync($request->input('subjects', []));
         if ($request->input('file-upload', false)) {
-            $studentBasicInfo->addMedia(storage_path('tmp/uploads/' . basename($request->input('file-upload'))))->toMediaCollection('file-upload');
+            $studentBasicInfo
+                ->addMedia(storage_path('tmp/uploads/' . basename($request->input('file-upload'))))
+                // ->toMediaCollection('file-upload');
+                ->toMediaCollection('image');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -213,11 +216,18 @@ class StudentBasicInfoController extends Controller
 
     public function show(StudentBasicInfo $studentBasicInfo)
     {
+        // return $studentBasicInfo;
+        // if ($studentBasicInfo->media->count() > 0) {
+        //     return response()->json(['preview_url' => $studentBasicInfo->media[0]->preview_url]);
+        // }
+
+        // return $studentBasicInfo->image->getUrl('preview');
+
         abort_if(Gate::denies('student_basic_info_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $studentBasicInfo->load('class', 'section', 'shift', 'user', 'subjects', 'studentEarnings', 'studentDetails');
 
-        $attendancePercent = 0; 
+        $attendancePercent = 0;
         $score = 0;
 
         return view('admin.studentBasicInfos.show', compact('studentBasicInfo', 'attendancePercent', 'score'));

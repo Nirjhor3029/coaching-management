@@ -11,8 +11,9 @@ use App\Models\Expense;
 use App\Models\ExpenseCategory;
 use App\Models\Teacher;
 use App\Models\User;
-use Gate;
+// use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 

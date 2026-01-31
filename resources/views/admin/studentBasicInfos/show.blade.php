@@ -5,10 +5,10 @@
         <!-- Action Toolbar -->
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
             <div class="flex items-center gap-2">
-                <button
-                    class="p-2 bg-white dark:bg-slate-800 border border-[#e7edf3] dark:border-slate-700 rounded-lg text-slate-600 hover:text-primary transition-colors">
+                <a href="{{ route('admin.student-basic-infos.index') }}"
+                    class="p-2 bg-white dark:bg-slate-800 border border-[#e7edf3] dark:border-slate-700 rounded-lg text-slate-600 hover:text-primary transition-colors flex items-center">
                     <span class="material-symbols-outlined">arrow_back</span>
-                </button>
+                </a>
                 <h2 class="text-2xl font-bold tracking-tight">Student Profile Preview</h2>
             </div>
             <div class="flex gap-2">
@@ -22,20 +22,20 @@
                     <span class="material-symbols-outlined text-[20px]">description</span>
                     Report Card
                 </button>
-                <button
+                <a href="{{ route('admin.student-basic-infos.edit', $studentBasicInfo->id) }}"
                     class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg text-sm font-bold hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20">
                     <span class="material-symbols-outlined text-[20px]">edit</span>
                     Edit Profile
-                </button>
+                </a>
             </div>
         </div>
         <!-- Profile Header Card -->
         <div class="bg-white dark:bg-slate-800 rounded-xl border border-[#e7edf3] dark:border-slate-700 p-6 mb-8 shadow-sm">
             <div class="flex flex-col md:flex-row items-center gap-8">
                 <div class="relative">
-                    <div class="size-32 rounded-full border-4 border-primary/10 overflow-hidden bg-slate-100"
+                    <div class="size-32 rounded-full  border-primary/10 overflow-hidden bg-slate-100"
                         data-alt="Student profile portrait"
-                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBNSbjr_RsKsVXtdjcWYF1Qo5cH4imFsoTfQScr3lkC_uQ7hq4qufx4eN4Q6_PP1vmNF_jb7AUvIBmMWd99BTQbr2HutL7MmS5uLYRtutlKSTneFN43T-0YdSB_3H4ghZ58IqtCpT48Lsf03nPkZ9pkSzbr_3LmaOMzFlX6TOt2SH4M7KafUpkWf7Wgng0Uxyb2sBH3csYYtR12hxItpuTO1RGjzWv6wik6eMD0a5bYIskExlsNQ4rpUzp6_iro0-C8MClHZrfiqor1"); background-position: center; background-size: cover;'>
+                        style='background-image: url("{{ $studentBasicInfo->image ? $studentBasicInfo->image->getUrl('preview') : 'https://ui-avatars.com/api/?name=' . urlencode($studentBasicInfo->first_name . ' ' . $studentBasicInfo->last_name) . '&background=random' }}"); background-position: center; background-size: cover;border: 2px solid gray;'>
                     </div>
                     <div
                         class="absolute bottom-1 right-1 bg-green-500 size-6 rounded-full border-4 border-white dark:border-slate-800">
@@ -65,7 +65,7 @@
                     </span>
                     <span class="text-[#4c739a] font-medium flex items-center gap-1">
                         <span class="material-symbols-outlined text-[18px]">location_on</span>
-                        {{-- Address:  --}}
+                        {{-- Address: --}}
                         {{ $studentBasicInfo->studentDetails->address ?? 'N/A' }}
                     </span>
                 </div>
@@ -104,17 +104,21 @@
                         <div>
                             <p class="text-[#4c739a] text-sm font-medium mb-1 uppercase tracking-tight">Section
                                 &amp; Shift</p>
-                            <p class="font-bold text-[#0d141b] dark:text-white">Section B • Morning Shift</p>
+                            <p class="font-bold text-[#0d141b] dark:text-white">
+                                {{ $studentBasicInfo->section->section_name ?? 'N/A' }} •
+                                {{ $studentBasicInfo->shift->shift_name ?? 'N/A' }}
+                            </p>
                         </div>
                         <div>
                             <p class="text-[#4c739a] text-sm font-medium mb-1 uppercase tracking-tight">Student
                                 ID No.</p>
-                            <p class="font-bold text-[#0d141b] dark:text-white">EDU-2023-9988</p>
+                            <p class="font-bold text-[#0d141b] dark:text-white">{{ $studentBasicInfo->id_no }}</p>
                         </div>
                         <div>
                             <p class="text-[#4c739a] text-sm font-medium mb-1 uppercase tracking-tight">
                                 Admission Date</p>
-                            <p class="font-bold text-[#0d141b] dark:text-white">January 15, 2023</p>
+                            <p class="font-bold text-[#0d141b] dark:text-white">
+                                {{ $studentBasicInfo->joining_date ?? 'N/A' }}</p>
                         </div>
                     </div>
                 </div>
@@ -129,33 +133,36 @@
                         <div>
                             <p class="text-[#4c739a] text-sm font-medium mb-1 uppercase tracking-tight">Date of
                                 Birth</p>
-                            <p class="font-bold text-[#0d141b] dark:text-white">12 May 2008</p>
+                            <p class="font-bold text-[#0d141b] dark:text-white">{{ $studentBasicInfo->dob ?? 'N/A' }}</p>
                         </div>
                         <div>
                             <p class="text-[#4c739a] text-sm font-medium mb-1 uppercase tracking-tight">Gender
                             </p>
-                            <p class="font-bold text-[#0d141b] dark:text-white">Female</p>
+                            <p class="font-bold text-[#0d141b] dark:text-white">
+                                {{ App\Models\StudentBasicInfo::GENDER_RADIO[$studentBasicInfo->gender] ?? 'N/A' }}</p>
                         </div>
                         <div>
                             <p class="text-[#4c739a] text-sm font-medium mb-1 uppercase tracking-tight">Blood
                                 Group</p>
-                            <p class="font-bold text-[#0d141b] dark:text-white">O Positive (O+)</p>
+                            <p class="font-bold text-[#0d141b] dark:text-white">
+                                {{ $studentBasicInfo->studentDetails->student_blood_group ?? 'N/A' }}</p>
                         </div>
                         <div>
                             <p class="text-[#4c739a] text-sm font-medium mb-1 uppercase tracking-tight">Phone
                                 Number</p>
-                            <p class="font-bold text-[#0d141b] dark:text-white">+1 (555) 0123-456</p>
+                            <p class="font-bold text-[#0d141b] dark:text-white">
+                                {{ $studentBasicInfo->contact_number ?? 'N/A' }}</p>
                         </div>
                         <div class="md:col-span-2">
                             <p class="text-[#4c739a] text-sm font-medium mb-1 uppercase tracking-tight">Email
                                 Address</p>
-                            <p class="font-bold text-[#0d141b] dark:text-white">emily.henderson@example.edu</p>
+                            <p class="font-bold text-[#0d141b] dark:text-white">{{ $studentBasicInfo->email ?? 'N/A' }}</p>
                         </div>
                         <div class="md:col-span-3">
                             <p class="text-[#4c739a] text-sm font-medium mb-1 uppercase tracking-tight">
                                 Residential Address</p>
-                            <p class="font-bold text-[#0d141b] dark:text-white">4582 Oakwood Ave, Apt 4C,
-                                Queens, NY 11375</p>
+                            <p class="font-bold text-[#0d141b] dark:text-white">
+                                {{ $studentBasicInfo->studentDetails->address ?? 'N/A' }}</p>
                         </div>
                     </div>
                 </div>
@@ -182,33 +189,22 @@
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-[#e7edf3] dark:divide-slate-700">
-                                <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                                    <td class="px-6 py-4 text-sm font-medium">Oct 05, 2023</td>
-                                    <td class="px-6 py-4 text-sm">Monthly Tuition Fee - Oct</td>
-                                    <td class="px-6 py-4 text-sm font-bold">$450.00</td>
-                                    <td class="px-6 py-4">
-                                        <span
-                                            class="px-2 py-1 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 text-[10px] font-bold rounded uppercase">Paid</span>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                                    <td class="px-6 py-4 text-sm font-medium">Sep 04, 2023</td>
-                                    <td class="px-6 py-4 text-sm">Monthly Tuition Fee - Sep</td>
-                                    <td class="px-6 py-4 text-sm font-bold">$450.00</td>
-                                    <td class="px-6 py-4">
-                                        <span
-                                            class="px-2 py-1 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 text-[10px] font-bold rounded uppercase">Paid</span>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                                    <td class="px-6 py-4 text-sm font-medium">Aug 15, 2023</td>
-                                    <td class="px-6 py-4 text-sm">Annual Sports Club Fee</td>
-                                    <td class="px-6 py-4 text-sm font-bold">$125.00</td>
-                                    <td class="px-6 py-4">
-                                        <span
-                                            class="px-2 py-1 bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400 text-[10px] font-bold rounded uppercase">Pending</span>
-                                    </td>
-                                </tr>
+                                @forelse ($studentBasicInfo->studentEarnings->take(5) as $earning)
+                                    <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                                        <td class="px-6 py-4 text-sm font-medium">{{ $earning->date ?? 'N/A' }}</td>
+                                        <td class="px-6 py-4 text-sm">{{ $earning->description ?? 'Tuition Fee' }}</td>
+                                        <td class="px-6 py-4 text-sm font-bold">{{ number_format($earning->amount, 2) }}</td>
+                                        <td class="px-6 py-4">
+                                            <span
+                                                class="px-2 py-1 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 text-[10px] font-bold rounded uppercase">Paid</span>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="px-6 py-4 text-center text-slate-500">No recent payments found
+                                        </td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -228,23 +224,30 @@
                             <p class="text-[#4c739a] text-xs font-medium mb-1 uppercase tracking-tight">
                                 Father's Name
                             </p>
-                            <p class="font-bold text-[#0d141b] dark:text-white">Robert Henderson</p>
-                            <p class="text-xs text-[#4c739a]">NID: 458-22-99812</p>
+                            <p class="font-bold text-[#0d141b] dark:text-white">
+                                {{ $studentBasicInfo->studentDetails->fathers_name ?? 'N/A' }}</p>
+                            <p class="text-xs text-[#4c739a]">NID:
+                                {{ $studentBasicInfo->studentDetails->fathers_nid ?? 'N/A' }}</p>
                         </div>
                         <div class="border-t border-slate-100 dark:border-slate-700 pt-4">
                             <p class="text-[#4c739a] text-xs font-medium mb-1 uppercase tracking-tight">
                                 Mother's Name
                             </p>
-                            <p class="font-bold text-[#0d141b] dark:text-white">Martha Henderson</p>
-                            <p class="text-xs text-[#4c739a]">NID: 458-22-99815</p>
+                            <p class="font-bold text-[#0d141b] dark:text-white">
+                                {{ $studentBasicInfo->studentDetails->mothers_name ?? 'N/A' }}</p>
+                            <p class="text-xs text-[#4c739a]">NID:
+                                {{ $studentBasicInfo->studentDetails->mothers_nid ?? 'N/A' }}</p>
                         </div>
                         <div class="bg-primary/5 dark:bg-primary/10 p-4 rounded-lg">
                             <p class="text-primary text-xs font-bold mb-2 uppercase tracking-wide flex items-center gap-1">
                                 <span class="material-symbols-outlined text-[14px]">emergency_share</span>
                                 Emergency Contact
                             </p>
-                            <p class="font-bold text-sm text-[#0d141b] dark:text-white">Robert Henderson (Father)</p>
-                            <p class="text-primary text-sm font-bold">+1 (555) 0987-654</p>
+                            <p class="font-bold text-sm text-[#0d141b] dark:text-white">
+                                {{ $studentBasicInfo->studentDetails->guardian_name ?? 'N/A' }}
+                                ({{ $studentBasicInfo->studentDetails->guardian_relation ?? 'Guardian' }})</p>
+                            <p class="text-primary text-sm font-bold">
+                                {{ $studentBasicInfo->studentDetails->guardian_contact_number ?? 'N/A' }}</p>
                         </div>
                     </div>
                 </div>
@@ -257,51 +260,19 @@
                     </div>
                     <div class="p-6">
                         <ul class="space-y-3 text-[#0d141b] dark:text-white">
-                            <li
-                                class="flex items-center justify-between p-3 bg-background-light dark:bg-slate-700/30 rounded-lg group hover:bg-primary/10 transition-colors">
-                                <div class="flex items-center gap-3">
-                                    <span
-                                        class="material-symbols-outlined text-slate-400 group-hover:text-primary">calculate</span>
-                                    <span class="text-sm font-bold">Advanced Mathematics</span>
-                                </div>
-                                <span class="text-xs font-medium text-slate-500">MTH-102</span>
-                            </li>
-                            <li
-                                class="flex items-center justify-between p-3 bg-background-light dark:bg-slate-700/30 rounded-lg group hover:bg-primary/10 transition-colors">
-                                <div class="flex items-center gap-3">
-                                    <span
-                                        class="material-symbols-outlined text-slate-400 group-hover:text-primary">biotech</span>
-                                    <span class="text-sm font-bold">Physics &amp; Mechanics</span>
-                                </div>
-                                <span class="text-xs font-medium text-slate-500">PHY-301</span>
-                            </li>
-                            <li
-                                class="flex items-center justify-between p-3 bg-background-light dark:bg-slate-700/30 rounded-lg group hover:bg-primary/10 transition-colors">
-                                <div class="flex items-center gap-3">
-                                    <span
-                                        class="material-symbols-outlined text-slate-400 group-hover:text-primary">language</span>
-                                    <span class="text-sm font-bold">English Literature</span>
-                                </div>
-                                <span class="text-xs font-medium text-slate-500">ENG-101</span>
-                            </li>
-                            <li
-                                class="flex items-center justify-between p-3 bg-background-light dark:bg-slate-700/30 rounded-lg group hover:bg-primary/10 transition-colors">
-                                <div class="flex items-center gap-3">
-                                    <span
-                                        class="material-symbols-outlined text-slate-400 group-hover:text-primary">history_edu</span>
-                                    <span class="text-sm font-bold">World History</span>
-                                </div>
-                                <span class="text-xs font-medium text-slate-500">HIS-205</span>
-                            </li>
-                            <li
-                                class="flex items-center justify-between p-3 bg-background-light dark:bg-slate-700/30 rounded-lg group hover:bg-primary/10 transition-colors">
-                                <div class="flex items-center gap-3">
-                                    <span
-                                        class="material-symbols-outlined text-slate-400 group-hover:text-primary">computer</span>
-                                    <span class="text-sm font-bold">Computer Science</span>
-                                </div>
-                                <span class="text-xs font-medium text-slate-500">CS-110</span>
-                            </li>
+                            @forelse ($studentBasicInfo->subjects as $subject)
+                                <li
+                                    class="flex items-center justify-between p-3 bg-background-light dark:bg-slate-700/30 rounded-lg group hover:bg-primary/10 transition-colors">
+                                    <div class="flex items-center gap-3">
+                                        <span
+                                            class="material-symbols-outlined text-slate-400 group-hover:text-primary">auto_stories</span>
+                                        <span class="text-sm font-bold">{{ $subject->name }}</span>
+                                    </div>
+                                    <span class="text-xs font-medium text-slate-500">{{ $subject->code ?? '' }}</span>
+                                </li>
+                            @empty
+                                <p class="text-sm text-slate-500">No subjects assigned</p>
+                            @endforelse
                         </ul>
                         <button
                             class="w-full mt-6 py-2 border-2 border-dashed border-[#e7edf3] dark:border-slate-700 rounded-lg text-sm text-[#4c739a] font-bold hover:border-primary/50 hover:text-primary transition-colors flex items-center justify-center gap-2">
@@ -318,171 +289,172 @@
 
 
     {{-- <div class="card">
-    <div class="card-header">
-        {{ trans('global.show') }} {{ trans('cruds.studentBasicInfo.title') }}
-    </div>
+        <div class="card-header">
+            {{ trans('global.show') }} {{ trans('cruds.studentBasicInfo.title') }}
+        </div>
 
-    <div class="card-body">
-        <div class="form-group">
+        <div class="card-body">
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.student-basic-infos.index') }}">
-                    {{ trans('global.back_to_list') }}
-                </a>
-            </div>
-            <table class="table table-bordered table-striped">
-                <tbody>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.studentBasicInfo.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $studentBasicInfo->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.studentBasicInfo.fields.roll') }}
-                        </th>
-                        <td>
-                            {{ $studentBasicInfo->roll }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.studentBasicInfo.fields.id_no') }}
-                        </th>
-                        <td>
-                            {{ $studentBasicInfo->id_no }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.studentBasicInfo.fields.first_name') }}
-                        </th>
-                        <td>
-                            {{ $studentBasicInfo->first_name }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.studentBasicInfo.fields.last_name') }}
-                        </th>
-                        <td>
-                            {{ $studentBasicInfo->last_name }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.studentBasicInfo.fields.gender') }}
-                        </th>
-                        <td>
-                            {{ App\Models\StudentBasicInfo::GENDER_RADIO[$studentBasicInfo->gender] ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.studentBasicInfo.fields.contact_number') }}
-                        </th>
-                        <td>
-                            {{ $studentBasicInfo->contact_number }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.studentBasicInfo.fields.email') }}
-                        </th>
-                        <td>
-                            {{ $studentBasicInfo->email }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.studentBasicInfo.fields.dob') }}
-                        </th>
-                        <td>
-                            {{ $studentBasicInfo->dob }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.studentBasicInfo.fields.status') }}
-                        </th>
-                        <td>
-                            {{ App\Models\StudentBasicInfo::STATUS_SELECT[$studentBasicInfo->status] ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.studentBasicInfo.fields.joining_date') }}
-                        </th>
-                        <td>
-                            {{ $studentBasicInfo->joining_date }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.studentBasicInfo.fields.image') }}
-                        </th>
-                        <td>
-                            @if ($studentBasicInfo->image)
-                                <a href="{{ $studentBasicInfo->image->getUrl() }}" target="_blank" style="display: inline-block">
+                <div class="form-group">
+                    <a class="btn btn-default" href="{{ route('admin.student-basic-infos.index') }}">
+                        {{ trans('global.back_to_list') }}
+                    </a>
+                </div>
+                <table class="table table-bordered table-striped">
+                    <tbody>
+                        <tr>
+                            <th>
+                                {{ trans('cruds.studentBasicInfo.fields.id') }}
+                            </th>
+                            <td>
+                                {{ $studentBasicInfo->id }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ trans('cruds.studentBasicInfo.fields.roll') }}
+                            </th>
+                            <td>
+                                {{ $studentBasicInfo->roll }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ trans('cruds.studentBasicInfo.fields.id_no') }}
+                            </th>
+                            <td>
+                                {{ $studentBasicInfo->id_no }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ trans('cruds.studentBasicInfo.fields.first_name') }}
+                            </th>
+                            <td>
+                                {{ $studentBasicInfo->first_name }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ trans('cruds.studentBasicInfo.fields.last_name') }}
+                            </th>
+                            <td>
+                                {{ $studentBasicInfo->last_name }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ trans('cruds.studentBasicInfo.fields.gender') }}
+                            </th>
+                            <td>
+                                {{ App\Models\StudentBasicInfo::GENDER_RADIO[$studentBasicInfo->gender] ?? '' }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ trans('cruds.studentBasicInfo.fields.contact_number') }}
+                            </th>
+                            <td>
+                                {{ $studentBasicInfo->contact_number }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ trans('cruds.studentBasicInfo.fields.email') }}
+                            </th>
+                            <td>
+                                {{ $studentBasicInfo->email }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ trans('cruds.studentBasicInfo.fields.dob') }}
+                            </th>
+                            <td>
+                                {{ $studentBasicInfo->dob }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ trans('cruds.studentBasicInfo.fields.status') }}
+                            </th>
+                            <td>
+                                {{ App\Models\StudentBasicInfo::STATUS_SELECT[$studentBasicInfo->status] ?? '' }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ trans('cruds.studentBasicInfo.fields.joining_date') }}
+                            </th>
+                            <td>
+                                {{ $studentBasicInfo->joining_date }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ trans('cruds.studentBasicInfo.fields.image') }}
+                            </th>
+                            <td>
+                                @if ($studentBasicInfo->image)
+                                <a href="{{ $studentBasicInfo->image->getUrl() }}" target="_blank"
+                                    style="display: inline-block">
                                     <img src="{{ $studentBasicInfo->image->getUrl('thumb') }}">
                                 </a>
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.studentBasicInfo.fields.class') }}
-                        </th>
-                        <td>
-                            {{ $studentBasicInfo->class->class_name ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.studentBasicInfo.fields.section') }}
-                        </th>
-                        <td>
-                            {{ $studentBasicInfo->section->section_name ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.studentBasicInfo.fields.shift') }}
-                        </th>
-                        <td>
-                            {{ $studentBasicInfo->shift->shift_name ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.studentBasicInfo.fields.user') }}
-                        </th>
-                        <td>
-                            {{ $studentBasicInfo->user->name ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.studentBasicInfo.fields.subject') }}
-                        </th>
-                        <td>
-                            @foreach ($studentBasicInfo->subjects as $key => $subject)
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ trans('cruds.studentBasicInfo.fields.class') }}
+                            </th>
+                            <td>
+                                {{ $studentBasicInfo->class->class_name ?? '' }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ trans('cruds.studentBasicInfo.fields.section') }}
+                            </th>
+                            <td>
+                                {{ $studentBasicInfo->section->section_name ?? '' }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ trans('cruds.studentBasicInfo.fields.shift') }}
+                            </th>
+                            <td>
+                                {{ $studentBasicInfo->shift->shift_name ?? '' }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ trans('cruds.studentBasicInfo.fields.user') }}
+                            </th>
+                            <td>
+                                {{ $studentBasicInfo->user->name ?? '' }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ trans('cruds.studentBasicInfo.fields.subject') }}
+                            </th>
+                            <td>
+                                @foreach ($studentBasicInfo->subjects as $key => $subject)
                                 <span class="label label-info">{{ $subject->name }}</span>
-                            @endforeach
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.student-basic-infos.index') }}">
-                    {{ trans('global.back_to_list') }}
-                </a>
+                                @endforeach
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="form-group">
+                    <a class="btn btn-default" href="{{ route('admin.student-basic-infos.index') }}">
+                        {{ trans('global.back_to_list') }}
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
-</div> --}}
+    </div> --}}
 
 
 
@@ -507,8 +479,8 @@
                         'earnings' => $studentBasicInfo->studentEarnings,
                     ])
                 </div>
-            </div>
-        </div>
-
+                    </div>
     </div>
+
+            </div>
 @endsection
