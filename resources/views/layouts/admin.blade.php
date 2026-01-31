@@ -30,12 +30,23 @@
                 {{ csrf_field() }}
             </form>
         </div>
+
+        <!-- Footer Copyright -->
+        <div class="mt-12 border-t border-slate-200 py-6 text-center dark:border-slate-800">
+            <p class="text-sm text-slate-500 dark:text-slate-400">© {{ date('Y') }} {{ config('app.name') }}. All
+                rights reserved.
+            </p>
+        </div>
     </div>
+
 
 
     {{-- All the layout scripts --}}
     @include('layouts._partials.footer_scripts')
 
+
+
+    {{-- Page specific scripts --}}
     @yield('scripts')
 </body>
 
