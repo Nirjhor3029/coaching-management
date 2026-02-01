@@ -22,17 +22,34 @@
             </div>
             <div class="form-group">
                 <label class="required" for="permissions">{{ trans('cruds.role.fields.permissions') }}</label>
-                <div style="padding-bottom: 4px">
-                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                </div>
-                <select class="form-control select2 {{ $errors->has('permissions') ? 'is-invalid' : '' }}" name="permissions[]" id="permissions" multiple required>
-                    @foreach($permissions as $id => $permission)
-                        <option value="{{ $id }}" {{ (in_array($id, old('permissions', [])) || $role->permissions->contains($id)) ? 'selected' : '' }}>{{ $permission }}</option>
+                <div class="row">
+                    @foreach($permissions as $parent)
+                        <div class="col-md-4 mb-3">
+                            <div class="card shadow-sm border-0">
+                                <div class="card-header bg-light d-flex align-items-center py-2" style="border-bottom: 2px solid #5ab2f7;">
+                                    <div class="custom-control custom-checkbox text-primary">
+                                        <input class="custom-control-input parent-checkbox" type="checkbox" id="permission_{{ $parent->id }}" name="permissions[]" value="{{ $parent->id }}" {{ (in_array($parent->id, old('permissions', [])) || $role->permissions->contains($parent->id)) ? 'checked' : '' }}>
+                                        <label class="custom-control-label fw-bold text-uppercase" for="permission_{{ $parent->id }}" style="font-size: 0.85rem; letter-spacing: 0.5px;">
+                                            {{ str_replace('_', ' ', $parent->title) }}
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="card-body py-2">
+                                    @foreach($parent->children as $child)
+                                        <div class="custom-control custom-checkbox ml-2 mb-1">
+                                            <input class="custom-control-input child-checkbox permission-item" type="checkbox" id="permission_{{ $child->id }}" name="permissions[]" value="{{ $child->id }}" data-parent-id="permission_{{ $parent->id }}" {{ (in_array($child->id, old('permissions', [])) || $role->permissions->contains($child->id)) ? 'checked' : '' }}>
+                                            <label class="custom-control-label text-muted" for="permission_{{ $child->id }}" style="font-size: 0.85rem;">
+                                                {{ str_replace('_', ' ', $child->title) }}
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
                     @endforeach
-                </select>
+                </div>
                 @if($errors->has('permissions'))
-                    <div class="invalid-feedback">
+                    <div class="invalid-feedback d-block">
                         {{ $errors->first('permissions') }}
                     </div>
                 @endif

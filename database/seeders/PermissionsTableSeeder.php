@@ -13,334 +13,476 @@ class PermissionsTableSeeder extends Seeder
             [
                 'id'    => 1,
                 'title' => 'user_management_access',
+                'parent_id' => null,
             ],
+
+
+
             [
                 'id'    => 2,
-                'title' => 'permission_create',
+                'title' => 'permission_access',
+                'parent_id' => null,
             ],
             [
                 'id'    => 3,
-                'title' => 'permission_edit',
+                'title' => 'permission_create',
+                'parent_id' => 2,
             ],
             [
                 'id'    => 4,
-                'title' => 'permission_show',
+                'title' => 'permission_edit',
+                'parent_id' => 2,
             ],
             [
                 'id'    => 5,
-                'title' => 'permission_delete',
+                'title' => 'permission_show',
+                'parent_id' => 2,
             ],
             [
                 'id'    => 6,
-                'title' => 'permission_access',
+                'title' => 'permission_delete',
+                'parent_id' => 2,
             ],
+
+
+
+
             [
                 'id'    => 7,
-                'title' => 'role_create',
+                'title' => 'role_access',
+                'parent_id' => null,
             ],
             [
                 'id'    => 8,
-                'title' => 'role_edit',
+                'title' => 'role_create',
+                'parent_id' => 7,
             ],
             [
                 'id'    => 9,
-                'title' => 'role_show',
+                'title' => 'role_edit',
+                'parent_id' => 7,
             ],
             [
                 'id'    => 10,
-                'title' => 'role_delete',
+                'title' => 'role_show',
+                'parent_id' => 7,
             ],
             [
                 'id'    => 11,
-                'title' => 'role_access',
+                'title' => 'role_delete',
+                'parent_id' => 7,
             ],
+
+
+
+
             [
                 'id'    => 12,
-                'title' => 'user_create',
+                'title' => 'user_access',
+                'parent_id' => null,
             ],
             [
                 'id'    => 13,
-                'title' => 'user_edit',
+                'title' => 'user_create',
+                'parent_id' => 12,
             ],
             [
                 'id'    => 14,
-                'title' => 'user_show',
+                'title' => 'user_edit',
+                'parent_id' => 12,
             ],
             [
                 'id'    => 15,
-                'title' => 'user_delete',
+                'title' => 'user_show',
+                'parent_id' => 12,
             ],
             [
                 'id'    => 16,
-                'title' => 'user_access',
+                'title' => 'user_delete',
+                'parent_id' => 12,
             ],
+
+
+
             [
                 'id'    => 17,
-                'title' => 'audit_log_show',
+                'title' => 'audit_log_access',
+                'parent_id' => null,
             ],
             [
                 'id'    => 18,
-                'title' => 'audit_log_access',
+                'title' => 'audit_log_show',
+                'parent_id' => 17,
             ],
+
+
+
+
             [
                 'id'    => 19,
                 'title' => 'student_information_access',
+                'parent_id' => null,
             ],
             [
                 'id'    => 20,
                 'title' => 'class_information_access',
+                'parent_id' => null,
             ],
+
+
             [
                 'id'    => 21,
-                'title' => 'section_create',
+                'title' => 'section_access',
+                'parent_id' => null,
             ],
             [
                 'id'    => 22,
-                'title' => 'section_edit',
+                'title' => 'section_create',
+                'parent_id' => 21,
             ],
             [
                 'id'    => 23,
-                'title' => 'section_show',
+                'title' => 'section_edit',
+                'parent_id' => 21,
             ],
             [
                 'id'    => 24,
-                'title' => 'section_delete',
+                'title' => 'section_show',
+                'parent_id' => 21,
             ],
             [
                 'id'    => 25,
-                'title' => 'section_access',
+                'title' => 'section_delete',
+                'parent_id' => 21,
             ],
+
+
             [
                 'id'    => 26,
-                'title' => 'shift_create',
+                'title' => 'shift_access',
+                'parent_id' => null,
             ],
             [
                 'id'    => 27,
-                'title' => 'shift_edit',
+                'title' => 'shift_create',
+                'parent_id' => 26,
             ],
             [
                 'id'    => 28,
-                'title' => 'shift_show',
+                'title' => 'shift_edit',
+                'parent_id' => 26,
             ],
             [
                 'id'    => 29,
-                'title' => 'shift_delete',
+                'title' => 'shift_show',
+                'parent_id' => 26,
             ],
             [
                 'id'    => 30,
-                'title' => 'shift_access',
+                'title' => 'shift_delete',
+                'parent_id' => 26,
             ],
+
+
             [
                 'id'    => 31,
-                'title' => 'academic_class_create',
+                'title' => 'academic_class_access',
+                'parent_id' => null,
             ],
             [
                 'id'    => 32,
-                'title' => 'academic_class_edit',
+                'title' => 'academic_class_create',
+                'parent_id' => 31,
             ],
             [
                 'id'    => 33,
-                'title' => 'academic_class_show',
+                'title' => 'academic_class_edit',
+                'parent_id' => 31,
             ],
             [
                 'id'    => 34,
-                'title' => 'academic_class_delete',
+                'title' => 'academic_class_show',
+                'parent_id' => 31,
             ],
             [
                 'id'    => 35,
-                'title' => 'academic_class_access',
+                'title' => 'academic_class_delete',
+                'parent_id' => 31,
             ],
+
+
+
             [
                 'id'    => 36,
-                'title' => 'student_basic_info_create',
+                'title' => 'student_basic_info_access',
+                'parent_id' => null,
             ],
             [
                 'id'    => 37,
-                'title' => 'student_basic_info_edit',
+                'title' => 'student_basic_info_create',
+                'parent_id' => 36,
             ],
             [
                 'id'    => 38,
-                'title' => 'student_basic_info_show',
+                'title' => 'student_basic_info_edit',
+                'parent_id' => 36,
             ],
             [
                 'id'    => 39,
-                'title' => 'student_basic_info_delete',
+                'title' => 'student_basic_info_show',
+                'parent_id' => 36,
             ],
             [
                 'id'    => 40,
-                'title' => 'student_basic_info_access',
+                'title' => 'student_basic_info_delete',
+                'parent_id' => 36,
             ],
+
+
             [
                 'id'    => 41,
-                'title' => 'student_details_information_create',
+                'title' => 'student_details_information_access',
+                'parent_id' => null,
             ],
             [
                 'id'    => 42,
-                'title' => 'student_details_information_edit',
+                'title' => 'student_details_information_create',
+                'parent_id' => 41,
             ],
             [
                 'id'    => 43,
-                'title' => 'student_details_information_show',
+                'title' => 'student_details_information_edit',
+                'parent_id' => 41,
             ],
             [
                 'id'    => 44,
-                'title' => 'student_details_information_delete',
+                'title' => 'student_details_information_show',
+                'parent_id' => 41,
             ],
             [
                 'id'    => 45,
-                'title' => 'student_details_information_access',
+                'title' => 'student_details_information_delete',
+                'parent_id' => 41,
             ],
+
+
             [
                 'id'    => 46,
-                'title' => 'expense_category_create',
+                'title' => 'expense_category_access',
+                'parent_id' => null,
             ],
             [
                 'id'    => 47,
-                'title' => 'expense_category_edit',
+                'title' => 'expense_category_create',
+                'parent_id' => 46,
             ],
             [
                 'id'    => 48,
-                'title' => 'expense_category_show',
+                'title' => 'expense_category_edit',
+                'parent_id' => 46,
             ],
             [
                 'id'    => 49,
-                'title' => 'expense_category_delete',
+                'title' => 'expense_category_show',
+                'parent_id' => 46,
             ],
             [
                 'id'    => 50,
-                'title' => 'expense_category_access',
+                'title' => 'expense_category_delete',
+                'parent_id' => 46,
             ],
+
+
             [
                 'id'    => 51,
                 'title' => 'category_access',
+                'parent_id' => null,
             ],
+
+
+
             [
                 'id'    => 52,
-                'title' => 'earning_category_create',
+                'title' => 'earning_category_access',
+                'parent_id' => null,
             ],
             [
                 'id'    => 53,
-                'title' => 'earning_category_edit',
+                'title' => 'earning_category_create',
+                'parent_id' => 52,
             ],
             [
                 'id'    => 54,
-                'title' => 'earning_category_show',
+                'title' => 'earning_category_edit',
+                'parent_id' => 52,
             ],
             [
                 'id'    => 55,
-                'title' => 'earning_category_delete',
+                'title' => 'earning_category_show',
+                'parent_id' => 52,
             ],
             [
                 'id'    => 56,
-                'title' => 'earning_category_access',
+                'title' => 'earning_category_delete',
+                'parent_id' => 52,
             ],
+
+
+
             [
                 'id'    => 57,
-                'title' => 'expense_create',
+                'title' => 'expense_access',
+                'parent_id' => null,
             ],
             [
                 'id'    => 58,
-                'title' => 'expense_edit',
+                'title' => 'expense_create',
+                'parent_id' => 57,
             ],
             [
                 'id'    => 59,
-                'title' => 'expense_show',
+                'title' => 'expense_edit',
+                'parent_id' => 57,
             ],
             [
                 'id'    => 60,
-                'title' => 'expense_delete',
+                'title' => 'expense_show',
+                'parent_id' => 57,
             ],
             [
                 'id'    => 61,
-                'title' => 'expense_access',
+                'title' => 'expense_delete',
+                'parent_id' => 57,
             ],
+
+
             [
                 'id'    => 62,
-                'title' => 'teacher_create',
+                'title' => 'teacher_access',
+                'parent_id' => null,
             ],
             [
                 'id'    => 63,
-                'title' => 'teacher_edit',
+                'title' => 'teacher_create',
+                'parent_id' => 62,
             ],
             [
                 'id'    => 64,
-                'title' => 'teacher_show',
+                'title' => 'teacher_edit',
+                'parent_id' => 62,
             ],
             [
                 'id'    => 65,
-                'title' => 'teacher_delete',
+                'title' => 'teacher_show',
+                'parent_id' => 62,
             ],
             [
                 'id'    => 66,
-                'title' => 'teacher_access',
+                'title' => 'teacher_delete',
+                'parent_id' => 62,
             ],
+
+
+
             [
                 'id'    => 67,
-                'title' => 'subject_create',
+                'title' => 'subject_access',
+                'parent_id' => null,
             ],
             [
                 'id'    => 68,
-                'title' => 'subject_edit',
+                'title' => 'subject_create',
+                'parent_id' => 67,
             ],
             [
                 'id'    => 69,
-                'title' => 'subject_show',
+                'title' => 'subject_edit',
+                'parent_id' => 67,
             ],
             [
                 'id'    => 70,
-                'title' => 'subject_delete',
+                'title' => 'subject_show',
+                'parent_id' => 67,
             ],
             [
                 'id'    => 71,
-                'title' => 'subject_access',
+                'title' => 'subject_delete',
+                'parent_id' => 67,
             ],
+
+
+
             [
                 'id'    => 72,
-                'title' => 'teachers_payment_create',
+                'title' => 'teachers_payment_access',
+                'parent_id' => null,
             ],
             [
                 'id'    => 73,
-                'title' => 'teachers_payment_edit',
+                'title' => 'teachers_payment_create',
+                'parent_id' => 72,
             ],
             [
                 'id'    => 74,
-                'title' => 'teachers_payment_show',
+                'title' => 'teachers_payment_edit',
+                'parent_id' => 72,
             ],
             [
                 'id'    => 75,
-                'title' => 'teachers_payment_delete',
+                'title' => 'teachers_payment_show',
+                'parent_id' => 72,
             ],
             [
                 'id'    => 76,
-                'title' => 'teachers_payment_access',
+                'title' => 'teachers_payment_delete',
+                'parent_id' => 72,
             ],
+
+
+
             [
                 'id'    => 77,
-                'title' => 'earning_create',
+                'title' => 'earning_access',
+                'parent_id' => null,
             ],
             [
                 'id'    => 78,
-                'title' => 'earning_edit',
+                'title' => 'earning_create',
+                'parent_id' => 77,
             ],
             [
                 'id'    => 79,
-                'title' => 'earning_show',
+                'title' => 'earning_edit',
+                'parent_id' => 77,
             ],
             [
                 'id'    => 80,
-                'title' => 'earning_delete',
+                'title' => 'earning_show',
+                'parent_id' => 77,
             ],
             [
                 'id'    => 81,
-                'title' => 'earning_access',
+                'title' => 'earning_delete',
+                'parent_id' => 77,
             ],
+            
+
+
+
             [
                 'id'    => 82,
                 'title' => 'teacher_sudent_access',
+                'parent_id' => null,
             ],
             [
                 'id'    => 83,
+                'title' => 'profile_password_access',
+                'parent_id' => null,
+            ],
+            [
+                'id'    => 84,
                 'title' => 'profile_password_edit',
+                'parent_id' => 83,
             ],
         ];
 
