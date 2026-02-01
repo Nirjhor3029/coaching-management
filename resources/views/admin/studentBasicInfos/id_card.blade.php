@@ -147,7 +147,7 @@
                         class="id-card-size card-preview bg-white rounded-[12px] shadow-2xl relative overflow-hidden flex flex-col border border-slate-100">
                         <div class="p-4 flex flex-1">
                             <!-- Details Section -->
-                            <div class="flex-1 flex flex-col gap-2">
+                            <div class="flex-1 flex flex-col gap-2 mr-2">
                                 <div>
                                     <p class="text-[8px] text-slate-400 font-bold uppercase mb-0.5">Permanent Address
                                     </p>
@@ -171,7 +171,7 @@
                                             </p>
                                         </div>
                                     </div>
-                                    <div>
+                                    <div class="text-right">
                                         <p class="text-[8px] text-slate-400 font-bold uppercase mb-0.5">Blood Group</p>
                                         <p class="text-xs font-black text-red-600">
                                             {{ $student->studentDetails->student_blood_group ?? 'N/A' }}</p>

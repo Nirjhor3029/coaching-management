@@ -66,21 +66,21 @@ class Expense extends Model implements HasMedia
 
     public function getExpenseDateAttribute($value)
     {
-        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
+        return $value ? Carbon::parse($value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
     }
 
     public function setExpenseDateAttribute($value)
     {
-        $this->attributes['expense_date'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+        $this->attributes['expense_date'] = $value ? Carbon::parse($value)->format('Y-m-d H:i:s') : null;
     }
 
     public function getPaymentProofAttribute()
     {
         $files = $this->getMedia('payment_proof');
         $files->each(function ($item) {
-            $item->url       = $item->getUrl();
+            $item->url = $item->getUrl();
             $item->thumbnail = $item->getUrl('thumb');
-            $item->preview   = $item->getUrl('preview');
+            $item->preview = $item->getUrl('preview');
         });
 
         return $files;

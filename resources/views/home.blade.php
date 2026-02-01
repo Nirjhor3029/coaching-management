@@ -38,11 +38,11 @@
                         <div class="flex justify-between items-start">
                             <div class="flex flex-col gap-1">
                                 {{-- <p class="text-slate-500 dark:text-[#9da6b9] text-sm font-medium">Total Transaction</p> --}}
-                                <p class="text-slate-500 dark:text-[#9da6b9] text-sm font-medium">Total Earning</p>
+                                <p class="text-slate-500 dark:text-[#9da6b9] text-sm font-medium">Total Profit</p>
                                 <h3 class="text-slate-900 dark:text-white text-2xl font-bold">
                                     {{-- $ --}}
                                     <strong>৳</strong>
-                                    {{ number_format($transactionData['totalEarnings'] - $transactionData['totalExpenses'], 2) }}
+                                    {{ number_format($transactionData['totalProfit'], 2) }}
                                 </h3>
                             </div>
                             <div class="p-2 bg-green-500/10 rounded-lg">

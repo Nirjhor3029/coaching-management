@@ -35,7 +35,7 @@ class ExpensesController extends Controller
         abort_if(Gate::denies('expense_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $expense_categories = ExpenseCategory::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
+        // return $expense_categories;
         $created_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $updated_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');

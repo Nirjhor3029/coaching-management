@@ -17,16 +17,27 @@ class UpdateExpenseRequest extends FormRequest
     public function rules()
     {
         return [
+            'expense_category_id' => [
+                'required',
+                'integer',
+                'exists:expense_categories,id',
+            ],
             'title' => [
                 'string',
                 'nullable',
             ],
             'amount' => [
                 'required',
+                'numeric',
             ],
             'expense_date' => [
                 'required',
-                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
+                'date',
+            ],
+            'teacher_id' => [
+                'nullable',
+                'integer',
+                'exists:teachers,id',
             ],
             'expense_month' => [
                 'nullable',

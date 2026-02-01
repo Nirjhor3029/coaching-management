@@ -42,15 +42,19 @@
                                 <label class="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300"
                                     for="title">Expense Title <span class="text-red-500">*</span></label>
                                 <input
-                                    class="block w-full rounded-lg border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:bg-white focus:ring-primary dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:placeholder-slate-400 sm:text-sm"
-                                    id="title" name="title" placeholder="e.g. Monthly Electricity Bill" type="text" />
+                                    class="block w-full rounded-lg border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:bg-white focus:ring-primary dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:placeholder-slate-400 sm:text-sm {{ $errors->has('title') ? 'border-red-500 ring-red-500' : '' }}"
+                                    id="title" name="title" placeholder="e.g. Monthly Electricity Bill" type="text"
+                                    value="{{ old('title') }}" />
+                                @if($errors->has('title'))
+                                    <p class="mt-1 text-xs text-red-500">{{ $errors->first('title') }}</p>
+                                @endif
                             </div>
                             <div class="col-span-2">
                                 <label class="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300"
                                     for="category">Category <span class="text-red-500">*</span></label>
                                 <div class="relative">
                                     <select
-                                        class="block w-full appearance-none rounded-lg border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 focus:border-primary focus:bg-white focus:ring-primary dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:placeholder-slate-400 sm:text-sm {{ $errors->has('expense_category') ? 'border-red-500' : '' }}"
+                                        class="block w-full appearance-none rounded-lg border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 focus:border-primary focus:bg-white focus:ring-primary dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:placeholder-slate-400 sm:text-sm {{ $errors->has('expense_category_id') ? 'border-red-500 ring-red-500' : '' }}"
                                         id="expense_category_id" name="expense_category_id" required>
                                         @foreach ($expense_categories as $id => $entry)
                                             <option value="{{ $id }}" {{ old('expense_category_id') == $id ? 'selected' : '' }}>
@@ -58,6 +62,9 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                    @if($errors->has('expense_category_id'))
+                                        <p class="mt-1 text-xs text-red-500">{{ $errors->first('expense_category_id') }}</p>
+                                    @endif
                                     <div
                                         class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500">
                                         <span class="material-icons-round">expand_more</span>
@@ -86,6 +93,9 @@
                                     </div>
                                     <input type="hidden" name="teacher_id" id="teacher_id_hidden"
                                         value="{{ old('teacher_id') }}">
+                                    @if($errors->has('teacher_id'))
+                                        <p class="mt-1 text-xs text-red-500">{{ $errors->first('teacher_id') }}</p>
+                                    @endif
 
                                     <!-- Search Results -->
                                     <div id="teacher-results"
@@ -113,13 +123,17 @@
                                     for="amount">Amount <span class="text-red-500">*</span></label>
                                 <div class="relative rounded-md shadow-sm">
                                     <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                                        <span class="text-slate-500 sm:text-sm">$</span>
+                                        <span class="text-slate-500 sm:text-sm">৳</span>
                                     </div>
                                     <input
-                                        class="block w-full rounded-lg border-slate-200 bg-slate-50 py-3 pl-7 pr-12 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:bg-white focus:ring-primary dark:border-slate-700 dark:bg-slate-900 dark:text-white sm:text-sm"
-                                        id="amount" name="amount" placeholder="0.00" type="number" />
+                                        class="block w-full rounded-lg border-slate-200 bg-slate-50 py-3 pl-7 pr-12 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:bg-white focus:ring-primary dark:border-slate-700 dark:bg-slate-900 dark:text-white sm:text-sm {{ $errors->has('amount') ? 'border-red-500 ring-red-500' : '' }}"
+                                        id="amount" name="amount" placeholder="0.00" type="number" step="0.01"
+                                        value="{{ old('amount') }}" />
+                                    @if($errors->has('amount'))
+                                        <p class="mt-1 text-xs text-red-500">{{ $errors->first('amount') }}</p>
+                                    @endif
                                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-                                        <span class="text-slate-500 sm:text-sm">USD</span>
+                                        <span class="text-slate-500 sm:text-sm">BDT</span>
                                     </div>
                                 </div>
                             </div>
@@ -127,9 +141,12 @@
                                 <label class="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300"
                                     for="expense_date">Date <span class="text-red-500">*</span></label>
                                 <input
-                                    class="block w-full rounded-lg border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:bg-white focus:ring-primary dark:border-slate-700 dark:bg-slate-900 dark:text-white sm:text-sm"
+                                    class="block w-full rounded-lg border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:bg-white focus:ring-primary dark:border-slate-700 dark:bg-slate-900 dark:text-white sm:text-sm {{ $errors->has('expense_date') ? 'border-red-500 ring-red-500' : '' }}"
                                     id="expense_date" name="expense_date" type="datetime-local"
                                     value="{{ old('expense_date', date('Y-m-d\TH:i')) }}" required />
+                                @if($errors->has('expense_date'))
+                                    <p class="mt-1 text-xs text-red-500">{{ $errors->first('expense_date') }}</p>
+                                @endif
                             </div>
                             <div class="col-span-2">
                                 <label class="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300"
@@ -198,7 +215,7 @@
                         class="rounded-xl border border-slate-200 bg-surface-light p-6 shadow-soft dark:border-slate-800 dark:bg-surface-dark">
                         <h2 class="mb-4 text-lg font-semibold text-slate-900 dark:text-white">Proof of Payment</h2>
                         <div id="payment_proof-dropzone"
-                            class="relative flex w-full flex-col items-center justify-center rounded-lg border-2 border-dashed border-slate-300 bg-slate-50 py-10 transition-colors hover:border-primary/50 hover:bg-primary/5 dark:border-slate-600 dark:bg-slate-800/50 dark:hover:border-primary/50 dark:hover:bg-primary/10 cursor-pointer">
+                            class="relative flex w-full flex-col items-center justify-center rounded-lg border-2 border-dashed border-slate-300 bg-slate-50 py-2 transition-colors hover:border-primary/50 hover:bg-primary/5 dark:border-slate-600 dark:bg-slate-800/50 dark:hover:border-primary/50 dark:hover:bg-primary/10 cursor-pointer">
                             <div class="flex flex-col items-center justify-center text-center pointer-events-none">
                                 <div
                                     class="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
@@ -627,22 +644,22 @@
 
                         // Create Preview Element matching design
                         const previewHtml = `
-                                    <div id="file-${fileId}" class="flex items-center justify-between rounded-lg border border-slate-200 bg-white p-2 dark:border-slate-700 dark:bg-slate-900 animate-fade-in">
-                                        <div class="flex items-center gap-3">
-                                            <div class="flex h-8 w-8 items-center justify-center rounded bg-primary/10 text-primary">
-                                                <span class="material-icons-round text-sm">${file.type.includes('pdf') ? 'picture_as_pdf' : 'image'}</span>
+                                        <div id="file-${fileId}" class="flex items-center justify-between rounded-lg border border-slate-200 bg-white p-2 dark:border-slate-700 dark:bg-slate-900 animate-fade-in">
+                                            <div class="flex items-center gap-3">
+                                                <div class="flex h-8 w-8 items-center justify-center rounded bg-primary/10 text-primary">
+                                                    <span class="material-icons-round text-sm">${file.type.includes('pdf') ? 'picture_as_pdf' : 'image'}</span>
+                                                </div>
+                                                <div class="flex flex-col">
+                                                    <span class="text-xs font-medium text-slate-900 dark:text-white line-clamp-1">${file.name}</span>
+                                                    <span class="text-[10px] text-slate-500">${(file.size / 1024 / 1024).toFixed(2)} MB</span>
+                                                </div>
                                             </div>
-                                            <div class="flex flex-col">
-                                                <span class="text-xs font-medium text-slate-900 dark:text-white line-clamp-1">${file.name}</span>
-                                                <span class="text-[10px] text-slate-500">${(file.size / 1024 / 1024).toFixed(2)} MB</span>
-                                            </div>
+                                            <button type="button" class="text-slate-400 hover:text-red-500 transition-colors" onclick="removeFile('${file.name}', 'file-${fileId}')">
+                                                <span class="material-icons-round text-lg">close</span>
+                                            </button>
+                                            <input type="hidden" name="payment_proof[]" value="${response.name}">
                                         </div>
-                                        <button type="button" class="text-slate-400 hover:text-red-500 transition-colors" onclick="removeFile('${file.name}', 'file-${fileId}')">
-                                            <span class="material-icons-round text-lg">close</span>
-                                        </button>
-                                        <input type="hidden" name="payment_proof[]" value="${response.name}">
-                                    </div>
-                                `;
+                                    `;
                         $(proofContainer).append(previewHtml);
                     });
 
