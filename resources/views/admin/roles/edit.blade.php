@@ -67,3 +67,60 @@
 
 
 @endsection
+
+@section('scripts')
+<script>
+$(document).ready(function() {
+    // Function to update card styling
+    function updateCardStyle(checkbox) {
+        let card = checkbox.closest('.card');
+        if (card.find('.permission-item:checked').length > 0 || card.find('.parent-checkbox:checked').length > 0) {
+            card.addClass('border-primary');
+            card.find('.card-header').addClass('bg-light text-primary');
+        } else {
+            card.removeClass('border-primary');
+            card.find('.card-header').removeClass('bg-light text-primary');
+        }
+    }
+
+    // Parent checkbox logic
+    $('.parent-checkbox').on('change', function() {
+        let isChecked = $(this).prop('checked');
+        let card = $(this).closest('.card');
+        card.find('.child-checkbox').prop('checked', isChecked);
+        updateCardStyle($(this));
+    });
+
+    // Child checkbox logic
+    $('.child-checkbox').on('change', function() {
+        let parentId = $(this).data('parent-id');
+        let parent = $('#' + parentId);
+        let card = $(this).closest('.card');
+        let totalChildren = card.find('.child-checkbox').length;
+        let checkedChildren = card.find('.child-checkbox:checked').length;
+        
+        // If any child is checked, ensure parent is checked
+        if (checkedChildren > 0) {
+            parent.prop('checked', true);
+        } else {
+            // Optional: uncheck parent if no children checked?
+            // parent.prop('checked', false);
+        }
+        
+        // If all children are checked, parent is definitely checked
+        if (checkedChildren === totalChildren) {
+            parent.prop('checked', true);
+        }
+
+        updateCardStyle($(this));
+    });
+    
+    // Initial state check for styling
+    $('.permission-item, .parent-checkbox').each(function() {
+        if ($(this).prop('checked')) {
+            updateCardStyle($(this));
+        }
+    });
+});
+</script>
+@endsection
