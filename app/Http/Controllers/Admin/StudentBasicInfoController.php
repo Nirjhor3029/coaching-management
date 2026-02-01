@@ -144,11 +144,14 @@ class StudentBasicInfoController extends Controller
         }
 
         if ($request->need_login) {
-            $user = User::create([
-                'name' => $request->first_name . ' ' . $request->last_name,
-                'email' => $request->email,
-                'password' =>  isset($request->password) && !empty($request->password) ? bcrypt($request->password) :  bcrypt($request->email),
-            ]);
+            $user = User::where('email', $request->email)->first();
+            if (!isset($user)) {
+                $user = User::create([
+                    'name' => $request->first_name . ' ' . $request->last_name,
+                    'email' => $request->email,
+                    'password' =>  isset($request->password) && !empty($request->password) ? bcrypt($request->password) :  bcrypt($request->email),
+                ]);
+            }
             $studentBasicInfo->user_id = $user->id;
             $studentBasicInfo->save();
         }

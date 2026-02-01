@@ -71,11 +71,11 @@
                     <span class="material-symbols-outlined text-sm">print</span>
                     <span class="truncate">Print Card</span>
                 </button>
-                <button
+                {{-- <button
                     class="flex min-w-[84px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-white text-sm font-bold leading-normal gap-2">
                     <span class="material-symbols-outlined text-sm">picture_as_pdf</span>
                     <span class="truncate">PDF</span>
-                </button>
+                </button> --}}
             </div>
         </div>
         <div
