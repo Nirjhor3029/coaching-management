@@ -73,7 +73,7 @@ class ExpensesController extends Controller
 
         $teachers = Teacher::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $expense->load('expense_category', 'created_by', 'updated_by', 'teacher');
+        $expense->load('expense_category', 'created_by', 'updated_by', 'teacher', 'media');
 
         return view('admin.expenses.edit', compact('created_bies', 'expense', 'expense_categories', 'teachers', 'updated_bies'));
     }
