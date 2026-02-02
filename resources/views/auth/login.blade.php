@@ -143,9 +143,9 @@
 
 
                 @if(session('message'))
-                <div class="alert alert-info" role="alert">
-                    {{ session('message') }}
-                </div>
+                    <div class="alert alert-info" role="alert">
+                        {{ session('message') }}
+                    </div>
                 @endif
 
                 <!-- Form Inputs -->
@@ -163,9 +163,9 @@
                                 placeholder="name@school.com" required="" type="email" name="email" />
                         </div>
                         @if($errors->has('email'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('email') }}
-                        </div>
+                            <div class="invalid-feedback">
+                                {{ $errors->first('email') }}
+                            </div>
                         @endif
                     </label>
                     <!-- Password Input -->
@@ -174,19 +174,19 @@
                         <div class="relative flex items-center">
                             <span class="absolute left-4 text-slate-400 material-symbols-outlined"
                                 style="font-size: 20px;">lock</span>
-                            <input
+                            <input id="password"
                                 class="form-input h-12 w-full rounded-lg border border-slate-200 bg-white pl-11 pr-12 text-sm text-slate-900 placeholder:text-slate-400 focus:border-primary focus:ring-1 focus:ring-primary dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                                 placeholder="••••••••" required="" type="password" name="password" />
-                            <button
+                            <button id="togglePassword"
                                 class="absolute right-0 flex h-full w-12 items-center justify-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
                                 type="button">
                                 <span class="material-symbols-outlined" style="font-size: 20px;">visibility</span>
                             </button>
                         </div>
                         @if($errors->has('password'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('password') }}
-                        </div>
+                            <div class="invalid-feedback">
+                                {{ $errors->first('password') }}
+                            </div>
                         @endif
                     </label>
                     <!-- Remember Me & Forgot Password -->
@@ -218,6 +218,20 @@
             </div>
         </div>
     </div>
+    <script>
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            const passwordInput = document.getElementById('password');
+            const icon = this.querySelector('.material-symbols-outlined');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.textContent = 'visibility_off';
+            } else {
+                passwordInput.type = 'password';
+                icon.textContent = 'visibility';
+            }
+        });
+    </script>
 </body>
 
 </html>
