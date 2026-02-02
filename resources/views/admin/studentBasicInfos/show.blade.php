@@ -248,6 +248,8 @@
                                 ({{ $studentBasicInfo->studentDetails->guardian_relation ?? 'Guardian' }})</p>
                             <p class="text-primary text-sm font-bold">
                                 {{ $studentBasicInfo->studentDetails->guardian_contact_number ?? 'N/A' }}</p>
+                            <p class="text-primary text-sm font-bold">
+                                {{ $studentBasicInfo->studentDetails->guardian_email ?? 'N/A' }}</p>
                         </div>
                     </div>
                 </div>
