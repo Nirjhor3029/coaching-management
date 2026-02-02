@@ -48,7 +48,7 @@ class AcademicClass extends Model
 
     public function setAcademicYearAttribute($value)
     {
-        $this->attributes['academic_year'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+        $this->attributes['academic_year'] = $value ? Carbon::parse($value)->format('Y-m-d') : null;
     }
 
     public function class_sections()

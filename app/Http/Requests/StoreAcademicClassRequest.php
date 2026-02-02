@@ -22,7 +22,7 @@ class StoreAcademicClassRequest extends FormRequest
                 'required',
             ],
             'academic_year' => [
-                'date_format:' . config('panel.date_format'),
+                'date',
                 'nullable',
             ],
             'class_code' => [
