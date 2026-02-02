@@ -3,6 +3,12 @@
     <!-- Scrollable Content Area -->
     <div class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark p-4 md:p-8" style="margin-top: -2rem">
         <div class="max-w-5xl mx-auto flex flex-col gap-6 pb-12">
+            @if(session('message'))
+                <div class="bg-emerald-100 border border-emerald-400 text-emerald-700 px-4 py-3 rounded relative mb-4 flex items-center gap-2 dark:bg-emerald-900/30 dark:border-emerald-800 dark:text-emerald-400" role="alert">
+                    <span class="material-symbols-outlined">check_circle</span>
+                    <span class="block sm:inline">{{ session('message') }}</span>
+                </div>
+            @endif
             <!-- Breadcrumbs -->
             <nav aria-label="Breadcrumb" class="flex">
                 <ol class="inline-flex items-center space-x-1 md:space-x-3">
@@ -46,6 +52,14 @@
                     </div>
                 </div>
                 <div class="flex gap-3">
+                    <form action="{{ route('admin.users.sendCredentials', $user->id) }}" method="POST" onsubmit="return confirm('This will reset the user\'s password and send the new credentials to their email. Are you sure?');">
+                        @csrf
+                        <button type="submit"
+                            class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-emerald-600 border border-transparent rounded-lg shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
+                            <span class="material-symbols-outlined text-[20px] mr-2">email</span>
+                            Send Credentials
+                        </button>
+                    </form>
                     <a href="{{ route('admin.users.edit', $user->id) }}"
                         class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-primary border border-transparent rounded-lg shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
                         <span class="material-symbols-outlined text-[20px] mr-2">edit</span>

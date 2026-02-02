@@ -34,6 +34,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Users
     Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
+    Route::post('users/{user}/send-credentials', 'UsersController@sendCredentials')->name('users.sendCredentials');
     Route::resource('users', 'UsersController');
 
     // Audit Logs

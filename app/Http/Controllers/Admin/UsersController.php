@@ -11,6 +11,9 @@ use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\UserCredentialsMail;
 
 class UsersController extends Controller
 {
@@ -67,6 +70,23 @@ class UsersController extends Controller
         // return $user;
 
         return view('admin.users.show', compact('user'));
+    }
+
+    public function sendCredentials(User $user)
+    {
+        abort_if(Gate::denies('user_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        // Generate a new random password
+        $password = Str::random(8);
+
+        // Update user's password
+        $user->password = $password;
+        $user->save();
+
+        // Send email
+        Mail::to($user->email)->send(new UserCredentialsMail($user, $password));
+
+        return back()->with('message', 'Credentials sent to ' . $user->email . ' successfully!');
     }
 
     public function destroy(User $user)
