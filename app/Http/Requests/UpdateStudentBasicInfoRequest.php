@@ -51,7 +51,27 @@ class UpdateStudentBasicInfoRequest extends FormRequest
                 'date_format:' . config('panel.date_format'),
             ],
             'joining_date' => [
-                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
+                'date_format:' . config('panel.date_format'),
+                'nullable',
+            ],
+            'guardian_name' => [
+                'string',
+                'required',
+            ],
+            'guardian_contact_number' => [
+                'string',
+                'required',
+            ],
+            'guardian_email' => [
+                'email',
+                'nullable',
+            ],
+            'address' => [
+                'string',
+                'nullable',
+            ],
+            'student_blood_group' => [
+                'string',
                 'nullable',
             ],
             'subjects.*' => [

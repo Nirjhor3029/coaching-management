@@ -39,9 +39,9 @@ class StudentBasicInfoController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'student_basic_info_show';
-                $editGate      = 'student_basic_info_edit';
-                $deleteGate    = 'student_basic_info_delete';
+                $viewGate = 'student_basic_info_show';
+                $editGate = 'student_basic_info_edit';
+                $deleteGate = 'student_basic_info_delete';
                 $crudRoutePart = 'student-basic-infos';
 
                 return view('partials.datatablesActions', compact(
@@ -130,7 +130,7 @@ class StudentBasicInfoController extends Controller
 
         // return $request->joining_date;
 
-        $studentBasicInfo->joining_date = $request->joining_date ? Carbon::createFromFormat('Y-m-d', $request->joining_date)->format('Y-m-d H:i:s') : null;
+        $studentBasicInfo->joining_date = $request->joining_date;
         $studentBasicInfo->status = $request->status ? $request->status : 1;
 
         // $studentBasicInfo->user_id = $request->user_id;
@@ -149,7 +149,7 @@ class StudentBasicInfoController extends Controller
                 $user = User::create([
                     'name' => $request->first_name . ' ' . $request->last_name,
                     'email' => $request->email,
-                    'password' =>  isset($request->password) && !empty($request->password) ? bcrypt($request->password) :  bcrypt($request->email),
+                    'password' => isset($request->password) && !empty($request->password) ? bcrypt($request->password) : bcrypt($request->email),
                 ]);
             }
             $studentBasicInfo->user_id = $user->id;
@@ -194,24 +194,78 @@ class StudentBasicInfoController extends Controller
 
         $subjects = Subject::pluck('name', 'id');
 
-        $studentBasicInfo->load('class', 'section', 'shift', 'user', 'subjects');
+        $studentBasicInfo->load('class', 'section', 'shift', 'user', 'subjects', 'studentDetails');
 
         return view('admin.studentBasicInfos.edit', compact('classes', 'sections', 'shifts', 'studentBasicInfo', 'subjects', 'users'));
     }
 
     public function update(UpdateStudentBasicInfoRequest $request, StudentBasicInfo $studentBasicInfo)
     {
-        $studentBasicInfo->update($request->all());
+        // Update Student Basic Info
+        $studentBasicInfo->update([
+            'roll' => $request->roll,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'gender' => $request->gender,
+            'dob' => $request->dob,
+            'contact_number' => $request->contact_number,
+            'email' => $request->email,
+            'class_id' => $request->class_id,
+            'section_id' => $request->section_id,
+            'shift_id' => $request->shift_id,
+            'joining_date' => $request->joining_date,
+            'status' => $request->status,
+        ]);
+
         $studentBasicInfo->subjects()->sync($request->input('subjects', []));
-        if ($request->input('image', false)) {
-            if (! $studentBasicInfo->image || $request->input('image') !== $studentBasicInfo->image->file_name) {
-                if ($studentBasicInfo->image) {
-                    $studentBasicInfo->image->delete();
+
+        // Handle User Login
+        if ($request->need_login) {
+            if (!$studentBasicInfo->user_id) {
+                $user = User::where('email', $request->email)->first();
+                if (!$user) {
+                    $user = User::create([
+                        'name' => $request->first_name . ' ' . $request->last_name,
+                        'email' => $request->email,
+                        'password' => isset($request->password) && !empty($request->password) ? bcrypt($request->password) : bcrypt($request->email),
+                    ]);
                 }
-                $studentBasicInfo->addMedia(storage_path('tmp/uploads/' . basename($request->input('image'))))->toMediaCollection('image');
+                $studentBasicInfo->user_id = $user->id;
+                $studentBasicInfo->save();
+            } else {
+                $user = $studentBasicInfo->user;
+                $userData = [
+                    'name' => $request->first_name . ' ' . $request->last_name,
+                    'email' => $request->email,
+                ];
+                if ($request->filled('password')) {
+                    $userData['password'] = bcrypt($request->password);
+                }
+                $user->update($userData);
             }
-        } elseif ($studentBasicInfo->image) {
-            $studentBasicInfo->image->delete();
+        }
+
+        // Update Student Details
+        $studentDetails = $studentBasicInfo->studentDetails()->firstOrCreate(['student_id' => $studentBasicInfo->id]);
+        $studentDetails->update([
+            'guardian_name' => $request->guardian_name,
+            'guardian_contact_number' => $request->guardian_contact_number,
+            'guardian_email' => $request->guardian_email,
+            'address' => $request->address,
+            'student_blood_group' => $request->student_blood_group,
+        ]);
+
+        // Image Handling
+        if ($request->input('image', false)) {
+            if (!$studentBasicInfo->image || $request->input('image') !== $studentBasicInfo->image->file_name) {
+                // If it's a new file (from tmp)
+                if (file_exists(storage_path('tmp/uploads/' . basename($request->input('image'))))) {
+                    if ($studentBasicInfo->image) {
+                        $studentBasicInfo->image->delete();
+                    }
+                    $studentBasicInfo->addMedia(storage_path('tmp/uploads/' . basename($request->input('image'))))->toMediaCollection('image');
+                }
+            }
         }
 
         return redirect()->route('admin.student-basic-infos.index');
@@ -260,10 +314,10 @@ class StudentBasicInfoController extends Controller
     {
         abort_if(Gate::denies('student_basic_info_create') && Gate::denies('student_basic_info_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model         = new StudentBasicInfo();
-        $model->id     = $request->input('crud_id', 0);
+        $model = new StudentBasicInfo();
+        $model->id = $request->input('crud_id', 0);
         $model->exists = true;
-        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+        $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }

@@ -28,7 +28,7 @@ class StudentBasicInfo extends Model implements HasMedia
     ];
 
     public const GENDER_RADIO = [
-        'male'   => 'Male',
+        'male' => 'Male',
         'memale' => 'Female',
         'others' => 'Others',
     ];
@@ -84,26 +84,26 @@ class StudentBasicInfo extends Model implements HasMedia
 
     public function setDobAttribute($value)
     {
-        $this->attributes['dob'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+        $this->attributes['dob'] = $value ? (Carbon::parse($value)->format('Y-m-d')) : null;
     }
 
     public function getJoiningDateAttribute($value)
     {
-        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
+        return $value ? Carbon::parse($value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
     }
 
     public function setJoiningDateAttribute($value)
     {
-        $this->attributes['joining_date'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+        $this->attributes['joining_date'] = $value ? (Carbon::parse($value)->format('Y-m-d H:i:s')) : null;
     }
 
     public function getImageAttribute()
     {
         $file = $this->getMedia('image')->last();
         if ($file) {
-            $file->url       = $file->getUrl();
+            $file->url = $file->getUrl();
             $file->thumbnail = $file->getUrl('thumb');
-            $file->preview   = $file->getUrl('preview');
+            $file->preview = $file->getUrl('preview');
         }
 
         return $file;
@@ -134,7 +134,8 @@ class StudentBasicInfo extends Model implements HasMedia
         return $this->belongsToMany(Subject::class);
     }
 
-    public function studentDetails(){
+    public function studentDetails()
+    {
         return $this->hasOne(StudentDetailsInformation::class, 'student_id', 'id');
     }
 
