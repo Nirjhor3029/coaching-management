@@ -37,9 +37,6 @@ class StoreTeacherRequest extends FormRequest
                 'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
                 'nullable',
             ],
-            'status' => [
-                'required',
-            ],
             'salary_amount' => [
                 'required',
             ],

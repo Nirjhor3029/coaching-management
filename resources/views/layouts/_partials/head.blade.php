@@ -7,7 +7,8 @@
 <title>{{ trans('panel.site_title') }}</title>
 
 {{-- Tailwind er Darkmode er sathe conflict kore tai bad dchi --}}
-{{-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" /> --}}
+{{--
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" /> --}}
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
 <link href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" rel="stylesheet" />
@@ -19,7 +20,8 @@
 <link
     href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"
     rel="stylesheet" />
-{{-- <link href="https://unpkg.com/@coreui/coreui@3.2/dist/css/coreui.min.css" rel="stylesheet" /> --}}
+{{--
+<link href="https://unpkg.com/@coreui/coreui@3.2/dist/css/coreui.min.css" rel="stylesheet" /> --}}
 {{-- cdn to local --}}
 <link href="{{ asset('/assets/cdns/css/coreui.min.css') }}" rel="stylesheet" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
@@ -37,7 +39,7 @@
     rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
     rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
 
 
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -49,8 +51,15 @@
             extend: {
                 colors: {
                     "primary": "#137fec",
+                    "primary-hover": "#0062cc",
                     "background-light": "#f6f6f8",
                     "background-dark": "#101622",
+                    "text-main": "#0f172a",
+                    "text-secondary": "#64748b",
+                    "card-light": "#ffffff",
+                    "card-dark": "#1a2632",
+                    "border-light": "#e2e8f0",
+                    "border-dark": "#334155",
                 },
                 fontFamily: {
                     "display": ["Lexend", "sans-serif"],
@@ -108,5 +117,3 @@
         color: red;
     }
 </style>
-
-

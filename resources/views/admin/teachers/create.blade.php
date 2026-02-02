@@ -1,236 +1,351 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.create') }} {{ trans('cruds.teacher.title_singular') }}
+    <!-- Page Scroll Container -->
+    <div
+        class="flex-1 overflow-y-auto p-6 lg:px-10 lg:py-8 bg-background-light dark:bg-background-dark transition-colors duration-200">
+        <div class="max-w-[1024px] mx-auto flex flex-col gap-8">
+            <!-- Breadcrumbs -->
+            <nav class="flex items-center gap-2 text-sm">
+                <a class="text-text-secondary dark:text-gray-400 hover:text-primary transition-colors"
+                    href="#">Dashboard</a>
+                <span class="text-text-secondary dark:text-gray-500">/</span>
+                <a class="text-text-secondary dark:text-gray-400 hover:text-primary transition-colors" href="#">Teachers</a>
+                <span class="text-text-secondary dark:text-gray-500">/</span>
+                <span class="text-text-main dark:text-white font-medium">Register</span>
+            </nav>
+            <!-- Page Heading -->
+            <div class="flex flex-col gap-2">
+                <h1 class="text-3xl font-bold text-text-main dark:text-white tracking-tight">Register New Teacher
+                </h1>
+                <p class="text-text-secondary dark:text-gray-400 max-w-2xl">Enter the details below to add a new
+                    faculty member to the system. Ensure all mandatory fields marked with * are filled correctly.
+                </p>
+            </div>
+            <!-- Main Form Card -->
+            <form action="{{ route('admin.teachers.store') }}" method="POST" enctype="multipart/form-data"
+                class="bg-card-light dark:bg-card-dark rounded-xl shadow-sm border border-border-light dark:border-border-dark overflow-hidden transition-colors duration-200">
+                @csrf
+                <!-- Section 1: Personal Details -->
+                <div class="p-6 lg:p-8 border-b border-border-light dark:border-border-dark">
+                    <h2 class="text-xl font-bold text-text-main dark:text-white mb-6 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">person</span>
+                        Personal Information
+                    </h2>
+                    <div class="flex flex-col lg:flex-row gap-8">
+                        <!-- Photo Upload -->
+                        <div class="flex-shrink-0 flex flex-col items-center gap-3">
+                            <div id="drop-zone"
+                                class="relative group cursor-pointer size-32 rounded-full bg-background-light dark:bg-background-dark border-2 border-dashed border-border-light dark:border-border-dark flex items-center justify-center overflow-hidden hover:border-primary transition-colors">
+                                <div id="photo-preview" class="absolute inset-0 w-full h-full bg-cover bg-center"></div>
+                                <span id="photo-placeholder-icon"
+                                    class="material-symbols-outlined text-4xl text-text-secondary group-hover:text-primary transition-colors">add_a_photo</span>
+                                <div
+                                    class="absolute inset-0 bg-black/40 hidden group-hover:flex items-center justify-center text-white text-xs font-medium">
+                                    Change</div>
+                                <input class="sr-only" id="file-upload" name="file-upload" type="file" accept="image/*" />
+                            </div>
+                            <span class="text-sm font-medium text-text-secondary dark:text-gray-400">Profile Photo</span>
+                            @if ($errors->has('profile_img'))
+                                <p class="text-xs text-red-500 mt-1">{{ $errors->first('profile_img') }}</p>
+                            @endif
+                        </div>
+                        <!-- Inputs -->
+                        <div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="col-span-1 md:col-span-2">
+                                <label class="block text-sm font-medium text-text-main dark:text-gray-300 mb-1.5">Full
+                                    Name <span class="text-red-500">*</span></label>
+                                <input
+                                    class="w-full rounded-lg border-none bg-background-light dark:bg-background-dark text-text-main dark:text-white py-2.5 px-4 placeholder-text-secondary/50 focus:ring-2 focus:ring-primary {{ $errors->has('name') ? 'ring-2 ring-red-500' : '' }}"
+                                    placeholder="e.g. John Doe" type="text" name="name" value="{{ old('name', '') }}"
+                                    required />
+                                @if($errors->has('name'))
+                                    <p class="mt-1 text-xs text-red-500">{{ $errors->first('name') }}</p>
+                                @endif
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-text-main dark:text-gray-300 mb-1.5">Email
+                                    Address <span class="text-red-500">*</span></label>
+                                <input
+                                    class="w-full rounded-lg border-none bg-background-light dark:bg-background-dark text-text-main dark:text-white py-2.5 px-4 placeholder-text-secondary/50 focus:ring-2 focus:ring-primary {{ $errors->has('email') ? 'ring-2 ring-red-500' : '' }}"
+                                    placeholder="john.doe@school.edu" type="email" name="email"
+                                    value="{{ old('email', '') }}" required />
+                                @if($errors->has('email'))
+                                    <p class="mt-1 text-xs text-red-500">{{ $errors->first('email') }}</p>
+                                @endif
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-text-main dark:text-gray-300 mb-1.5">Phone
+                                    Number <span class="text-red-500">*</span></label>
+                                <input
+                                    class="w-full rounded-lg border-none bg-background-light dark:bg-background-dark text-text-main dark:text-white py-2.5 px-4 placeholder-text-secondary/50 focus:ring-2 focus:ring-primary {{ $errors->has('phone') ? 'ring-2 ring-red-500' : '' }}"
+                                    placeholder="+1 (555) 000-0000" type="tel" name="phone" value="{{ old('phone', '') }}"
+                                    required />
+                                @if($errors->has('phone'))
+                                    <p class="mt-1 text-xs text-red-500">{{ $errors->first('phone') }}</p>
+                                @endif
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-text-main dark:text-gray-300 mb-1.5">Default
+                                    Password</label>
+                                <input
+                                    class="w-full rounded-lg border-none bg-background-light dark:bg-background-dark text-text-main dark:text-white py-2.5 px-4 placeholder-text-secondary/50 focus:ring-2 focus:ring-primary"
+                                    placeholder="Leave blank to use email" type="password" name="password" />
+                                <p class="mt-1 text-[10px] text-text-secondary">Used for the initial login of the new
+                                    teacher account.</p>
+                            </div>
+                            <div class="col-span-1 md:col-span-2">
+                                <label
+                                    class="block text-sm font-medium text-text-main dark:text-gray-300 mb-1.5">Residential
+                                    Address</label>
+                                <textarea name="address"
+                                    class="w-full rounded-lg border-none bg-background-light dark:bg-background-dark text-text-main dark:text-white py-2.5 px-4 placeholder-text-secondary/50 focus:ring-2 focus:ring-primary resize-none {{ $errors->has('address') ? 'ring-2 ring-red-500' : '' }}"
+                                    placeholder="Street address, city, state, zip code"
+                                    rows="2">{{ old('address', '') }}</textarea>
+                                @if($errors->has('address'))
+                                    <p class="mt-1 text-xs text-red-500">{{ $errors->first('address') }}</p>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Section 2: Employment Information -->
+                <div
+                    class="p-6 lg:p-8 border-b border-border-light dark:border-border-dark bg-background-light/30 dark:bg-background-dark/30">
+                    <h2 class="text-xl font-bold text-text-main dark:text-white mb-6 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">badge</span>
+                        Employment Details
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-text-main dark:text-gray-300 mb-1.5">Employee
+                                Code <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <input
+                                    class="w-full rounded-lg border-none bg-card-light dark:bg-card-dark text-text-main dark:text-white py-2.5 px-4 focus:ring-2 focus:ring-primary font-mono text-sm {{ $errors->has('emloyee_code') ? 'ring-2 ring-red-500' : '' }}"
+                                    readonly="" type="text" name="emloyee_code"
+                                    value="TCH-{{ date('Y') }}-{{ sprintf('%03d', \App\Models\Teacher::count() + 1) }}" />
+                                <span
+                                    class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-primary font-medium cursor-pointer">Auto</span>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-text-main dark:text-gray-300 mb-1.5">Joining
+                                Date <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <input
+                                    class="w-full rounded-lg border-none bg-card-light dark:bg-card-dark text-text-main dark:text-white py-2.5 px-4 focus:ring-2 focus:ring-primary [color-scheme:light] dark:[color-scheme:dark] {{ $errors->has('joining_date') ? 'ring-2 ring-red-500' : '' }}"
+                                    type="text" name="joining_date" id="joining_date"
+                                    value="{{ old('joining_date') ?? date(config('panel.date_format') . ' ' . config('panel.time_format')) }}" />
+                                @if($errors->has('joining_date'))
+                                    <p class="mt-1 text-xs text-red-500">{{ $errors->first('joining_date') }}</p>
+                                @endif
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-text-main dark:text-gray-300 mb-1.5">Gender <span
+                                    class="text-red-500">*</span></label>
+                            <select name="gender" id="gender"
+                                class="w-full rounded-lg border-none bg-card-light dark:bg-card-dark text-text-main dark:text-white py-2.5 px-3 focus:ring-2 focus:ring-primary {{ $errors->has('gender') ? 'ring-2 ring-red-500' : '' }}">
+                                @foreach(App\Models\Teacher::GENDER_SELECT as $key => $label)
+                                    <option value="{{ $key }}" {{ old('gender') == $key ? 'selected' : '' }}>{{ $label }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-text-main dark:text-gray-300 mb-1.5">Salary
+                                Type <span class="text-red-500">*</span></label>
+                            <select name="salary_type" id="salary_type"
+                                class="w-full rounded-lg border-none bg-card-light dark:bg-card-dark text-text-main dark:text-white py-2.5 px-3 focus:ring-2 focus:ring-primary {{ $errors->has('salary_type') ? 'ring-2 ring-red-500' : '' }}">
+                                @foreach(App\Models\Teacher::SALARY_TYPE_SELECT as $key => $label)
+                                    <option value="{{ $key }}" {{ old('salary_type') == $key ? 'selected' : '' }}>{{ $label }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('salary_type'))
+                                <p class="mt-1 text-xs text-red-500">{{ $errors->first('salary_type') }}</p>
+                            @endif
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-text-main dark:text-gray-300 mb-1.5">Base
+                                Salary / Rate <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary">$</span>
+                                <input name="salary_amount"
+                                    class="w-full rounded-lg border-none bg-card-light dark:bg-card-dark text-text-main dark:text-white py-2.5 pl-8 pr-4 placeholder-text-secondary/50 focus:ring-2 focus:ring-primary {{ $errors->has('salary_amount') ? 'ring-2 ring-red-500' : '' }}"
+                                    placeholder="0.00" type="number" step="0.01" value="{{ old('salary_amount', '') }}"
+                                    required />
+                            </div>
+                            @if($errors->has('salary_amount'))
+                                <p class="mt-1 text-xs text-red-500">{{ $errors->first('salary_amount') }}</p>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <!-- Section 3: Academic Assignment -->
+                <div class="p-6 lg:p-8">
+                    <h2 class="text-xl font-bold text-text-main dark:text-white mb-6 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">menu_book</span>
+                        Academic Assignment
+                    </h2>
+                    <div>
+                        <label class="block text-sm font-medium text-text-main dark:text-gray-300 mb-2">Assign
+                            Subjects</label>
+                        <select name="subjects[]" id="subjects" class="form-control select2 w-full" multiple>
+                            @foreach($subjects as $id => $name)
+                                <option value="{{ $id }}" {{ in_array($id, old('subjects', [])) ? 'selected' : '' }}>{{ $name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <p class="mt-2 text-xs text-text-secondary dark:text-gray-400">You can assign multiple subjects for
+                            this teacher.</p>
+                        @if($errors->has('subjects'))
+                            <p class="mt-1 text-xs text-red-500">{{ $errors->first('subjects') }}</p>
+                        @endif
+                    </div>
+                </div>
+                <!-- Footer Actions -->
+                <div
+                    class="p-6 lg:p-8 bg-background-light/50 dark:bg-black/20 border-t border-border-light dark:border-border-dark flex items-center justify-end gap-4">
+                    <a href="{{ route('admin.teachers.index') }}"
+                        class="px-6 py-2.5 rounded-lg text-sm font-medium text-text-secondary dark:text-gray-300 hover:text-text-main hover:bg-white dark:hover:bg-white/5 transition-colors">
+                        Cancel
+                    </a>
+                    <button
+                        class="px-6 py-2.5 rounded-lg text-sm font-medium text-white bg-primary hover:bg-primary-hover shadow-lg shadow-primary/30 transition-all transform active:scale-95 flex items-center gap-2"
+                        type="submit">
+                        <span class="material-symbols-outlined !text-[20px]">check</span>
+                        Register Teacher
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
-
-    <div class="card-body">
-        <form method="POST" action="{{ route("admin.teachers.store") }}" enctype="multipart/form-data">
-            @csrf
-            <div class="form-group">
-                <label class="required" for="emloyee_code">{{ trans('cruds.teacher.fields.emloyee_code') }}</label>
-                <input class="form-control {{ $errors->has('emloyee_code') ? 'is-invalid' : '' }}" type="text" name="emloyee_code" id="emloyee_code" value="{{ old('emloyee_code', '') }}" required>
-                @if($errors->has('emloyee_code'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('emloyee_code') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.teacher.fields.emloyee_code_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="name">{{ trans('cruds.teacher.fields.name') }}</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
-                @if($errors->has('name'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('name') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.teacher.fields.name_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="phone">{{ trans('cruds.teacher.fields.phone') }}</label>
-                <input class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" type="text" name="phone" id="phone" value="{{ old('phone', '') }}" required>
-                @if($errors->has('phone'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('phone') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.teacher.fields.phone_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="email">{{ trans('cruds.teacher.fields.email') }}</label>
-                <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email" name="email" id="email" value="{{ old('email') }}">
-                @if($errors->has('email'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('email') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.teacher.fields.email_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="address">{{ trans('cruds.teacher.fields.address') }}</label>
-                <input class="form-control {{ $errors->has('address') ? 'is-invalid' : '' }}" type="text" name="address" id="address" value="{{ old('address', '') }}">
-                @if($errors->has('address'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('address') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.teacher.fields.address_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="profile_img">{{ trans('cruds.teacher.fields.profile_img') }}</label>
-                <div class="needsclick dropzone {{ $errors->has('profile_img') ? 'is-invalid' : '' }}" id="profile_img-dropzone">
-                </div>
-                @if($errors->has('profile_img'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('profile_img') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.teacher.fields.profile_img_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="user_id">{{ trans('cruds.teacher.fields.user') }}</label>
-                <select class="form-control select2 {{ $errors->has('user') ? 'is-invalid' : '' }}" name="user_id" id="user_id">
-                    @foreach($users as $id => $entry)
-                        <option value="{{ $id }}" {{ old('user_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('user'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('user') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.teacher.fields.user_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label>{{ trans('cruds.teacher.fields.gender') }}</label>
-                <select class="form-control {{ $errors->has('gender') ? 'is-invalid' : '' }}" name="gender" id="gender">
-                    <option value disabled {{ old('gender', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                    @foreach(App\Models\Teacher::GENDER_SELECT as $key => $label)
-                        <option value="{{ $key }}" {{ old('gender', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('gender'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('gender') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.teacher.fields.gender_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="joining_date">{{ trans('cruds.teacher.fields.joining_date') }}</label>
-                <input class="form-control datetime {{ $errors->has('joining_date') ? 'is-invalid' : '' }}" type="text" name="joining_date" id="joining_date" value="{{ old('joining_date') }}">
-                @if($errors->has('joining_date'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('joining_date') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.teacher.fields.joining_date_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <div class="form-check {{ $errors->has('status') ? 'is-invalid' : '' }}">
-                    <input class="form-check-input" type="checkbox" name="status" id="status" value="1" required {{ old('status', 0) == 1 || old('status') === null ? 'checked' : '' }}>
-                    <label class="required form-check-label" for="status">{{ trans('cruds.teacher.fields.status') }}</label>
-                </div>
-                @if($errors->has('status'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('status') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.teacher.fields.status_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label>{{ trans('cruds.teacher.fields.salary_type') }}</label>
-                <select class="form-control {{ $errors->has('salary_type') ? 'is-invalid' : '' }}" name="salary_type" id="salary_type">
-                    <option value disabled {{ old('salary_type', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                    @foreach(App\Models\Teacher::SALARY_TYPE_SELECT as $key => $label)
-                        <option value="{{ $key }}" {{ old('salary_type', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('salary_type'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('salary_type') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.teacher.fields.salary_type_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="salary_amount">{{ trans('cruds.teacher.fields.salary_amount') }}</label>
-                <input class="form-control {{ $errors->has('salary_amount') ? 'is-invalid' : '' }}" type="number" name="salary_amount" id="salary_amount" value="{{ old('salary_amount', '0') }}" step="0.01" required>
-                @if($errors->has('salary_amount'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('salary_amount') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.teacher.fields.salary_amount_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="subjects">{{ trans('cruds.teacher.fields.subject') }}</label>
-                <div style="padding-bottom: 4px">
-                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                </div>
-                <select class="form-control select2 {{ $errors->has('subjects') ? 'is-invalid' : '' }}" name="subjects[]" id="subjects" multiple>
-                    @foreach($subjects as $id => $subject)
-                        <option value="{{ $id }}" {{ in_array($id, old('subjects', [])) ? 'selected' : '' }}>{{ $subject }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('subjects'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('subjects') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.teacher.fields.subject_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
-
-
 
 @endsection
 
 @section('scripts')
-<script>
-    Dropzone.options.profileImgDropzone = {
-    url: '{{ route('admin.teachers.storeMedia') }}',
-    maxFilesize: 2, // MB
-    acceptedFiles: '.jpeg,.jpg,.png,.gif',
-    maxFiles: 1,
-    addRemoveLinks: true,
-    headers: {
-      'X-CSRF-TOKEN': "{{ csrf_token() }}"
-    },
-    params: {
-      size: 2,
-      width: 4096,
-      height: 4096
-    },
-    success: function (file, response) {
-      $('form').find('input[name="profile_img"]').remove()
-      $('form').append('<input type="hidden" name="profile_img" value="' + response.name + '">')
-    },
-    removedfile: function (file) {
-      file.previewElement.remove()
-      if (file.status !== 'error') {
-        $('form').find('input[name="profile_img"]').remove()
-        this.options.maxFiles = this.options.maxFiles + 1
-      }
-    },
-    init: function () {
-@if(isset($teacher) && $teacher->profile_img)
-      var file = {!! json_encode($teacher->profile_img) !!}
-          this.options.addedfile.call(this, file)
-      this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
-      file.previewElement.classList.add('dz-complete')
-      $('form').append('<input type="hidden" name="profile_img" value="' + file.file_name + '">')
-      this.options.maxFiles = this.options.maxFiles - 1
-@endif
-    },
-    error: function (file, response) {
-        if ($.type(response) === 'string') {
-            var message = response //dropzone sends it's own error messages in string
-        } else {
-            var message = response.errors.file
-        }
-        file.previewElement.classList.add('dz-error')
-        _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
-        _results = []
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            node = _ref[_i]
-            _results.push(node.textContent = message)
-        }
+    <script>
+        $(document).ready(function () {
+            // Initialize Select2
+            $('#subjects').select2({
+                placeholder: 'Select subjects',
+                allowClear: true,
+                width: '100%'
+            });
 
-        return _results
-    }
-}
+            // Initialize Datetimepicker
+            if ($.fn.datetimepicker) {
+                $('#joining_date').datetimepicker({
+                    format: 'YYYY-MM-DD HH:mm:ss',
+                    locale: 'en',
+                    sideBySide: true,
+                    icons: {
+                        up: 'fas fa-chevron-up',
+                        down: 'fas fa-chevron-down',
+                        previous: 'fas fa-chevron-left',
+                        next: 'fas fa-chevron-right',
+                        today: 'fa fa-arrows-alt',
+                        clear: 'fa fa-trash',
+                        close: 'fa fa-times'
+                    }
+                });
+            }
 
-</script>
+            // Photo Upload Logic
+            const fileUpload = document.getElementById('file-upload');
+            const dropZone = document.getElementById('drop-zone');
+            const photoPreview = document.getElementById('photo-preview');
+            const placeholderIcon = document.getElementById('photo-placeholder-icon');
+            const teacherForm = document.querySelector('form');
+
+            function handleFile(file) {
+                if (!file || !file.type.startsWith('image/')) {
+                    alert('Please upload a valid image file.');
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    photoPreview.style.backgroundImage = `url('${e.target.result}')`;
+                    if (placeholderIcon) placeholderIcon.classList.add('hidden');
+                };
+                reader.readAsDataURL(file);
+
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('_token', '{{ csrf_token() }}');
+
+                dropZone.classList.add('opacity-50', 'cursor-wait');
+
+                fetch('{{ route('admin.teachers.storeMedia') }}', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                    .then(response => {
+                        if (!response.ok) throw new Error('Upload failed');
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.name) {
+                            const existingHidden = teacherForm.querySelectorAll('input[name="profile_img"][type="hidden"]');
+                            existingHidden.forEach(el => el.remove());
+
+                            const hiddenInput = document.createElement('input');
+                            hiddenInput.type = 'hidden';
+                            hiddenInput.name = 'profile_img';
+                            hiddenInput.value = data.name;
+                            teacherForm.appendChild(hiddenInput);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Failed to upload image. Please try again.');
+                    })
+                    .finally(() => {
+                        dropZone.classList.remove('opacity-50', 'cursor-wait');
+                    });
+            }
+
+            if (fileUpload) {
+                fileUpload.addEventListener('change', (e) => {
+                    if (e.target.files.length > 0) handleFile(e.target.files[0]);
+                });
+            }
+
+            if (dropZone) {
+                dropZone.addEventListener('click', (e) => {
+                    if (!e.target.closest('label')) fileUpload.click();
+                });
+
+                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                    dropZone.addEventListener(eventName, (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }, false);
+                });
+
+                ['dragenter', 'dragover'].forEach(eventName => {
+                    dropZone.addEventListener(eventName, () => {
+                        dropZone.classList.add('border-primary', 'bg-primary/5');
+                    }, false);
+                });
+
+                ['dragleave', 'drop'].forEach(eventName => {
+                    dropZone.addEventListener(eventName, () => {
+                        dropZone.classList.remove('border-primary', 'bg-primary/5');
+                    }, false);
+                });
+
+                dropZone.addEventListener('drop', (e) => {
+                    const dt = e.dataTransfer;
+                    if (dt.files && dt.files.length > 0) handleFile(dt.files[0]);
+                });
+            }
+        });
+    </script>
+
 @endsection

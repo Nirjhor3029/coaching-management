@@ -32,17 +32,33 @@ class TeacherController extends Controller
     {
         abort_if(Gate::denies('teacher_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $subjects = Subject::pluck('name', 'id');
 
-        return view('admin.teachers.create', compact('subjects', 'users'));
+        return view('admin.teachers.create', compact('subjects'));
     }
 
     public function store(StoreTeacherRequest $request)
     {
-        $teacher = Teacher::create($request->all());
+        // 1. Create User account first
+        $user = User::where('email', $request->email)->first();
+        if (!$user) {
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => bcrypt($request->input('password', $request->email)), // Use password if provided, else email
+            ]);
+            // Assign 'User' role (ID 2)
+            $user->roles()->sync([2]);
+        }
+
+        // 2. Create Teacher and link to User
+        $teacherData = $request->all();
+        $teacherData['user_id'] = $user->id;
+        $teacherData['status'] = 1; // Always active by default
+
+        $teacher = Teacher::create($teacherData);
         $teacher->subjects()->sync($request->input('subjects', []));
+
         if ($request->input('profile_img', false)) {
             $teacher->addMedia(storage_path('tmp/uploads/' . basename($request->input('profile_img'))))->toMediaCollection('profile_img');
         }
@@ -72,7 +88,7 @@ class TeacherController extends Controller
         $teacher->update($request->all());
         $teacher->subjects()->sync($request->input('subjects', []));
         if ($request->input('profile_img', false)) {
-            if (! $teacher->profile_img || $request->input('profile_img') !== $teacher->profile_img->file_name) {
+            if (!$teacher->profile_img || $request->input('profile_img') !== $teacher->profile_img->file_name) {
                 if ($teacher->profile_img) {
                     $teacher->profile_img->delete();
                 }
@@ -118,10 +134,10 @@ class TeacherController extends Controller
     {
         abort_if(Gate::denies('teacher_create') && Gate::denies('teacher_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model         = new Teacher();
-        $model->id     = $request->input('crud_id', 0);
+        $model = new Teacher();
+        $model->id = $request->input('crud_id', 0);
         $model->exists = true;
-        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+        $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }

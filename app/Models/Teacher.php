@@ -29,12 +29,12 @@ class Teacher extends Model implements HasMedia
     ];
 
     public const SALARY_TYPE_SELECT = [
-        'fixed'        => 'fixed',
+        'fixed' => 'fixed',
         'subject_wise' => 'subject_wise',
     ];
 
     public const GENDER_SELECT = [
-        'male'   => 'Male',
+        'male' => 'Male',
         'female' => 'Female',
         'others' => 'Others',
     ];
@@ -81,9 +81,9 @@ class Teacher extends Model implements HasMedia
     {
         $file = $this->getMedia('profile_img')->last();
         if ($file) {
-            $file->url       = $file->getUrl();
+            $file->url = $file->getUrl();
             $file->thumbnail = $file->getUrl('thumb');
-            $file->preview   = $file->getUrl('preview');
+            $file->preview = $file->getUrl('preview');
         }
 
         return $file;
@@ -96,12 +96,12 @@ class Teacher extends Model implements HasMedia
 
     public function getJoiningDateAttribute($value)
     {
-        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
+        return $value ? Carbon::parse($value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
     }
 
     public function setJoiningDateAttribute($value)
     {
-        $this->attributes['joining_date'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+        $this->attributes['joining_date'] = $value ? Carbon::parse($value)->format('Y-m-d H:i:s') : null;
     }
 
     public function subjects()
