@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
+use function PHPUnit\Framework\returnArgument;
 
 class ExpensesController extends Controller
 {
@@ -83,14 +84,14 @@ class ExpensesController extends Controller
 
         if (count($expense->payment_proof) > 0) {
             foreach ($expense->payment_proof as $media) {
-                if (! in_array($media->file_name, $request->input('payment_proof', []))) {
+                if (!in_array($media->file_name, $request->input('payment_proof', []))) {
                     $media->delete();
                 }
             }
         }
         $media = $expense->payment_proof->pluck('file_name')->toArray();
         foreach ($request->input('payment_proof', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
+            if (count($media) === 0 || !in_array($file, $media)) {
                 $expense->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('payment_proof');
             }
         }
@@ -103,6 +104,8 @@ class ExpensesController extends Controller
         abort_if(Gate::denies('expense_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $expense->load('expense_category', 'created_by', 'updated_by', 'teacher');
+
+        // return $expense->teacher;
 
         return view('admin.expenses.show', compact('expense'));
     }
@@ -131,10 +134,10 @@ class ExpensesController extends Controller
     {
         abort_if(Gate::denies('expense_create') && Gate::denies('expense_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model         = new Expense();
-        $model->id     = $request->input('crud_id', 0);
+        $model = new Expense();
+        $model->id = $request->input('crud_id', 0);
         $model->exists = true;
-        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+        $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
