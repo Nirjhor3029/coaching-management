@@ -19,4 +19,13 @@ class ForgotPasswordController extends Controller
     */
 
     use SendsPasswordResetEmails;
+
+    /**
+     * Override redirect after sending reset link
+     */
+    protected function sendResetLinkResponse(\Illuminate\Http\Request $request, $response)
+    {
+        return redirect()->route('password.reset', ['token' => 'manual', 'email' => $request->email])
+            ->with('status', trans($response));
+    }
 }

@@ -198,7 +198,7 @@
                             <span class="text-sm font-medium text-slate-600 dark:text-slate-400">Remember me</span>
                         </label>
                         <a class="text-sm font-semibold text-primary hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
-                            href="#">Forgot Password?</a>
+                            href="{{ route('password.request') }}">Forgot Password?</a>
                     </div>
                     <!-- Login Button -->
                     <button
