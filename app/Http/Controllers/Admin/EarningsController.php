@@ -47,6 +47,14 @@ class EarningsController extends Controller
     {
         $data = $request->all();
         $data['created_by_id'] = auth()->id();
+
+        // Auto-calculate month and year from earning_date
+        if (!empty($data['earning_date'])) {
+            $date = \Carbon\Carbon::parse($data['earning_date']);
+            $data['earning_month'] = $date->month;
+            $data['earning_year'] = $date->year;
+        }
+
         $earning = Earning::create($data);
 
         foreach ($request->input('payment_proof', []) as $file) {
@@ -79,6 +87,14 @@ class EarningsController extends Controller
     {
         $data = $request->all();
         $data['updated_by_id'] = auth()->id();
+
+        // Auto-calculate month and year from earning_date
+        if (!empty($data['earning_date'])) {
+            $date = \Carbon\Carbon::parse($data['earning_date']);
+            $data['earning_month'] = $date->month;
+            $data['earning_year'] = $date->year;
+        }
+
         $earning->update($data);
 
         if (count($earning->payment_proof) > 0) {

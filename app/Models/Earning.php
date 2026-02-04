@@ -85,16 +85,16 @@ class Earning extends Model implements HasMedia
 
     public function setEarningDateAttribute($value)
     {
-        $this->attributes['earning_date'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+        $this->attributes['earning_date'] = $value ? Carbon::parse($value)->format('Y-m-d H:i:s') : null;
     }
 
     public function getPaymentProofAttribute()
     {
         $files = $this->getMedia('payment_proof');
         $files->each(function ($item) {
-            $item->url       = $item->getUrl();
+            $item->url = $item->getUrl();
             $item->thumbnail = $item->getUrl('thumb');
-            $item->preview   = $item->getUrl('preview');
+            $item->preview = $item->getUrl('preview');
         });
 
         return $files;

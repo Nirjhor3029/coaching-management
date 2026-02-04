@@ -33,8 +33,8 @@ class StoreEarningRequest extends FormRequest
                 'required',
             ],
             'earning_date' => [
-                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
                 'nullable',
+                'date',
             ],
             'earning_month' => [
                 'nullable',

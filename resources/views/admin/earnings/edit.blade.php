@@ -94,8 +94,8 @@
                                 @endif
                             </div>
 
-                            <!-- Student -->
-                            <div class="space-y-2">
+                            <!-- Student (Conditional) -->
+                            <div class="space-y-2 student-fee-field" style="display: none;">
                                 <label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="student_id">
                                     {{ trans('cruds.earning.fields.student') }}
                                 </label>
@@ -114,8 +114,8 @@
                                 @endif
                             </div>
 
-                            <!-- Subject -->
-                            <div class="space-y-2">
+                            <!-- Subject (Conditional) -->
+                            <div class="space-y-2 student-fee-field" style="display: none;">
                                 <label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="subject_id">
                                     {{ trans('cruds.earning.fields.subject') }}
                                 </label>
@@ -199,8 +199,8 @@
                                     placeholder="REF-0000">
                             </div>
 
-                            <!-- Academic Background -->
-                            <div class="space-y-2">
+                            <!-- Academic Background (Conditional) -->
+                            <div class="space-y-2 student-fee-field" style="display: none;">
                                 <label class="text-sm font-semibold text-slate-700 dark:text-slate-300"
                                     for="academic_background">
                                     {{ trans('cruds.earning.fields.academic_background') }}
@@ -212,8 +212,8 @@
                                     placeholder="e.g. Science">
                             </div>
 
-                            <!-- Exam Year -->
-                            <div class="space-y-2">
+                            <!-- Exam Year (Conditional) -->
+                            <div class="space-y-2 student-fee-field" style="display: none;">
                                 <label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="exam_year">
                                     {{ trans('cruds.earning.fields.exam_year') }}
                                 </label>
@@ -229,37 +229,22 @@
                                     for="payment_method">
                                     {{ trans('cruds.earning.fields.payment_method') }}
                                 </label>
-                                <input
+                                <select
                                     class="w-full bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-700 rounded-xl py-3 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                                    type="text" name="payment_method" id="payment_method"
-                                    value="{{ old('payment_method', $earning->payment_method) }}"
-                                    placeholder="Cash, Card, Transfer">
+                                    name="payment_method" id="payment_method">
+                                    <option value="">Select Payment Method</option>
+                                    <option value="Cash" {{ old('payment_method', $earning->payment_method) == 'Cash' ? 'selected' : '' }}>Cash</option>
+                                    <option value="bKash" {{ old('payment_method', $earning->payment_method) == 'bKash' ? 'selected' : '' }}>bKash</option>
+                                    <option value="Bank" {{ old('payment_method', $earning->payment_method) == 'Bank' ? 'selected' : '' }}>Bank</option>
+                                </select>
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-                            <!-- Month -->
-                            <div class="space-y-2">
-                                <label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="earning_month">
-                                    {{ trans('cruds.earning.fields.earning_month') }}
-                                </label>
-                                <input
-                                    class="w-full bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-700 rounded-xl py-3 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                                    type="number" name="earning_month" id="earning_month"
-                                    value="{{ old('earning_month', $earning->earning_month) }}" step="1">
-                            </div>
-
-                            <!-- Year -->
-                            <div class="space-y-2">
-                                <label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="earning_year">
-                                    {{ trans('cruds.earning.fields.earning_year') }}
-                                </label>
-                                <input
-                                    class="w-full bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-700 rounded-xl py-3 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                                    type="number" name="earning_year" id="earning_year"
-                                    value="{{ old('earning_year', $earning->earning_year) }}" step="1">
-                            </div>
-                        </div>
+                        <!-- Hidden fields for month and year (auto-calculated from date) -->
+                        <input type="hidden" name="earning_month" id="earning_month"
+                            value="{{ old('earning_month', $earning->earning_month) }}">
+                        <input type="hidden" name="earning_year" id="earning_year"
+                            value="{{ old('earning_year', $earning->earning_year) }}">
                     </div>
                 </div>
 
@@ -383,6 +368,24 @@
                 containerCssClass: 'modern-select2'
             });
 
+            // Initialize Datetimepicker for earning_date
+            if ($.fn.datetimepicker) {
+                $('.datetime').datetimepicker({
+                    format: 'YYYY-MM-DD HH:mm:ss',
+                    locale: 'en',
+                    sideBySide: true,
+                    icons: {
+                        up: 'fas fa-chevron-up',
+                        down: 'fas fa-chevron-down',
+                        previous: 'fas fa-chevron-left',
+                        next: 'fas fa-chevron-right',
+                        today: 'fa fa-arrows-alt',
+                        clear: 'fa fa-trash',
+                        close: 'fa fa-times'
+                    }
+                });
+            }
+
             function SimpleUploadAdapter(editor) {
                 editor.plugins.get('FileRepository').createUploadAdapter = function (loader) {
                     return {
@@ -431,8 +434,51 @@
             for (var i = 0; i < allEditors.length; ++i) {
                 ClassicEditor.create(allEditors[i], {
                     extraPlugins: [SimpleUploadAdapter]
+                }).then(editor => {
+                    // Fix CKEditor text color for dark mode
+                    const editable = editor.editing.view.document.getRoot();
+                    editor.editing.view.change(writer => {
+                        writer.setStyle('color', '#1e293b', editable); // Dark text color
+                    });
                 });
             }
+        });
+
+        // Conditional fields based on earning category
+        $(document).ready(function () {
+            function toggleStudentFeeFields() {
+                const categorySelect = $('#earning_category_id');
+                const selectedText = categorySelect.find('option:selected').text().toLowerCase();
+
+                if (selectedText.includes('student') && selectedText.includes('fee')) {
+                    $('.student-fee-field').slideDown(300);
+                } else {
+                    $('.student-fee-field').slideUp(300);
+                }
+            }
+
+            // Initial check on page load
+            toggleStudentFeeFields();
+
+            // On category change
+            $('#earning_category_id').on('change', function () {
+                toggleStudentFeeFields();
+            });
+
+            // Auto-calculate month and year from earning date
+            $('#earning_date').on('change', function () {
+                const dateValue = $(this).val();
+                if (dateValue) {
+                    // Parse the date
+                    const date = new Date(dateValue);
+                    if (!isNaN(date.getTime())) {
+                        // Set month (1-12)
+                        $('#earning_month').val(date.getMonth() + 1);
+                        // Set year
+                        $('#earning_year').val(date.getFullYear());
+                    }
+                }
+            });
         });
 
         var uploadedPaymentProofMap = {}
@@ -472,7 +518,7 @@
                         $('form').append('<input type="hidden" name="payment_proof[]" value="' + file.file_name + '">')
                     }
                 @endif
-                },
+                            },
             error: function (file, response) {
                 if ($.type(response) === 'string') {
                     var message = response
@@ -492,20 +538,140 @@
     </script>
 
     <style>
+        /* Select2 Container Styling */
+        .modern-select2+.select2-container {
+            width: 100% !important;
+        }
+
         .modern-select2+.select2-container .select2-selection {
-            @apply bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-700 rounded-xl h-[48px] flex items-center px-2;
+            background-color: rgb(248 250 252) !important;
+            border: 1px solid rgb(226 232 240) !important;
+            border-radius: 0.75rem !important;
+            height: 48px !important;
+            display: flex !important;
+            align-items: center !important;
+            padding: 0 1rem !important;
+            transition: all 0.3s ease !important;
         }
 
+        /* Dark mode for select2 */
+        .dark .modern-select2+.select2-container .select2-selection {
+            background-color: rgba(15, 23, 42, 0.5) !important;
+            border-color: rgb(51 65 85) !important;
+        }
+
+        /* Focus state */
+        .modern-select2+.select2-container--open .select2-selection,
+        .modern-select2+.select2-container--focus .select2-selection {
+            border-color: var(--primary-color, #3b82f6) !important;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2) !important;
+        }
+
+        /* Arrow styling */
         .modern-select2+.select2-container--default .select2-selection--single .select2-selection__arrow {
-            @apply h-[48px] top-0;
+            height: 48px !important;
+            top: 0 !important;
+            right: 1rem !important;
         }
 
+        .modern-select2+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+            border-color: rgb(148 163 184) transparent transparent transparent !important;
+            border-width: 6px 5px 0 5px !important;
+            margin-left: -5px !important;
+            margin-top: -3px !important;
+        }
+
+        .dark .modern-select2+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+            border-color: rgb(148 163 184) transparent transparent transparent !important;
+        }
+
+        /* Selected text styling */
         .modern-select2+.select2-container--default .select2-selection--single .select2-selection__rendered {
-            @apply text-slate-900 dark:text-white font-medium;
+            color: rgb(15 23 42) !important;
+            font-weight: 500 !important;
+            line-height: 48px !important;
+            padding: 0 !important;
         }
 
-        .ck-editor__素质 {
-            @apply border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden shadow-sm;
+        .dark .modern-select2+.select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: rgb(255 255 255) !important;
+        }
+
+        /* Placeholder styling */
+        .modern-select2+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+            color: rgb(148 163 184) !important;
+        }
+
+        /* Dropdown styling */
+        .select2-container--default .select2-dropdown {
+            background-color: white !important;
+            border: 1px solid rgb(226 232 240) !important;
+            border-radius: 0.75rem !important;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+        }
+
+        .dark .select2-container--default .select2-dropdown {
+            background-color: rgb(30 41 59) !important;
+            border-color: rgb(51 65 85) !important;
+        }
+
+        /* Dropdown search */
+        .select2-container--default .select2-search--dropdown .select2-search__field {
+            background-color: rgb(248 250 252) !important;
+            border: 1px solid rgb(226 232 240) !important;
+            border-radius: 0.5rem !important;
+            padding: 0.5rem !important;
+            color: rgb(15 23 42) !important;
+        }
+
+        .dark .select2-container--default .select2-search--dropdown .select2-search__field {
+            background-color: rgba(15, 23, 42, 0.5) !important;
+            border-color: rgb(51 65 85) !important;
+            color: white !important;
+        }
+
+        /* Dropdown results */
+        .select2-container--default .select2-results__option {
+            padding: 0.75rem 1rem !important;
+            color: rgb(15 23 42) !important;
+        }
+
+        .dark .select2-container--default .select2-results__option {
+            color: rgb(226 232 240) !important;
+        }
+
+        /* Highlighted option */
+        .select2-container--default .select2-results__option--highlighted[aria-selected],
+        .select2-container--default .select2-results__option--highlighted.select2-results__option[aria-selected] {
+            background-color: var(--primary-color, #3b82f6) !important;
+            color: white !important;
+        }
+
+        /* Hover state for options */
+        .select2-container--default .select2-results__option:hover {
+            background-color: var(--primary-color, #3b82f6) !important;
+            color: white !important;
+        }
+
+        /* Selected option */
+        .select2-container--default .select2-results__option[aria-selected=true] {
+            background-color: rgb(241 245 249) !important;
+        }
+
+        .dark .select2-container--default .select2-results__option[aria-selected=true] {
+            background-color: rgb(51 65 85) !important;
+        }
+
+        /* CKEditor styling */
+        .ck-editor__editable {
+            border: 1px solid rgb(226 232 240) !important;
+            border-radius: 0.75rem !important;
+            overflow: hidden !important;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+        }
+
+        .dark .ck-editor__editable {
+            border-color: rgb(51 65 85) !important;
         }
     </style>
 @endsection
