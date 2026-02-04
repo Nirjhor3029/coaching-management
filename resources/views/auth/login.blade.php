@@ -5,12 +5,34 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Coaching System Login</title>
+    <title>{{ trans('panel.site_title') }}</title>
+
+    <link rel="shortcut icon" href="{{ asset('assets/images/logo.svg') }}" type="image/x-icon">
+
+
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap"
         rel="stylesheet" />
+
+    {{-- Logo Fonts --}}
+    <style>
+        @font-face {
+            font-family: 'fall-in-love-font';
+            src: url('assets/fonts/fonts/fall_in_love.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .logo-moto {
+            font-family: 'fall-in-love-font', cursive;
+            /* font-size: 1.25rem; */
+        }
+    </style>
+
+
+
     <!-- Material Symbols -->
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
@@ -64,7 +86,8 @@
     class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 h-screen overflow-hidden flex flex-col font-display antialiased">
     <div class="flex flex-1 h-full w-full">
         <!-- Left Panel: Branding & Inspiration -->
-        <div class="relative hidden lg:flex w-1/2 flex-col justify-between overflow-hidden " style="--tw-bg-opacity: 1;
+        <div class="relative hidden lg:flex w-1/2 flex-col justify-between overflow-hidden "
+            style="--tw-bg-opacity: 1;
     background-color: rgb(15 23 42 / 67%);">
             <!-- Background Image -->
             <div class="absolute inset-0 h-full w-full bg-cover bg-center opacity-60 mix-blend-overlay transition-opacity duration-1000"
@@ -80,26 +103,33 @@
                     <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-white/20 backdrop-blur-sm">
                         <span class="material-symbols-outlined text-white">school</span>
                     </div>
-                    <span class="text-xl font-bold tracking-wide">
+                    <img src="{{ asset('assets/images/logo_for_menu.svg') }}" alt="Logo" class="h-10">
+                    {{-- <span class="text-xl font-bold tracking-wide">
                         {{ trans('panel.site_title') }}
-                    </span>
+                    </span> --}}
                 </div>
                 <!-- Inspirational Text -->
                 <div class="max-w-lg">
-                    <h2 class="mb-4 text-4xl font-bold leading-tight tracking-tight">Empowering the next generation of
-                        learners.</h2>
-                    <p class="text-lg text-blue-100 font-light">Join thousands of students and educators transforming
-                        the way we learn, teach, and grow together.</p>
+                    <h2 class="mb-4 text-4xl font-bold leading-tight tracking-tight">
+                        Empowering the next generation of learners.
+                    </h2>
+                    <p class="text-lg text-blue-100 font-light logo-moto">
+                        {{-- Join thousands of students and educators transforming
+                        the way we learn, teach, and grow together. --}}
+                        <i>Learn to Serve The Nation</i>
+                    </p>
                 </div>
                 <!-- Footer/Copyright on Image -->
                 <div class="text-sm text-blue-200">
-                    © 2023 EduMastery Systems. All rights reserved.
+                    © {{ date('Y') }} {{ trans('panel.site_title') }}. All rights reserved.
                 </div>
             </div>
         </div>
         <!-- Right Panel: Login Form -->
         <div class="flex w-full items-center justify-center bg-white dark:bg-slate-850 lg:w-1/2 overflow-y-auto">
             <div class="w-full max-w-[440px] px-8 py-12 sm:px-12">
+                <img src="{{ asset('assets/images/logo.svg') }}" alt="Logo" class="h-10"
+                    style="margin-left: -9px;margin-bottom: 16px;">
                 <!-- Header -->
                 <div class="mb-8">
                     <h1 class="text-3xl font-black tracking-tight text-slate-900 dark:text-white mb-2">Welcome Back</h1>
@@ -142,7 +172,7 @@
 
 
 
-                @if(session('message'))
+                @if (session('message'))
                     <div class="alert alert-info" role="alert">
                         {{ session('message') }}
                     </div>
@@ -162,7 +192,7 @@
                                 class="form-input h-12 w-full rounded-lg border border-slate-200 bg-white pl-11 pr-4 text-sm text-slate-900 placeholder:text-slate-400 focus:border-primary focus:ring-1 focus:ring-primary dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                                 placeholder="name@school.com" required="" type="email" name="email" />
                         </div>
-                        @if($errors->has('email'))
+                        @if ($errors->has('email'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('email') }}
                             </div>
@@ -183,7 +213,7 @@
                                 <span class="material-symbols-outlined" style="font-size: 20px;">visibility</span>
                             </button>
                         </div>
-                        @if($errors->has('password'))
+                        @if ($errors->has('password'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('password') }}
                             </div>
@@ -219,7 +249,7 @@
         </div>
     </div>
     <script>
-        document.getElementById('togglePassword').addEventListener('click', function () {
+        document.getElementById('togglePassword').addEventListener('click', function() {
             const passwordInput = document.getElementById('password');
             const icon = this.querySelector('.material-symbols-outlined');
 

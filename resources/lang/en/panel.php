@@ -1,6 +1,5 @@
 <?php
 
 return [
-    'site_title' => 'Excellentors Academy',
-    
+    'site_title' => 'Excellency',
 ];

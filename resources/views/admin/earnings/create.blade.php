@@ -1,362 +1,508 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.create') }} {{ trans('cruds.earning.title_singular') }}
-    </div>
+    <div class="flex-1 overflow-y-auto bg-[#f8fafc] dark:bg-[#0f172a] transition-colors duration-300">
+        <div class="max-w-5xl mx-auto p-4 md:p-8 lg:p-12">
+            <!-- Breadcrumbs & Header -->
+            <div class="mb-10 animate-in fade-in slide-in-from-top-4 duration-700">
+                <nav
+                    class="flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-4">
+                    <a href="{{ route('admin.home') }}" class="hover:text-primary transition-colors">Dashboard</a>
+                    <span class="material-symbols-outlined !text-[14px]">chevron_right</span>
+                    <a href="{{ route('admin.earnings.index') }}" class="hover:text-primary transition-colors">Earnings</a>
+                    <span class="material-symbols-outlined !text-[14px]">chevron_right</span>
+                    <span class="text-slate-900 dark:text-white">Record New Earning</span>
+                </nav>
 
-    <div class="card-body">
-        <form method="POST" action="{{ route("admin.earnings.store") }}" enctype="multipart/form-data">
-            @csrf
-            <div class="form-group">
-                <label for="earning_category_id">{{ trans('cruds.earning.fields.earning_category') }}</label>
-                <select class="form-control select2 {{ $errors->has('earning_category') ? 'is-invalid' : '' }}" name="earning_category_id" id="earning_category_id">
-                    @foreach($earning_categories as $id => $entry)
-                        <option value="{{ $id }}" {{ old('earning_category_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('earning_category'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('earning_category') }}
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                            Record <span class="text-primary">Earning</span>
+                        </h1>
+                        <p class="mt-2 text-slate-600 dark:text-slate-400 text-lg">
+                            Log tuition fees, exam charges, and other revenue sources.
+                        </p>
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.earning.fields.earning_category_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="student_id">{{ trans('cruds.earning.fields.student') }}</label>
-                <select class="form-control select2 {{ $errors->has('student') ? 'is-invalid' : '' }}" name="student_id" id="student_id">
-                    @foreach($students as $id => $entry)
-                        <option value="{{ $id }}" {{ old('student_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('student'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('student') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.earning.fields.student_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="subject_id">{{ trans('cruds.earning.fields.subject') }}</label>
-                <select class="form-control select2 {{ $errors->has('subject') ? 'is-invalid' : '' }}" name="subject_id" id="subject_id">
-                    @foreach($subjects as $id => $entry)
-                        <option value="{{ $id }}" {{ old('subject_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('subject'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('subject') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.earning.fields.subject_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="title">{{ trans('cruds.earning.fields.title') }}</label>
-                <input class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" type="text" name="title" id="title" value="{{ old('title', '') }}" required>
-                @if($errors->has('title'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('title') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.earning.fields.title_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="academic_background">{{ trans('cruds.earning.fields.academic_background') }}</label>
-                <input class="form-control {{ $errors->has('academic_background') ? 'is-invalid' : '' }}" type="text" name="academic_background" id="academic_background" value="{{ old('academic_background', '') }}">
-                @if($errors->has('academic_background'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('academic_background') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.earning.fields.academic_background_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="exam_year">{{ trans('cruds.earning.fields.exam_year') }}</label>
-                <input class="form-control {{ $errors->has('exam_year') ? 'is-invalid' : '' }}" type="text" name="exam_year" id="exam_year" value="{{ old('exam_year', '') }}">
-                @if($errors->has('exam_year'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('exam_year') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.earning.fields.exam_year_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="details">{{ trans('cruds.earning.fields.details') }}</label>
-                <textarea class="form-control ckeditor {{ $errors->has('details') ? 'is-invalid' : '' }}" name="details" id="details">{!! old('details') !!}</textarea>
-                @if($errors->has('details'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('details') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.earning.fields.details_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="amount">{{ trans('cruds.earning.fields.amount') }}</label>
-                <input class="form-control {{ $errors->has('amount') ? 'is-invalid' : '' }}" type="number" name="amount" id="amount" value="{{ old('amount', '') }}" step="0.01" required>
-                @if($errors->has('amount'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('amount') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.earning.fields.amount_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="earning_date">{{ trans('cruds.earning.fields.earning_date') }}</label>
-                <input class="form-control datetime {{ $errors->has('earning_date') ? 'is-invalid' : '' }}" type="text" name="earning_date" id="earning_date" value="{{ old('earning_date') }}">
-                @if($errors->has('earning_date'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('earning_date') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.earning.fields.earning_date_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="earning_month">{{ trans('cruds.earning.fields.earning_month') }}</label>
-                <input class="form-control {{ $errors->has('earning_month') ? 'is-invalid' : '' }}" type="number" name="earning_month" id="earning_month" value="{{ old('earning_month', '') }}" step="1">
-                @if($errors->has('earning_month'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('earning_month') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.earning.fields.earning_month_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="earning_year">{{ trans('cruds.earning.fields.earning_year') }}</label>
-                <input class="form-control {{ $errors->has('earning_year') ? 'is-invalid' : '' }}" type="number" name="earning_year" id="earning_year" value="{{ old('earning_year', '') }}" step="1">
-                @if($errors->has('earning_year'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('earning_year') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.earning.fields.earning_year_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="earning_reference">{{ trans('cruds.earning.fields.earning_reference') }}</label>
-                <input class="form-control {{ $errors->has('earning_reference') ? 'is-invalid' : '' }}" type="text" name="earning_reference" id="earning_reference" value="{{ old('earning_reference', '') }}">
-                @if($errors->has('earning_reference'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('earning_reference') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.earning.fields.earning_reference_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="payment_method">{{ trans('cruds.earning.fields.payment_method') }}</label>
-                <input class="form-control {{ $errors->has('payment_method') ? 'is-invalid' : '' }}" type="text" name="payment_method" id="payment_method" value="{{ old('payment_method', '') }}">
-                @if($errors->has('payment_method'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('payment_method') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.earning.fields.payment_method_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="payment_proof">{{ trans('cruds.earning.fields.payment_proof') }}</label>
-                <div class="needsclick dropzone {{ $errors->has('payment_proof') ? 'is-invalid' : '' }}" id="payment_proof-dropzone">
                 </div>
-                @if($errors->has('payment_proof'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('payment_proof') }}
+            </div>
+
+            <!-- Form Card -->
+            <form action="{{ route('admin.earnings.store') }}" method="POST" enctype="multipart/form-data"
+                class="space-y-8 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-200">
+                @csrf
+
+                <!-- Section: Core Details -->
+                <div class="relative group">
+                    <div
+                        class="absolute -inset-1 bg-gradient-to-r from-primary/20 to-blue-500/20 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000">
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.earning.fields.payment_proof_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="payment_proof_details">{{ trans('cruds.earning.fields.payment_proof_details') }}</label>
-                <textarea class="form-control ckeditor {{ $errors->has('payment_proof_details') ? 'is-invalid' : '' }}" name="payment_proof_details" id="payment_proof_details">{!! old('payment_proof_details') !!}</textarea>
-                @if($errors->has('payment_proof_details'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('payment_proof_details') }}
+                    <div
+                        class="relative bg-white dark:bg-slate-800/50 backdrop-blur-xl rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                        <div
+                            class="p-6 md:p-8 border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/80">
+                            <h2 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary">analytics</span>
+                                </div>
+                                Core Information
+                            </h2>
+                        </div>
+
+                        <div class="p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <!-- Category -->
+                            <div class="space-y-2">
+                                <label
+                                    class="text-sm font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-2"
+                                    for="earning_category_id">
+                                    {{ trans('cruds.earning.fields.earning_category') }}
+                                </label>
+                                <select
+                                    class="form-control select2 block w-full {{ $errors->has('earning_category') ? 'ring-2 ring-red-500' : '' }}"
+                                    name="earning_category_id" id="earning_category_id">
+                                    @foreach($earning_categories as $id => $entry)
+                                        <option value="{{ $id }}" {{ old('earning_category_id') == $id ? 'selected' : '' }}>
+                                            {{ $entry }}</option>
+                                    @endforeach
+                                </select>
+                                @if($errors->has('earning_category'))
+                                    <p class="text-xs font-medium text-red-500 flex items-center gap-1">
+                                        <span class="material-symbols-outlined !text-[14px]">error</span>
+                                        {{ $errors->first('earning_category') }}
+                                    </p>
+                                @endif
+                            </div>
+
+                            <!-- Title -->
+                            <div class="space-y-2">
+                                <label
+                                    class="text-sm font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-2"
+                                    for="title">
+                                    {{ trans('cruds.earning.fields.title') }} <span class="text-red-500">*</span>
+                                </label>
+                                <div class="relative">
+                                    <input
+                                        class="w-full bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-700 rounded-xl py-3 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all {{ $errors->has('title') ? 'ring-2 ring-red-500 border-transparent' : '' }}"
+                                        type="text" name="title" id="title" value="{{ old('title', '') }}"
+                                        placeholder="e.g. Monthly Tuition Fee" required>
+                                </div>
+                                @if($errors->has('title'))
+                                    <p class="text-xs font-medium text-red-500 flex items-center gap-1">
+                                        <span class="material-symbols-outlined !text-[14px]">error</span>
+                                        {{ $errors->first('title') }}
+                                    </p>
+                                @endif
+                            </div>
+
+                            <!-- Student -->
+                            <div class="space-y-2">
+                                <label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="student_id">
+                                    {{ trans('cruds.earning.fields.student') }}
+                                </label>
+                                <select
+                                    class="form-control select2 block w-full {{ $errors->has('student') ? 'ring-2 ring-red-500' : '' }}"
+                                    name="student_id" id="student_id">
+                                    @foreach($students as $id => $entry)
+                                        <option value="{{ $id }}" {{ old('student_id') == $id ? 'selected' : '' }}>{{ $entry }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @if($errors->has('student'))
+                                    <p class="text-xs font-medium text-red-500 flex items-center gap-1">
+                                        <span class="material-symbols-outlined !text-[14px]">error</span>
+                                        {{ $errors->first('student') }}
+                                    </p>
+                                @endif
+                            </div>
+
+                            <!-- Subject -->
+                            <div class="space-y-2">
+                                <label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="subject_id">
+                                    {{ trans('cruds.earning.fields.subject') }}
+                                </label>
+                                <select
+                                    class="form-control select2 block w-full {{ $errors->has('subject') ? 'ring-2 ring-red-500' : '' }}"
+                                    name="subject_id" id="subject_id">
+                                    @foreach($subjects as $id => $entry)
+                                        <option value="{{ $id }}" {{ old('subject_id') == $id ? 'selected' : '' }}>{{ $entry }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @if($errors->has('subject'))
+                                    <p class="text-xs font-medium text-red-500 flex items-center gap-1">
+                                        <span class="material-symbols-outlined !text-[14px]">error</span>
+                                        {{ $errors->first('subject') }}
+                                    </p>
+                                @endif
+                            </div>
+                        </div>
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.earning.fields.payment_proof_details_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="paid_by">{{ trans('cruds.earning.fields.paid_by') }}</label>
-                <input class="form-control {{ $errors->has('paid_by') ? 'is-invalid' : '' }}" type="text" name="paid_by" id="paid_by" value="{{ old('paid_by', '') }}">
-                @if($errors->has('paid_by'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('paid_by') }}
+                </div>
+
+                <!-- Section: Financial & Academic Details -->
+                <div
+                    class="bg-white dark:bg-slate-800/50 backdrop-blur-xl rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                    <div
+                        class="p-6 md:p-8 border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/80">
+                        <h2 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-orange-500">payments</span>
+                            </div>
+                            Financial & Academic Details
+                        </h2>
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.earning.fields.paid_by_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="recieved_by">{{ trans('cruds.earning.fields.recieved_by') }}</label>
-                <input class="form-control {{ $errors->has('recieved_by') ? 'is-invalid' : '' }}" type="text" name="recieved_by" id="recieved_by" value="{{ old('recieved_by', '') }}">
-                @if($errors->has('recieved_by'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('recieved_by') }}
+
+                    <div class="p-6 md:p-8">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <!-- Amount -->
+                            <div class="space-y-2">
+                                <label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="amount">
+                                    {{ trans('cruds.earning.fields.amount') }} <span class="text-red-500">*</span>
+                                </label>
+                                <div class="relative group/input">
+                                    <div
+                                        class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold group-focus-within/input:text-primary transition-colors">
+                                        $</div>
+                                    <input
+                                        class="w-full bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-700 rounded-xl py-3 pl-8 pr-4 text-slate-900 dark:text-white font-bold focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                                        type="number" name="amount" id="amount" value="{{ old('amount', '') }}" step="0.01"
+                                        required>
+                                </div>
+                                @if($errors->has('amount'))
+                                    <p class="text-xs font-medium text-red-500">{{ $errors->first('amount') }}</p>
+                                @endif
+                            </div>
+
+                            <!-- Date -->
+                            <div class="space-y-2">
+                                <label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="earning_date">
+                                    {{ trans('cruds.earning.fields.earning_date') }}
+                                </label>
+                                <div class="relative group/input">
+                                    <span
+                                        class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-slate-400 !text-[20px] group-focus-within/input:text-primary transition-colors">calendar_today</span>
+                                    <input
+                                        class="w-full bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-700 rounded-xl py-3 pl-12 pr-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all datetime"
+                                        type="text" name="earning_date" id="earning_date" value="{{ old('earning_date') }}">
+                                </div>
+                            </div>
+
+                            <!-- Reference -->
+                            <div class="space-y-2">
+                                <label class="text-sm font-semibold text-slate-700 dark:text-slate-300"
+                                    for="earning_reference">
+                                    {{ trans('cruds.earning.fields.earning_reference') }}
+                                </label>
+                                <input
+                                    class="w-full bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-700 rounded-xl py-3 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                                    type="text" name="earning_reference" id="earning_reference"
+                                    value="{{ old('earning_reference', '') }}" placeholder="REF-0000">
+                            </div>
+
+                            <!-- Academic Background -->
+                            <div class="space-y-2">
+                                <label class="text-sm font-semibold text-slate-700 dark:text-slate-300"
+                                    for="academic_background">
+                                    {{ trans('cruds.earning.fields.academic_background') }}
+                                </label>
+                                <input
+                                    class="w-full bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-700 rounded-xl py-3 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                                    type="text" name="academic_background" id="academic_background"
+                                    value="{{ old('academic_background', '') }}" placeholder="e.g. Science">
+                            </div>
+
+                            <!-- Exam Year -->
+                            <div class="space-y-2">
+                                <label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="exam_year">
+                                    {{ trans('cruds.earning.fields.exam_year') }}
+                                </label>
+                                <input
+                                    class="w-full bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-700 rounded-xl py-3 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                                    type="text" name="exam_year" id="exam_year" value="{{ old('exam_year', '') }}"
+                                    placeholder="2024">
+                            </div>
+
+                            <!-- Payment Method -->
+                            <div class="space-y-2">
+                                <label class="text-sm font-semibold text-slate-700 dark:text-slate-300"
+                                    for="payment_method">
+                                    {{ trans('cruds.earning.fields.payment_method') }}
+                                </label>
+                                <input
+                                    class="w-full bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-700 rounded-xl py-3 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                                    type="text" name="payment_method" id="payment_method"
+                                    value="{{ old('payment_method', '') }}" placeholder="Cash, Card, Transfer">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                            <!-- Month -->
+                            <div class="space-y-2">
+                                <label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="earning_month">
+                                    {{ trans('cruds.earning.fields.earning_month') }}
+                                </label>
+                                <input
+                                    class="w-full bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-700 rounded-xl py-3 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                                    type="number" name="earning_month" id="earning_month"
+                                    value="{{ old('earning_month', date('n')) }}" step="1">
+                            </div>
+
+                            <!-- Year -->
+                            <div class="space-y-2">
+                                <label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="earning_year">
+                                    {{ trans('cruds.earning.fields.earning_year') }}
+                                </label>
+                                <input
+                                    class="w-full bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-700 rounded-xl py-3 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                                    type="number" name="earning_year" id="earning_year"
+                                    value="{{ old('earning_year', date('Y')) }}" step="1">
+                            </div>
+                        </div>
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.earning.fields.recieved_by_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="created_by_id">{{ trans('cruds.earning.fields.created_by') }}</label>
-                <select class="form-control select2 {{ $errors->has('created_by') ? 'is-invalid' : '' }}" name="created_by_id" id="created_by_id">
-                    @foreach($created_bies as $id => $entry)
-                        <option value="{{ $id }}" {{ old('created_by_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('created_by'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('created_by') }}
+                </div>
+
+                <!-- Section: Documentation & Administrative -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Proof & Details -->
+                    <div class="lg:col-span-2 space-y-8">
+                        <div
+                            class="bg-white dark:bg-slate-800/50 backdrop-blur-xl rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 p-6 md:p-8">
+                            <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-3">
+                                <span class="material-symbols-outlined text-primary">description</span>
+                                Supporting Documents
+                            </h2>
+
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2 block"
+                                        for="details">
+                                        {{ trans('cruds.earning.fields.details') }}
+                                    </label>
+                                    <div class="prose max-w-none">
+                                        <textarea class="form-control ckeditor" name="details"
+                                            id="details">{!! old('details') !!}</textarea>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2 block">
+                                        {{ trans('cruds.earning.fields.payment_proof') }}
+                                    </label>
+                                    <div class="needsclick dropzone bg-slate-50 dark:bg-slate-900/50 border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-xl hover:border-primary transition-colors duration-300"
+                                        id="payment_proof-dropzone">
+                                        <div class="dz-message" data-dz-message>
+                                            <span
+                                                class="material-symbols-outlined !text-4xl text-slate-400">cloud_upload</span>
+                                            <p class="text-sm text-slate-500 mt-2">Drop receipt or click to upload</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2 block"
+                                        for="payment_proof_details">
+                                        {{ trans('cruds.earning.fields.payment_proof_details') }}
+                                    </label>
+                                    <textarea class="form-control ckeditor" name="payment_proof_details"
+                                        id="payment_proof_details">{!! old('payment_proof_details') !!}</textarea>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.earning.fields.created_by_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="updated_by_id">{{ trans('cruds.earning.fields.updated_by') }}</label>
-                <select class="form-control select2 {{ $errors->has('updated_by') ? 'is-invalid' : '' }}" name="updated_by_id" id="updated_by_id">
-                    @foreach($updated_bies as $id => $entry)
-                        <option value="{{ $id }}" {{ old('updated_by_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('updated_by'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('updated_by') }}
+
+                    <!-- Payer/Receiver Info -->
+                    <div class="lg:col-span-1">
+                        <div
+                            class="sticky top-8 bg-white dark:bg-slate-800/50 backdrop-blur-xl rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 p-6 md:p-8">
+                            <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-3">
+                                <span class="material-symbols-outlined text-emerald-500">assignment_ind</span>
+                                Assignment
+                            </h2>
+
+                            <div class="space-y-6">
+                                <div class="space-y-2">
+                                    <label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="paid_by">
+                                        {{ trans('cruds.earning.fields.paid_by') }}
+                                    </label>
+                                    <input
+                                        class="w-full bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-700 rounded-xl py-3 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                                        type="text" name="paid_by" id="paid_by" value="{{ old('paid_by', '') }}"
+                                        placeholder="Full Name">
+                                </div>
+
+                                <div class="space-y-2">
+                                    <label class="text-sm font-semibold text-slate-700 dark:text-slate-300"
+                                        for="recieved_by">
+                                        {{ trans('cruds.earning.fields.recieved_by') }}
+                                    </label>
+                                    <input
+                                        class="w-full bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-700 rounded-xl py-3 px-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                                        type="text" name="recieved_by" id="recieved_by" value="{{ old('recieved_by', '') }}"
+                                        placeholder="Receiver Name">
+                                </div>
+
+                                <div
+                                    class="p-4 bg-emerald-50 dark:bg-emerald-500/10 rounded-xl border border-emerald-100 dark:border-emerald-500/20 mt-8">
+                                    <p class="text-xs text-emerald-700 dark:text-emerald-400 font-medium leading-relaxed">
+                                        <span class="material-symbols-outlined !text-[14px] align-middle mr-1">info</span>
+                                        Log entries are automatically time-stamped and linked to your account for auditing.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.earning.fields.updated_by_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
-            </div>
-        </form>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-col sm:flex-row items-center justify-end gap-4 pb-12">
+                    <a href="{{ route('admin.earnings.index') }}"
+                        class="w-full sm:w-auto px-8 py-3.5 rounded-xl text-sm font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all text-center">
+                        Discard Changes
+                    </a>
+                    <button
+                        class="w-full sm:w-auto px-10 py-3.5 rounded-xl text-sm font-bold text-white bg-primary hover:bg-primary-hover shadow-lg shadow-primary/25 transition-all transform active:scale-95 flex items-center justify-center gap-3"
+                        type="submit">
+                        <span class="material-symbols-outlined">save</span>
+                        Confirm & Record
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-
-
 
 @endsection
 
 @section('scripts')
-<script>
-    $(document).ready(function () {
-  function SimpleUploadAdapter(editor) {
-    editor.plugins.get('FileRepository').createUploadAdapter = function(loader) {
-      return {
-        upload: function() {
-          return loader.file
-            .then(function (file) {
-              return new Promise(function(resolve, reject) {
-                // Init request
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', '{{ route('admin.earnings.storeCKEditorImages') }}', true);
-                xhr.setRequestHeader('x-csrf-token', window._token);
-                xhr.setRequestHeader('Accept', 'application/json');
-                xhr.responseType = 'json';
+    <script>
+        $(document).ready(function () {
+            // Enhanced Select2 for better mobile experience
+            $('.select2').select2({
+                width: '100%',
+                containerCssClass: 'modern-select2'
+            });
 
-                // Init listeners
-                var genericErrorText = `Couldn't upload file: ${ file.name }.`;
-                xhr.addEventListener('error', function() { reject(genericErrorText) });
-                xhr.addEventListener('abort', function() { reject() });
-                xhr.addEventListener('load', function() {
-                  var response = xhr.response;
+            function SimpleUploadAdapter(editor) {
+                editor.plugins.get('FileRepository').createUploadAdapter = function (loader) {
+                    return {
+                        upload: function () {
+                            return loader.file
+                                .then(function (file) {
+                                    return new Promise(function (resolve, reject) {
+                                        var xhr = new XMLHttpRequest();
+                                        xhr.open('POST', '{{ route('admin.earnings.storeCKEditorImages') }}', true);
+                                        xhr.setRequestHeader('x-csrf-token', window._token);
+                                        xhr.setRequestHeader('Accept', 'application/json');
+                                        xhr.responseType = 'json';
 
-                  if (!response || xhr.status !== 201) {
-                    return reject(response && response.message ? `${genericErrorText}\n${xhr.status} ${response.message}` : `${genericErrorText}\n ${xhr.status} ${xhr.statusText}`);
-                  }
+                                        xhr.addEventListener('error', function () { reject(`Couldn't upload file: ${file.name}.`) });
+                                        xhr.addEventListener('abort', function () { reject() });
+                                        xhr.addEventListener('load', function () {
+                                            var response = xhr.response;
+                                            if (!response || xhr.status !== 201) {
+                                                return reject(response && response.message ? `${response.message}` : `${xhr.status} ${xhr.statusText}`);
+                                            }
+                                            $('form').append('<input type="hidden" name="ck-media[]" value="' + response.id + '">');
+                                            resolve({ default: response.url });
+                                        });
 
-                  $('form').append('<input type="hidden" name="ck-media[]" value="' + response.id + '">');
+                                        if (xhr.upload) {
+                                            xhr.upload.addEventListener('progress', function (e) {
+                                                if (e.lengthComputable) {
+                                                    loader.uploadTotal = e.total;
+                                                    loader.uploaded = e.loaded;
+                                                }
+                                            });
+                                        }
 
-                  resolve({ default: response.url });
-                });
-
-                if (xhr.upload) {
-                  xhr.upload.addEventListener('progress', function(e) {
-                    if (e.lengthComputable) {
-                      loader.uploadTotal = e.total;
-                      loader.uploaded = e.loaded;
-                    }
-                  });
+                                        var data = new FormData();
+                                        data.append('upload', file);
+                                        data.append('crud_id', '{{ $earning->id ?? 0 }}');
+                                        xhr.send(data);
+                                    });
+                                })
+                        }
+                    };
                 }
+            }
 
-                // Send request
-                var data = new FormData();
-                data.append('upload', file);
-                data.append('crud_id', '{{ $earning->id ?? 0 }}');
-                xhr.send(data);
-              });
-            })
+            var allEditors = document.querySelectorAll('.ckeditor');
+            for (var i = 0; i < allEditors.length; ++i) {
+                ClassicEditor.create(allEditors[i], {
+                    extraPlugins: [SimpleUploadAdapter]
+                });
+            }
+        });
+
+        var uploadedPaymentProofMap = {}
+        Dropzone.options.paymentProofDropzone = {
+            url: '{{ route('admin.earnings.storeMedia') }}',
+            maxFilesize: 5, // Increased to 5MB
+            acceptedFiles: '.jpeg,.jpg,.png,.gif,.pdf', // Added PDF support
+            addRemoveLinks: true,
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            params: {
+                size: 5
+            },
+            success: function (file, response) {
+                $('form').append('<input type="hidden" name="payment_proof[]" value="' + response.name + '">')
+                uploadedPaymentProofMap[file.name] = response.name
+            },
+            removedfile: function (file) {
+                file.previewElement.remove()
+                var name = ''
+                if (typeof file.file_name !== 'undefined') {
+                    name = file.file_name
+                } else {
+                    name = uploadedPaymentProofMap[file.name]
+                }
+                $('form').find('input[name="payment_proof[]"][value="' + name + '"]').remove()
+            },
+            init: function () {
+                @if(isset($earning) && $earning->payment_proof)
+                    var files = {!! json_encode($earning->payment_proof) !!}
+                    for (var i in files) {
+                        var file = files[i]
+                        this.options.addedfile.call(this, file)
+                        this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
+                        file.previewElement.classList.add('dz-complete')
+                        $('form').append('<input type="hidden" name="payment_proof[]" value="' + file.file_name + '">')
+                    }
+                @endif
+                },
+            error: function (file, response) {
+                if ($.type(response) === 'string') {
+                    var message = response
+                } else {
+                    var message = response.errors.file
+                }
+                file.previewElement.classList.add('dz-error')
+                _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+                _results = []
+                for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                    node = _ref[_i]
+                    _results.push(node.textContent = message)
+                }
+                return _results
+            }
         }
-      };
-    }
-  }
+    </script>
 
-  var allEditors = document.querySelectorAll('.ckeditor');
-  for (var i = 0; i < allEditors.length; ++i) {
-    ClassicEditor.create(
-      allEditors[i], {
-        extraPlugins: [SimpleUploadAdapter]
-      }
-    );
-  }
-});
-</script>
-
-<script>
-    var uploadedPaymentProofMap = {}
-Dropzone.options.paymentProofDropzone = {
-    url: '{{ route('admin.earnings.storeMedia') }}',
-    maxFilesize: 2, // MB
-    acceptedFiles: '.jpeg,.jpg,.png,.gif',
-    addRemoveLinks: true,
-    headers: {
-      'X-CSRF-TOKEN': "{{ csrf_token() }}"
-    },
-    params: {
-      size: 2,
-      width: 4096,
-      height: 4096
-    },
-    success: function (file, response) {
-      $('form').append('<input type="hidden" name="payment_proof[]" value="' + response.name + '">')
-      uploadedPaymentProofMap[file.name] = response.name
-    },
-    removedfile: function (file) {
-      console.log(file)
-      file.previewElement.remove()
-      var name = ''
-      if (typeof file.file_name !== 'undefined') {
-        name = file.file_name
-      } else {
-        name = uploadedPaymentProofMap[file.name]
-      }
-      $('form').find('input[name="payment_proof[]"][value="' + name + '"]').remove()
-    },
-    init: function () {
-@if(isset($earning) && $earning->payment_proof)
-      var files = {!! json_encode($earning->payment_proof) !!}
-          for (var i in files) {
-          var file = files[i]
-          this.options.addedfile.call(this, file)
-          this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
-          file.previewElement.classList.add('dz-complete')
-          $('form').append('<input type="hidden" name="payment_proof[]" value="' + file.file_name + '">')
+    <style>
+        .modern-select2+.select2-container .select2-selection {
+            @apply bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-700 rounded-xl h-[48px] flex items-center px-2;
         }
-@endif
-    },
-     error: function (file, response) {
-         if ($.type(response) === 'string') {
-             var message = response //dropzone sends it's own error messages in string
-         } else {
-             var message = response.errors.file
-         }
-         file.previewElement.classList.add('dz-error')
-         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
-         _results = []
-         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-             node = _ref[_i]
-             _results.push(node.textContent = message)
-         }
 
-         return _results
-     }
-}
+        .modern-select2+.select2-container--default .select2-selection--single .select2-selection__arrow {
+            @apply h-[48px] top-0;
+        }
 
-</script>
+        .modern-select2+.select2-container--default .select2-selection--single .select2-selection__rendered {
+            @apply text-slate-900 dark:text-white font-medium;
+        }
+
+        .ck-editor__素质 {
+            @apply border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden shadow-sm;
+        }
+    </style>
 @endsection

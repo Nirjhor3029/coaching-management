@@ -6,6 +6,8 @@
 
 <title>{{ trans('panel.site_title') }}</title>
 
+<link rel="shortcut icon" href="{{ asset('assets/images/logo.svg') }}" type="image/x-icon">
+
 {{-- Tailwind er Darkmode er sathe conflict kore tai bad dchi --}}
 {{--
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" /> --}}

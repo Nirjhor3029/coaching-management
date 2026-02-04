@@ -40,16 +40,14 @@ class EarningsController extends Controller
 
         $subjects = Subject::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $created_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $updated_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        return view('admin.earnings.create', compact('created_bies', 'earning_categories', 'students', 'subjects', 'updated_bies'));
+        return view('admin.earnings.create', compact('earning_categories', 'students', 'subjects'));
     }
 
     public function store(StoreEarningRequest $request)
     {
-        $earning = Earning::create($request->all());
+        $data = $request->all();
+        $data['created_by_id'] = auth()->id();
+        $earning = Earning::create($data);
 
         foreach ($request->input('payment_proof', []) as $file) {
             $earning->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('payment_proof');
@@ -72,29 +70,27 @@ class EarningsController extends Controller
 
         $subjects = Subject::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $created_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $updated_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $earning->load('earning_category', 'student', 'subject', 'created_by', 'updated_by');
 
-        return view('admin.earnings.edit', compact('created_bies', 'earning', 'earning_categories', 'students', 'subjects', 'updated_bies'));
+        return view('admin.earnings.edit', compact('earning', 'earning_categories', 'students', 'subjects'));
     }
 
     public function update(UpdateEarningRequest $request, Earning $earning)
     {
-        $earning->update($request->all());
+        $data = $request->all();
+        $data['updated_by_id'] = auth()->id();
+        $earning->update($data);
 
         if (count($earning->payment_proof) > 0) {
             foreach ($earning->payment_proof as $media) {
-                if (! in_array($media->file_name, $request->input('payment_proof', []))) {
+                if (!in_array($media->file_name, $request->input('payment_proof', []))) {
                     $media->delete();
                 }
             }
         }
         $media = $earning->payment_proof->pluck('file_name')->toArray();
         foreach ($request->input('payment_proof', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
+            if (count($media) === 0 || !in_array($file, $media)) {
                 $earning->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('payment_proof');
             }
         }
@@ -135,10 +131,10 @@ class EarningsController extends Controller
     {
         abort_if(Gate::denies('earning_create') && Gate::denies('earning_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model         = new Earning();
-        $model->id     = $request->input('crud_id', 0);
+        $model = new Earning();
+        $model->id = $request->input('crud_id', 0);
         $model->exists = true;
-        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+        $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }

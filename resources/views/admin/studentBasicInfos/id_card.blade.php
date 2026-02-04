@@ -92,13 +92,15 @@
                     <div
                         class="id-card-size card-preview bg-white rounded-[12px] shadow-2xl relative overflow-hidden flex flex-col border border-slate-100">
                         <!-- Card Header -->
-                        <div class="bg-primary h-12 flex items-center px-4 gap-2">
-                            <div class="bg-white p-1 rounded-sm">
+                        {{-- <div class="bg-primary h-12 flex items-center px-4 gap-2"> --}}
+                        <div class=" h-12 flex items-center px-4 py-2 gap-2">
+                            <img src="{{ asset('assets/images/logo_for_id.svg') }}" alt="Logo" class="h-10 mx-auto">
+                            {{-- <div class="bg-white p-1 rounded-sm">
                                 <svg class="size-5 text-primary" fill="currentColor" viewbox="0 0 48 48">
                                     <path d="M24 4H42V17.3333V30.6667H24V44H6V30.6667V17.3333H24V4Z"></path>
                                 </svg>
-                            </div>
-                            <span class="text-white font-bold text-xs uppercase tracking-tight">{{ config('app.name', 'School Name') }}</span>
+                            </div> --}}
+                            {{-- <span class="text-white font-bold text-xs uppercase tracking-tight">{{ config('app.name', 'School Name') }}</span> --}}
                         </div>
                         <!-- Card Body -->
                         <div class="flex p-4 gap-4 flex-1">

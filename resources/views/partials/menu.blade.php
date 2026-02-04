@@ -3,7 +3,8 @@
 
     <div class="c-sidebar-brand d-md-down-none">
         <a class="c-sidebar-brand-full h4" href="#">
-            {{ trans('panel.site_title') }}
+            {{-- {{ trans('panel.site_title') }} --}}
+            <img src="{{ asset('assets/images/logo_for_menu.svg') }}" alt="Logo" class="h-10 mx-auto">
         </a>
     </div>
 
