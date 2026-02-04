@@ -1,43 +1,139 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.create') }} {{ trans('cruds.earningCategory.title_singular') }}
-    </div>
+    <div class="flex-1 overflow-y-auto bg-[#f8fafc] dark:bg-[#0f172a] transition-colors duration-300">
+        <div class="max-w-4xl mx-auto p-4 md:p-8 lg:p-12">
+            <!-- Breadcrumbs & Header -->
+            <div class="mb-10 animate-in fade-in slide-in-from-top-4 duration-700">
+                <nav
+                    class="flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-4">
+                    <a href="{{ route('admin.home') }}" class="hover:text-primary transition-colors">Dashboard</a>
+                    <span class="material-symbols-outlined !text-[14px]">chevron_right</span>
+                    <a href="{{ route('admin.earning-categories.index') }}"
+                        class="hover:text-primary transition-colors">Earning Categories</a>
+                    <span class="material-symbols-outlined !text-[14px]">chevron_right</span>
+                    <span class="text-slate-900 dark:text-white">Create New</span>
+                </nav>
 
-    <div class="card-body">
-        <form method="POST" action="{{ route("admin.earning-categories.store") }}" enctype="multipart/form-data">
-            @csrf
-            <div class="form-group">
-                <label for="name">{{ trans('cruds.earningCategory.fields.name') }}</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}">
-                @if($errors->has('name'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('name') }}
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                            Create <span class="text-primary">Earning Category</span>
+                        </h1>
+                        <p class="mt-2 text-slate-600 dark:text-slate-400 text-lg">
+                            Define a new category for organizing revenue streams.
+                        </p>
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.earningCategory.fields.name_helper') }}</span>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="type">{{ trans('cruds.earningCategory.fields.type') }}</label>
-                <input class="form-control {{ $errors->has('type') ? 'is-invalid' : '' }}" type="text" name="type" id="type" value="{{ old('type', '') }}">
-                @if($errors->has('type'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('type') }}
+
+            <!-- Form Card -->
+            <form action="{{ route('admin.earning-categories.store') }}" method="POST" enctype="multipart/form-data"
+                class="space-y-8 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-200">
+                @csrf
+
+                <!-- Section: Category Details -->
+                <div class="relative group">
+                    <div
+                        class="absolute -inset-1 bg-gradient-to-r from-primary/20 to-purple-500/20 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000">
                     </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.earningCategory.fields.type_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
-            </div>
-        </form>
+                    <div
+                        class="relative bg-white dark:bg-slate-800/50 backdrop-blur-xl rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                        <div
+                            class="p-6 md:p-8 border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/80">
+                            <h2 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary">category</span>
+                                </div>
+                                Category Information
+                            </h2>
+                        </div>
+
+                        <div class="p-6 md:p-8 space-y-6">
+                            <!-- Name -->
+                            <div class="space-y-2">
+                                <label
+                                    class="text-sm font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-2"
+                                    for="name">
+                                    {{ trans('cruds.earningCategory.fields.name') }} <span class="text-red-500">*</span>
+                                </label>
+                                <div class="relative group/input">
+                                    <span
+                                        class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-slate-400 !text-[20px] group-focus-within/input:text-primary transition-colors">label</span>
+                                    <input
+                                        class="w-full bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-700 rounded-xl py-3 pl-12 pr-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all {{ $errors->has('name') ? 'ring-2 ring-red-500 border-transparent' : '' }}"
+                                        type="text" name="name" id="name" value="{{ old('name', '') }}"
+                                        placeholder="e.g. Tuition Fee, Exam Fee, Admission Fee" required>
+                                </div>
+                                @if($errors->has('name'))
+                                    <p class="text-xs font-medium text-red-500 flex items-center gap-1">
+                                        <span class="material-symbols-outlined !text-[14px]">error</span>
+                                        {{ $errors->first('name') }}
+                                    </p>
+                                @endif
+                                @if(trans('cruds.earningCategory.fields.name_helper'))
+                                    <p class="text-xs text-slate-500 dark:text-slate-400">
+                                        {{ trans('cruds.earningCategory.fields.name_helper') }}
+                                    </p>
+                                @endif
+                            </div>
+
+                            <!-- Type -->
+                            <div class="space-y-2">
+                                <label
+                                    class="text-sm font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-2"
+                                    for="type">
+                                    {{ trans('cruds.earningCategory.fields.type') }}
+                                </label>
+                                <div class="relative group/input">
+                                    <span
+                                        class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-slate-400 !text-[20px] group-focus-within/input:text-primary transition-colors">style</span>
+                                    <input
+                                        class="w-full bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-700 rounded-xl py-3 pl-12 pr-4 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all {{ $errors->has('type') ? 'ring-2 ring-red-500 border-transparent' : '' }}"
+                                        type="text" name="type" id="type" value="{{ old('type', '') }}"
+                                        placeholder="e.g. Monthly, One-time, Annual">
+                                </div>
+                                @if($errors->has('type'))
+                                    <p class="text-xs font-medium text-red-500 flex items-center gap-1">
+                                        <span class="material-symbols-outlined !text-[14px]">error</span>
+                                        {{ $errors->first('type') }}
+                                    </p>
+                                @endif
+                                @if(trans('cruds.earningCategory.fields.type_helper'))
+                                    <p class="text-xs text-slate-500 dark:text-slate-400">
+                                        {{ trans('cruds.earningCategory.fields.type_helper') }}
+                                    </p>
+                                @endif
+                            </div>
+
+                            <!-- Info Box -->
+                            <div
+                                class="p-4 bg-blue-50 dark:bg-blue-500/10 rounded-xl border border-blue-100 dark:border-blue-500/20">
+                                <p class="text-xs text-blue-700 dark:text-blue-400 font-medium leading-relaxed">
+                                    <span class="material-symbols-outlined !text-[14px] align-middle mr-1">info</span>
+                                    Categories help organize and track different types of revenue. Choose descriptive names
+                                    for easy identification.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-col sm:flex-row items-center justify-end gap-4 pb-12">
+                    <a href="{{ route('admin.earning-categories.index') }}"
+                        class="w-full sm:w-auto px-8 py-3.5 rounded-xl text-sm font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all text-center">
+                        Cancel
+                    </a>
+                    <button
+                        class="w-full sm:w-auto px-10 py-3.5 rounded-xl text-sm font-bold text-white bg-primary hover:bg-primary-hover shadow-lg shadow-primary/25 transition-all transform active:scale-95 flex items-center justify-center gap-3"
+                        type="submit">
+                        <span class="material-symbols-outlined">save</span>
+                        Create Category
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-
-
 
 @endsection
