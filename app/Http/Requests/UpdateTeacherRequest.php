@@ -3,9 +3,10 @@
 namespace App\Http\Requests;
 
 use App\Models\Teacher;
-use Gate;
+// use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 
 class UpdateTeacherRequest extends FormRequest
 {
@@ -41,7 +42,7 @@ class UpdateTeacherRequest extends FormRequest
                 'required',
             ],
             'salary_amount' => [
-                'required',
+                'nullable',
             ],
             'subjects.*' => [
                 'integer',

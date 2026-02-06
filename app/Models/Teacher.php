@@ -30,7 +30,7 @@ class Teacher extends Model implements HasMedia
 
     public const SALARY_TYPE_SELECT = [
         'fixed' => 'fixed',
-        'subject_wise' => 'subject_wise',
+        'variable' => 'variable',
     ];
 
     public const GENDER_SELECT = [

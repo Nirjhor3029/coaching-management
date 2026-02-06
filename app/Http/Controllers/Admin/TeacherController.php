@@ -7,11 +7,13 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyTeacherRequest;
 use App\Http\Requests\StoreTeacherRequest;
 use App\Http\Requests\UpdateTeacherRequest;
+use App\Models\Role;
 use App\Models\Subject;
 use App\Models\Teacher;
 use App\Models\User;
-use Gate;
+// use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -42,13 +44,20 @@ class TeacherController extends Controller
         // 1. Create User account first
         $user = User::where('email', $request->email)->first();
         if (!$user) {
+            $password = $request->password ?? $request->email; // Use password if provided, else email
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => bcrypt($request->input('password', $request->email)), // Use password if provided, else email
+                'password' => bcrypt($password), // Use password if provided, else email
             ]);
+            $teacherRole = Role::where('title', 'Teacher')->first();
             // Assign 'User' role (ID 2)
-            $user->roles()->sync([2]);
+            if (isset($teacherRole)) {
+                $user->roles()->sync([$teacherRole->id]);
+            }else{
+                $user->roles()->sync([2]); // Default 'User' role
+            }
+            
         }
 
         // 2. Create Teacher and link to User

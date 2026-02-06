@@ -38,7 +38,7 @@ class StoreTeacherRequest extends FormRequest
                 'nullable',
             ],
             'salary_amount' => [
-                'required',
+                'nullable',
             ],
             'subjects.*' => [
                 'integer',

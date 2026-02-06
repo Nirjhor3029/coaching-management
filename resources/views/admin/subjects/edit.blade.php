@@ -17,14 +17,14 @@
                         <div class="flex items-center">
                             <span class="material-symbols-outlined text-slate-400 text-[18px]">chevron_right</span>
                             <a class="ml-1 text-sm font-medium text-slate-500 hover:text-primary md:ml-2 dark:text-slate-400 dark:hover:text-white"
-                                href="{{ route('admin.subjects.index') }}">Subjects</a>
+                                href="{{ route('admin.subjects.index') }}">Batches</a>
                         </div>
                     </li>
                     <li aria-current="page">
                         <div class="flex items-center">
                             <span class="material-symbols-outlined text-slate-400 text-[18px]">chevron_right</span>
                             <span class="ml-1 text-sm font-medium text-slate-900 md:ml-2 dark:text-white">Edit
-                                Subject</span>
+                                Batch</span>
                         </div>
                     </li>
                 </ol>
@@ -33,8 +33,8 @@
             <!-- Page Header -->
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Edit Subject</h1>
-                    <p class="mt-1 text-slate-500 dark:text-slate-400">Update subject name, code, and monthly fee.</p>
+                    <h1 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Edit Batch</h1>
+                    <p class="mt-1 text-slate-500 dark:text-slate-400">Update Batch name, code, and monthly fee.</p>
                 </div>
             </div>
 
@@ -50,7 +50,7 @@
                         <div
                             class="flex items-center gap-2 text-primary border-b border-slate-100 dark:border-slate-700/50 pb-4">
                             <span class="material-symbols-outlined font-bold">book</span>
-                            <h3 class="text-lg font-bold text-slate-900 dark:text-white">Subject Details</h3>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white">Batch Details</h3>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -90,7 +90,9 @@
                                     for="monthly_fee">{{ trans('cruds.subject.fields.monthly_fee') }}</label>
                                 <div class="relative mt-1">
                                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <span class="text-slate-500 sm:text-sm">$</span>
+                                        <span class="text-slate-500 sm:text-sm">
+                                            ৳
+                                        </span>
                                     </div>
                                     <input
                                         class="block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 pl-7 pr-3 {{ $errors->has('monthly_fee') ? 'border-red-500 ring-red-500' : '' }}"
@@ -120,7 +122,7 @@
                         class="inline-flex items-center px-6 py-2 text-sm font-medium text-white bg-primary border border-transparent rounded-lg shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
                         type="submit">
                         <span class="material-symbols-outlined text-[20px] mr-2">save</span>
-                        Update Subject
+                        Update Batch
                     </button>
                 </div>
             </form>
