@@ -65,6 +65,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('student-basic-infos/parse-csv-import', 'StudentBasicInfoController@parseCsvImport')->name('student-basic-infos.parseCsvImport');
     Route::post('student-basic-infos/process-csv-import', 'StudentBasicInfoController@processCsvImport')->name('student-basic-infos.processCsvImport');
     Route::get('student-basic-infos/print-id-card/{id}', [StudentBasicInfoController::class, 'printIdCard'])->name('student-basic-infos.printIdCard');
+    Route::post('student-basic-infos/{studentBasicInfo}/sync-subjects', 'StudentBasicInfoController@syncSubjects')->name('student-basic-infos.syncSubjects');
     Route::resource('student-basic-infos', 'StudentBasicInfoController');
 
     // Student Details Information

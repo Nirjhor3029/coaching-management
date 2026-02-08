@@ -287,7 +287,16 @@ class StudentBasicInfoController extends Controller
         $attendancePercent = 0;
         $score = 0;
 
-        return view('admin.studentBasicInfos.show', compact('studentBasicInfo', 'attendancePercent', 'score'));
+        $subjects = Subject::pluck('name', 'id');
+
+        return view('admin.studentBasicInfos.show', compact('studentBasicInfo', 'attendancePercent', 'score', 'subjects'));
+    }
+
+    public function syncSubjects(Request $request, StudentBasicInfo $studentBasicInfo)
+    {
+        $studentBasicInfo->subjects()->sync($request->input('subjects', []));
+
+        return response()->json(['message' => 'Subjects updated successfully']);
     }
 
     public function destroy(StudentBasicInfo $studentBasicInfo)

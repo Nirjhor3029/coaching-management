@@ -152,7 +152,7 @@
                             </a>
                         </li>
                     @endcan
-                    @can('student_details_information_access')
+                    {{-- @can('student_details_information_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.student-details-informations.index") }}"
                                 class="c-sidebar-nav-link {{ request()->is("admin/student-details-informations") || request()->is("admin/student-details-informations/*") ? "c-active" : "" }}">
@@ -162,7 +162,7 @@
                                 {{ trans('cruds.studentDetailsInformation.title') }}
                             </a>
                         </li>
-                    @endcan
+                    @endcan --}}
                 </ul>
             </li>
         @endcan

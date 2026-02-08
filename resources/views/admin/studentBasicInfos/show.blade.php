@@ -193,7 +193,8 @@
                                     <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
                                         <td class="px-6 py-4 text-sm font-medium">{{ $earning->date ?? 'N/A' }}</td>
                                         <td class="px-6 py-4 text-sm">{{ $earning->description ?? 'Tuition Fee' }}</td>
-                                        <td class="px-6 py-4 text-sm font-bold">{{ number_format($earning->amount, 2) }}</td>
+                                        <td class="px-6 py-4 text-sm font-bold">{{ number_format($earning->amount, 2) }}
+                                        </td>
                                         <td class="px-6 py-4">
                                             <span
                                                 class="px-2 py-1 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 text-[10px] font-bold rounded uppercase">Paid</span>
@@ -201,7 +202,8 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="4" class="px-6 py-4 text-center text-slate-500">No recent payments found
+                                        <td colspan="4" class="px-6 py-4 text-center text-slate-500">No recent payments
+                                            found
                                         </td>
                                     </tr>
                                 @endforelse
@@ -258,7 +260,9 @@
                     class="bg-white dark:bg-slate-800 rounded-xl border border-[#e7edf3] dark:border-slate-700 overflow-hidden shadow-sm">
                     <div class="px-6 py-4 border-b border-[#e7edf3] dark:border-slate-700 flex items-center gap-2">
                         <span class="material-symbols-outlined text-primary">auto_stories</span>
-                        <h3 class="font-bold text-lg text-[#0d141b] dark:text-white">Enrolled Subjects</h3>
+                        <h3 class="font-bold text-lg text-[#0d141b] dark:text-white">
+                            Enrolled {{ trans('cruds.subject.title') }}
+                        </h3>
                     </div>
                     <div class="p-6">
                         <ul class="space-y-3 text-[#0d141b] dark:text-white">
@@ -276,10 +280,10 @@
                                 <p class="text-sm text-slate-500">No subjects assigned</p>
                             @endforelse
                         </ul>
-                        <button
+                        <button onclick="openSubjectModal()"
                             class="w-full mt-6 py-2 border-2 border-dashed border-[#e7edf3] dark:border-slate-700 rounded-lg text-sm text-[#4c739a] font-bold hover:border-primary/50 hover:text-primary transition-colors flex items-center justify-center gap-2">
                             <span class="material-symbols-outlined text-[18px]">add</span>
-                            Manage Subjects
+                            Manage {{ trans('cruds.subject.title') }}
                         </button>
                     </div>
                 </div>
@@ -481,8 +485,125 @@
                         'earnings' => $studentBasicInfo->studentEarnings,
                     ])
                 </div>
+            </div>
+        </div>
+
+    </div>
+@endsection
+
+@section('scripts')
+    <!-- Subject Management Modal -->
+    <div id="subjectModal" class="fixed inset-0 z-[9999] hidden overflow-y-auto" aria-labelledby="modal-title"
+        role="dialog" aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <!-- Background overlay -->
+            <div class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity" aria-hidden="true"
+                onclick="closeSubjectModal()"></div>
+
+            <!-- Modal panel -->
+            <div
+                class="inline-block align-bottom bg-white dark:bg-slate-800 rounded-2xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full border border-slate-200 dark:border-slate-700">
+                <div class="bg-white dark:bg-slate-800 px-6 pt-6 pb-4 sm:p-8 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div
+                            class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-xl bg-primary/10 sm:mx-0 sm:h-10 sm:w-10">
+                            <span class="material-symbols-outlined text-primary">auto_stories</span>
+                        </div>
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                            <h3 class="text-xl leading-6 font-bold text-slate-900 dark:text-white" id="modal-title">
+                                Manage Enrolled Subjects
+                            </h3>
+                            <div class="mt-4">
+                                <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">
+                                    Select the subjects this student should be enrolled in.
+                                </p>
+                                <form id="syncSubjectsForm">
+                                    @csrf
+                                    <div class="space-y-4">
+                                        <div class="form-group">
+                                            <label
+                                                class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Available
+                                                Subjects</label>
+                                            <select name="subjects[]" id="subjects-select" class="w-full select2"
+                                                multiple="multiple">
+                                                @foreach ($subjects as $id => $name)
+                                                    <option value="{{ $id }}"
+                                                        {{ $studentBasicInfo->subjects->contains($id) ? 'selected' : '' }}>
+                                                        {{ $name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
+                </div>
+                <div class="bg-slate-50 dark:bg-slate-900/50 px-6 py-4 sm:px-8 sm:flex sm:flex-row-reverse gap-3">
+                    <button type="button" onclick="submitSubjects()" id="saveSubjectsBtn"
+                        class="w-full inline-flex justify-center rounded-xl border border-transparent shadow-lg shadow-primary/20 px-6 py-2.5 bg-primary text-base font-bold text-white hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:ml-3 sm:w-auto sm:text-sm transition-all flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[18px]">save</span>
+                        Save Changes
+                    </button>
+                    <button type="button" onclick="closeSubjectModal()"
+                        class="mt-3 w-full inline-flex justify-center rounded-xl border border-slate-300 dark:border-slate-700 shadow-sm px-6 py-2.5 bg-white dark:bg-slate-800 text-base font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:mt-0 sm:w-auto sm:text-sm transition-all">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
-            </div>
+    <script>
+        function openSubjectModal() {
+            $('#subjectModal').removeClass('hidden');
+            $('body').addClass('overflow-hidden');
+            // Re-initialize select2 if needed when modal opens
+            $('#subjects-select').select2({
+                width: '100%',
+                placeholder: "Select subjects...",
+                dropdownParent: $('#subjectModal')
+            });
+        }
+
+        function closeSubjectModal() {
+            $('#subjectModal').addClass('hidden');
+            $('body').removeClass('overflow-hidden');
+        }
+
+        function submitSubjects() {
+            const btn = $('#saveSubjectsBtn');
+            const originalText = btn.html();
+
+            btn.prop('disabled', true).html('<span class="material-symbols-outlined animate-spin">sync</span> Saving...');
+
+            const formData = $('#syncSubjectsForm').serialize();
+
+            $.ajax({
+                url: '{{ route('admin.student-basic-infos.syncSubjects', $studentBasicInfo->id) }}',
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: response.message,
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+                        location.reload();
+                    });
+                },
+                error: function(xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                    });
+                    btn.prop('disabled', false).html(originalText);
+                }
+            });
+        }
+    </script>
 @endsection
