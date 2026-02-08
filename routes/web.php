@@ -102,6 +102,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('teachers-payments', 'TeachersPaymentController');
 
     // Earnings
+    Route::get('students/search', 'EarningsController@getStudents')->name('students.search');
     Route::delete('earnings/destroy', 'EarningsController@massDestroy')->name('earnings.massDestroy');
     Route::post('earnings/media', 'EarningsController@storeMedia')->name('earnings.storeMedia');
     Route::post('earnings/ckmedia', 'EarningsController@storeCKEditorImages')->name('earnings.storeCKEditorImages');

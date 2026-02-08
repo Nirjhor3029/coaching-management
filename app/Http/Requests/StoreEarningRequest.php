@@ -17,9 +17,28 @@ class StoreEarningRequest extends FormRequest
     public function rules()
     {
         return [
+            'earning_category_id' => [
+                'required',
+                'integer',
+                'exists:earning_categories,id',
+            ],
+            'student_id' => [
+                'nullable',
+                'integer',
+                'exists:student_basic_infos,id',
+            ],
+            'subject_id' => [
+                'nullable',
+                'integer',
+                'exists:subjects,id',
+            ],
             'title' => [
                 'string',
                 'required',
+            ],
+            'details' => [
+                'string',
+                'nullable',
             ],
             'academic_background' => [
                 'string',
@@ -31,22 +50,23 @@ class StoreEarningRequest extends FormRequest
             ],
             'amount' => [
                 'required',
+                'numeric',
             ],
             'earning_date' => [
-                'nullable',
+                'required',
                 'date',
             ],
             'earning_month' => [
                 'nullable',
                 'integer',
-                'min:-2147483648',
-                'max:2147483647',
+                'min:1',
+                'max:12',
             ],
             'earning_year' => [
                 'nullable',
                 'integer',
-                'min:-2147483648',
-                'max:2147483647',
+                'min:2000',
+                'max:2100',
             ],
             'earning_reference' => [
                 'string',
@@ -58,6 +78,10 @@ class StoreEarningRequest extends FormRequest
             ],
             'payment_proof' => [
                 'array',
+            ],
+            'payment_proof_details' => [
+                'string',
+                'nullable',
             ],
             'paid_by' => [
                 'string',

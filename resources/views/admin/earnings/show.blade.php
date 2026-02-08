@@ -150,7 +150,7 @@
                     </div>
 
                     <!-- Details/Notes -->
-                    @if($earning->details)
+                    @if ($earning->details)
                         <div class="md:col-span-2 space-y-4 pt-4 border-t border-border-light dark:border-border-dark">
                             <h3 class="text-sm font-bold text-text-secondary dark:text-gray-500 uppercase tracking-widest">
                                 Transaction Notes</h3>
@@ -162,12 +162,12 @@
                     @endif
 
                     <!-- Payment Proof -->
-                    @if($earning->payment_proof->count() > 0)
+                    @if ($earning->payment_proof->count() > 0)
                         <div class="md:col-span-2 space-y-4 pt-4 border-t border-border-light dark:border-border-dark">
                             <h3 class="text-sm font-bold text-text-secondary dark:text-gray-500 uppercase tracking-widest">
                                 Payment Proof</h3>
                             <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                                @foreach($earning->payment_proof as $key => $media)
+                                @foreach ($earning->payment_proof as $key => $media)
                                     <a href="{{ $media->getUrl() }}" target="_blank"
                                         class="block group relative aspect-square rounded-xl overflow-hidden border border-border-light dark:border-border-dark">
                                         <img src="{{ $media->getUrl('thumb') }}" alt="Proof"

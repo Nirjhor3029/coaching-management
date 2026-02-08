@@ -36,11 +36,36 @@ class EarningsController extends Controller
 
         $earning_categories = EarningCategory::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $students = StudentBasicInfo::pluck('id_no', 'id')->prepend(trans('global.pleaseSelect'), '');
+        // We don't load all students here anymore, it's handled via Select2 AJAX
+        $students = []; 
 
         $subjects = Subject::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.earnings.create', compact('earning_categories', 'students', 'subjects'));
+    }
+
+    public function getStudents(Request $request)
+    {
+        $search = $request->term;
+
+        $students = StudentBasicInfo::where(function($query) use ($search) {
+                $query->where('first_name', 'LIKE', "%$search%")
+                      ->orWhere('last_name', 'LIKE', "%$search%")
+                      ->orWhere('id_no', 'LIKE', "%$search%");
+            })
+            ->limit(10)
+            ->get();
+
+        $formatted_students = [];
+
+        foreach ($students as $student) {
+            $formatted_students[] = [
+                'id' => $student->id,
+                'text' => ($student->first_name ?? '') . ' ' . ($student->last_name ?? '') . ' (' . ($student->id_no ?? '') . ')'
+            ];
+        }
+
+        return response()->json($formatted_students);
     }
 
     public function store(StoreEarningRequest $request)
@@ -74,7 +99,7 @@ class EarningsController extends Controller
 
         $earning_categories = EarningCategory::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $students = StudentBasicInfo::pluck('id_no', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $students = [];
 
         $subjects = Subject::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
