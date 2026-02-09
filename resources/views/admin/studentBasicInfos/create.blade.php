@@ -32,24 +32,13 @@
             <!-- Page Header -->
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Add New Student
+                    <h1 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
+                        Add New Student
                     </h1>
-                    <p class="mt-1 text-slate-500 dark:text-slate-400">Fill in the details below to register a new
-                        student to the database.</p>
+                    <p class="mt-1 text-slate-500 dark:text-slate-400">
+                        Fill in the details below to register a new student to the database.
+                    </p>
                 </div>
-                {{-- <div class="flex gap-3">
-                    <button
-                        class="px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:bg-slate-800 dark:text-slate-300 dark:border-slate-600 dark:hover:bg-slate-700"
-                        type="button">
-                        Cancel
-                    </button>
-                    <button
-                        class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-primary border border-transparent rounded-lg shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-                        type="button">
-                        <span class="material-symbols-outlined text-[20px] mr-2">save</span>
-                        Save Student
-                    </button>
-                </div> --}}
             </div>
 
 
@@ -104,20 +93,6 @@
                                     <p class="text-xs text-slate-500">PNG, JPG, GIF up to 2MB</p>
                                 </div>
                             </div>
-
-                            {{-- <div class="flex items-center gap-2">
-                                <label class="switch">
-                                    <input type="checkbox" name="status" class="sr-only" {{
-                                        (isset($studentBasicInfo->status) && $studentBasicInfo->status) ? 'checked' : '' }}>
-                                    <span class="slider rounded-full bg-green-600 dark:bg-red-600"></span>
-                                </label>
-                                <span
-                                    class="text-sm font-medium {{ (isset($studentBasicInfo->status) && $studentBasicInfo->status) ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400' }}">
-                                    {{ (isset($studentBasicInfo->status) && $studentBasicInfo->status) ? 'Active' :
-                                    'Inactive' }}
-                                </span>
-                            </div> --}}
-
                         </div>
 
 
@@ -169,7 +144,7 @@
                                 <input
                                     class=" {{ $errors->has('contact_number') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
                                     id="contact_number" name="contact_number" placeholder="e.g. 01685******"
-                                    value="{{ old('contact_number', '') }}" type="text" required />
+                                    value="{{ old('contact_number', '') }}" type="tel" required />
                                 @if ($errors->has('contact_number'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('contact_number') }}
@@ -181,12 +156,12 @@
 
                             {{-- email --}}
                             <div class="col-span-1">
-                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 required"
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 "
                                     for="email">{{ trans('cruds.studentBasicInfo.fields.email') }}</label>
                                 <input
                                     class=" {{ $errors->has('email') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
                                     id="email" name="email" placeholder="e.g. email@example.com" type="email"
-                                    value="{{ old('email', '') }}" required />
+                                    value="{{ old('email', '') }}" />
                                 @if ($errors->has('email'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('email') }}
@@ -336,7 +311,8 @@
                                 <input
                                     class="block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-slate-900 dark:text-white pl-7 shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
                                     id="id_no" name="id_no" readonly="" type="text"
-                                    value="   ST-{{ date('Y') }}-{{ date('m') }}-{{ \App\Models\StudentBasicInfo::count() + 1 }}" />
+                                    value="    {{ \App\Models\StudentBasicInfo::count() + 1 + 100 }}" />
+                                {{-- value="   ST-{{ date('Y') }}-{{ date('m') }}-{{ \App\Models\StudentBasicInfo::count() + 1 }}" /> --}}
                             </div>
                         </div>
 
@@ -468,6 +444,43 @@
                         <h3 class="text-lg font-bold text-slate-900 dark:text-white">Guardian / Contact Info</h3>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                        {{-- fathers_name --}}
+                        <div class="col-span-1">
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 required"
+                                for="fathers_name">{{ trans('cruds.studentDetailsInformation.fields.fathers_name') }}</label>
+                            <input
+                                class=" {{ $errors->has('fathers_name') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
+                                id="fathers_name" name="fathers_name"
+                                value="{{ old('fathers_name', '') }}" placeholder="Father's Full Name"
+                                type="text" required />
+                            @if ($errors->has('fathers_name'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('fathers_name') }}
+                                </div>
+                            @endif
+                            <span
+                                class="help-block">{{ trans('cruds.studentDetailsInformation.fields.fathers_name_helper') }}</span>
+                        </div>
+
+                        {{-- mothers_name --}}
+                        <div class="col-span-1">
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 required"
+                                for="mothers_name">{{ trans('cruds.studentDetailsInformation.fields.mothers_name') }}</label>
+                            <input
+                                class=" {{ $errors->has('mothers_name') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
+                                id="mothers_name" name="mothers_name"
+                                value="{{ old('mothers_name', '') }}" placeholder="Mother's Full Name"
+                                type="text" required />
+                            @if ($errors->has('mothers_name'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('mothers_name') }}
+                                </div>
+                            @endif
+                            <span
+                                class="help-block">{{ trans('cruds.studentDetailsInformation.fields.mothers_name_helper') }}</span>
+                        </div>
+
 
                         {{-- guardian_name --}}
                         <div class="col-span-1 md:col-span-2">

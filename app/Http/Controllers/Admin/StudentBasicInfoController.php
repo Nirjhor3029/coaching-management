@@ -128,12 +128,8 @@ class StudentBasicInfoController extends Controller
         $studentBasicInfo->section_id = $request->section_id;
         $studentBasicInfo->shift_id = $request->shift_id;
 
-        // return $request->joining_date;
-
         $studentBasicInfo->joining_date = $request->joining_date;
         $studentBasicInfo->status = $request->status ? $request->status : 1;
-
-        // $studentBasicInfo->user_id = $request->user_id;
 
         $studentBasicInfo->save();
 
@@ -158,6 +154,10 @@ class StudentBasicInfoController extends Controller
 
         $studentDetails = new StudentDetailsInformation();
         $studentDetails->student_id = $studentBasicInfo->id;
+
+        $studentDetails->fathers_name = $request->fathers_name;
+        $studentDetails->mothers_name = $request->mothers_name;
+
         $studentDetails->guardian_name = $request->guardian_name;
         $studentDetails->guardian_relation = $request->guardian_relation_type == 'Other' ? $request->guardian_relation_other : $request->guardian_relation_type;
         $studentDetails->guardian_contact_number = $request->guardian_contact_number;
@@ -249,6 +249,8 @@ class StudentBasicInfoController extends Controller
         // Update Student Details
         $studentDetails = $studentBasicInfo->studentDetails()->firstOrCreate(['student_id' => $studentBasicInfo->id]);
         $studentDetails->update([
+            'fathers_name' => $request->fathers_name,
+            'mothers_name' => $request->mothers_name,
             'guardian_name' => $request->guardian_name,
             'guardian_relation' => $request->guardian_relation_type == 'Other' ? $request->guardian_relation_other : $request->guardian_relation_type,
             'guardian_contact_number' => $request->guardian_contact_number,

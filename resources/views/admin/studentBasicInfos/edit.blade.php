@@ -143,7 +143,7 @@
                                 <input
                                     class=" {{ $errors->has('contact_number') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
                                     id="contact_number" name="contact_number" placeholder="e.g. 01685******"
-                                    value="{{ old('contact_number', $studentBasicInfo->contact_number) }}" type="text"
+                                    value="{{ old('contact_number', $studentBasicInfo->contact_number) }}" type="tel"
                                     required />
                                 @if ($errors->has('contact_number'))
                                     <div class="invalid-feedback">{{ $errors->first('contact_number') }}</div>
@@ -152,12 +152,12 @@
 
                             {{-- email --}}
                             <div class="col-span-1">
-                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 required"
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 "
                                     for="email">{{ trans('cruds.studentBasicInfo.fields.email') }}</label>
                                 <input
                                     class=" {{ $errors->has('email') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
                                     id="email" name="email" placeholder="e.g. email@example.com" type="email"
-                                    value="{{ old('email', $studentBasicInfo->email) }}" required />
+                                    value="{{ old('email', $studentBasicInfo->email) }}" />
                                 @if ($errors->has('email'))
                                     <div class="invalid-feedback">{{ $errors->first('email') }}</div>
                                 @endif
@@ -239,6 +239,11 @@
                     </div>
                 </div>
 
+
+
+
+
+
                 <!-- Academic Details -->
                 <div class="p-6 md:p-8 border-b border-slate-200 dark:border-slate-700">
                     <div class="flex items-center gap-2 mb-6 text-primary">
@@ -257,7 +262,7 @@
                                 <input
                                     class="block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-slate-900 dark:text-white pl-7 shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
                                     id="id_no" name="id_no" readonly type="text"
-                                    value="{{ $studentBasicInfo->id_no }}" />
+                                    value="   {{ $studentBasicInfo->id_no }}" />
                             </div>
                         </div>
 
@@ -352,6 +357,12 @@
                     </div>
                 </div>
 
+
+
+
+
+
+
                 <!-- Guardian Information -->
                 <div class="p-6 md:p-8">
                     <div class="flex items-center gap-2 mb-6 text-primary">
@@ -359,6 +370,42 @@
                         <h3 class="text-lg font-bold text-slate-900 dark:text-white">Guardian / Contact Info</h3>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+
+                        {{-- fathers_name --}}
+                        <div class="col-span-1">
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 required"
+                                for="fathers_name">{{ trans('cruds.studentDetailsInformation.fields.fathers_name') }}</label>
+                            <input
+                                class=" {{ $errors->has('fathers_name') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
+                                id="fathers_name" name="fathers_name" value="{{ old('fathers_name', $studentBasicInfo->studentDetails->fathers_name ?? '') }}"
+                                placeholder="Father's Full Name" type="text" required />
+                            @if ($errors->has('fathers_name'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('fathers_name') }}
+                                </div>
+                            @endif
+                            <span
+                                class="help-block">{{ trans('cruds.studentDetailsInformation.fields.fathers_name_helper') }}</span>
+                        </div>
+
+                        {{-- mothers_name --}}
+                        <div class="col-span-1">
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 required"
+                                for="mothers_name">{{ trans('cruds.studentDetailsInformation.fields.mothers_name') }}</label>
+                            <input
+                                class=" {{ $errors->has('mothers_name') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
+                                id="mothers_name" name="mothers_name" value="{{ old('mothers_name', $studentBasicInfo->studentDetails->mothers_name ?? '') }}"
+                                placeholder="Mother's Full Name" type="text" required />
+                            @if ($errors->has('mothers_name'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('mothers_name') }}
+                                </div>
+                            @endif
+                            <span
+                                class="help-block">{{ trans('cruds.studentDetailsInformation.fields.mothers_name_helper') }}</span>
+                        </div>
+
                         {{-- guardian_name --}}
                         <div class="col-span-1 md:col-span-2">
                             <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 required"

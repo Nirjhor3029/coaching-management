@@ -48,7 +48,7 @@
                     <div class="flex flex-wrap justify-center md:justify-start items-center gap-x-4 gap-y-2">
                         <span class="text-[#4c739a] font-medium flex items-center gap-1">
                             <span class="material-symbols-outlined text-[18px]">badge</span>
-                            Academic ID: {{ $studentBasicInfo->id_no }}
+                            Academic ID: # {{ $studentBasicInfo->id_no }}
                         </span>
                         @php
                             $StatusColor =
@@ -110,9 +110,10 @@
                             </p>
                         </div>
                         <div>
-                            <p class="text-[#4c739a] text-sm font-medium mb-1 uppercase tracking-tight">Student
-                                ID No.</p>
-                            <p class="font-bold text-[#0d141b] dark:text-white">{{ $studentBasicInfo->id_no }}</p>
+                            <p class="text-[#4c739a] text-sm font-medium mb-1 uppercase tracking-tight">
+                                Student ID No.
+                            </p>
+                            <p class="font-bold text-[#0d141b] dark:text-white">#  {{ $studentBasicInfo->id_no }}</p>
                         </div>
                         <div>
                             <p class="text-[#4c739a] text-sm font-medium mb-1 uppercase tracking-tight">
@@ -511,7 +512,7 @@
                         </div>
                         <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
                             <h3 class="text-xl leading-6 font-bold text-slate-900 dark:text-white" id="modal-title">
-                                Manage Enrolled Subjects
+                                Manage Enrolled {{ trans('cruds.subject.title') }}
                             </h3>
                             <div class="mt-4">
                                 <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">
