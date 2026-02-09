@@ -209,7 +209,8 @@
                                         {{ $errors->first('password') }}
                                     </div>
                                 @endif
-                                <span class="help-block">{{ trans('cruds.studentBasicInfo.fields.password_helper') }}</span>
+                                <span
+                                    class="help-block">{{ trans('cruds.studentBasicInfo.fields.password_helper') }}</span>
                             </div>
 
 
@@ -220,7 +221,8 @@
                                     for="dob">{{ trans('cruds.studentBasicInfo.fields.dob') }}</label>
                                 <input
                                     class="mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                    id="dob" name="dob" type="date" value="{{ old('dob', '') }}" required />
+                                    id="dob" name="dob" type="date" value="{{ old('dob', '') }}"
+                                    required />
                                 @if ($errors->has('dob'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('dob') }}
@@ -237,9 +239,10 @@
                                 <select
                                     class="mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
                                     id="gender" name="gender" required>
-                                    <option value="{{null}}">Select Gender</option>
+                                    <option value="{{ null }}">Select Gender</option>
                                     @foreach (App\Models\StudentBasicInfo::GENDER_RADIO as $key => $label)
-                                        <option value="{{ $key }}" {{ old('gender') == $key ? 'selected' : '' }}>{{ $label }}
+                                        <option value="{{ $key }}"
+                                            {{ old('gender') == $key ? 'selected' : '' }}>{{ $label }}
                                         </option>
                                     @endforeach
                                     {{-- <option>Male</option>
@@ -290,7 +293,8 @@
 
                             {{-- religion --}}
                             <div class="col-span-1">
-                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300" for="religion">
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300"
+                                    for="religion">
                                     Religion
                                 </label>
                                 <input
@@ -424,7 +428,8 @@
                                 for="roll">{{ trans('cruds.studentBasicInfo.fields.roll') }}</label>
                             <input
                                 class=" {{ $errors->has('roll') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                id="roll" name="roll" placeholder="e.g. 15" type="number" value="{{ old('roll', '') }}" />
+                                id="roll" name="roll" placeholder="e.g. 15" type="number"
+                                value="{{ old('roll', '') }}" />
                             @if ($errors->has('roll'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('roll') }}
@@ -439,15 +444,16 @@
                                 for="joining_date">{{ trans('cruds.studentBasicInfo.fields.joining_date') }}</label>
                             <input
                                 class=" {{ $errors->has('joining_date') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                id="joining_date" name="joining_date" type="date" value="{{ old('joining_date', '') }}"
-                                required />
+                                id="joining_date" name="joining_date" type="date"
+                                value="{{ old('joining_date', '') }}" required />
 
                             @if ($errors->has('joining_date'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('joining_date') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.studentBasicInfo.fields.joining_date_helper') }}</span>
+                            <span
+                                class="help-block">{{ trans('cruds.studentBasicInfo.fields.joining_date_helper') }}</span>
                         </div>
                     </div>
                 </div>
@@ -480,6 +486,44 @@
                                 class="help-block">{{ trans('cruds.studentDetailsInformation.fields.guardian_name_helper') }}</span>
                         </div>
 
+                        {{-- guardian_relation --}}
+                        <div class="col-span-1 md:col-span-2">
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 required">
+                                Relation with Student
+                            </label>
+                            <div class="mt-2 flex flex-wrap gap-6">
+                                <label class="flex items-center cursor-pointer group">
+                                    <input type="radio" name="guardian_relation_type" value="Father"
+                                        class="w-4 h-4 text-primary border-slate-300 focus:ring-primary dark:border-slate-600 dark:bg-slate-700"
+                                        {{ old('guardian_relation_type', 'Father') == 'Father' ? 'checked' : '' }}
+                                        required>
+                                    <span class="ml-2 text-sm font-medium text-slate-700 dark:text-slate-300">Father</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer group">
+                                    <input type="radio" name="guardian_relation_type" value="Mother"
+                                        class="w-4 h-4 text-primary border-slate-300 focus:ring-primary dark:border-slate-600 dark:bg-slate-700"
+                                        {{ old('guardian_relation_type') == 'Mother' ? 'checked' : '' }}>
+                                    <span class="ml-2 text-sm font-medium text-slate-700 dark:text-slate-300">Mother</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer group">
+                                    <input type="radio" name="guardian_relation_type" value="Other"
+                                        id="relation_other"
+                                        class="w-4 h-4 text-primary border-slate-300 focus:ring-primary dark:border-slate-600 dark:bg-slate-700"
+                                        {{ old('guardian_relation_type') == 'Other' ? 'checked' : '' }}>
+                                    <span class="ml-2 text-sm font-medium text-slate-700 dark:text-slate-300">Other</span>
+                                </label>
+                            </div>
+
+                            <div id="other_relation_container"
+                                class="mt-4 {{ old('guardian_relation_type') == 'Other' ? '' : 'hidden' }}">
+                                <input
+                                    class="block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
+                                    id="guardian_relation_other" name="guardian_relation_other"
+                                    placeholder="Specify relation (e.g. Uncle, Aunt, Brother)" type="text"
+                                    value="{{ old('guardian_relation_other', '') }}" />
+                            </div>
+                        </div>
+
                         {{-- guardian_email --}}
                         <div class="col-span-1">
                             <label class="block text-sm font-medium text-slate-700 dark:text-slate-300"
@@ -505,8 +549,8 @@
                             <input
                                 class=" {{ $errors->has('guardian_contact_number') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
                                 id="guardian_contact_number" name="guardian_contact_number"
-                                value="{{ old('guardian_contact_number', '') }}" placeholder="e.g. 01xxxxxxxxx" type="tel"
-                                required />
+                                value="{{ old('guardian_contact_number', '') }}" placeholder="e.g. 01xxxxxxxxx"
+                                type="tel" required />
                             @if ($errors->has('guardian_contact_number'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('guardian_contact_number') }}
@@ -523,8 +567,7 @@
                                 for="address">{{ trans('cruds.studentDetailsInformation.fields.address') }}</label>
                             <textarea
                                 class="mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                id="address" name="address" placeholder="Enter full address..."
-                                rows="3">{{ old('address', '') }}</textarea>
+                                id="address" name="address" placeholder="Enter full address..." rows="3">{{ old('address', '') }}</textarea>
                             @if ($errors->has('address'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('address') }}
@@ -556,13 +599,24 @@
 
 @section('scripts')
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             // Need Login Toggle
-            $("#need_login").change(function () {
+            $("#need_login").change(function() {
                 if ($(this).is(":checked")) {
                     $("#password-field").removeClass("d-none").fadeIn();
                 } else {
                     $("#password-field").addClass("d-none").fadeOut();
+                }
+            });
+
+            // Guardian Relation Toggle
+            $('input[name="guardian_relation_type"]').change(function() {
+                if ($(this).val() === 'Other') {
+                    $('#other_relation_container').removeClass('hidden').fadeIn();
+                    $('#guardian_relation_other').attr('required', true);
+                } else {
+                    $('#other_relation_container').addClass('hidden').fadeOut();
+                    $('#guardian_relation_other').attr('required', false);
                 }
             });
 
@@ -602,12 +656,12 @@
                 dropZone.classList.add('opacity-50', 'cursor-wait');
 
                 fetch('{{ route('admin.student-basic-infos.storeMedia') }}', {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest'
-                    }
-                })
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    })
                     .then(response => {
                         if (!response.ok) throw new Error('Upload failed');
                         return response.json();
@@ -615,7 +669,8 @@
                     .then(data => {
                         if (data.name) {
                             // Find and remove any existing hidden inputs for this field
-                            const existingHidden = studentForm.querySelectorAll('input[name="file-upload"][type="hidden"]');
+                            const existingHidden = studentForm.querySelectorAll(
+                                'input[name="file-upload"][type="hidden"]');
                             existingHidden.forEach(el => el.remove());
 
                             // Add hidden input with the filename returned from temporary storage
@@ -661,13 +716,15 @@
 
                 ['dragenter', 'dragover'].forEach(eventName => {
                     dropZone.addEventListener(eventName, () => {
-                        dropZone.classList.add('bg-slate-50', 'dark:bg-slate-800/50', 'border-primary');
+                        dropZone.classList.add('bg-slate-50', 'dark:bg-slate-800/50',
+                            'border-primary');
                     }, false);
                 });
 
                 ['dragleave', 'drop'].forEach(eventName => {
                     dropZone.addEventListener(eventName, () => {
-                        dropZone.classList.remove('bg-slate-50', 'dark:bg-slate-800/50', 'border-primary');
+                        dropZone.classList.remove('bg-slate-50', 'dark:bg-slate-800/50',
+                            'border-primary');
                     }, false);
                 });
 
@@ -684,7 +741,8 @@
                 studentForm.addEventListener('reset', () => {
                     photoPreview.style.backgroundImage = 'none';
                     if (placeholderIcon) placeholderIcon.classList.remove('hidden');
-                    const hiddenInput = studentForm.querySelector('input[name="file-upload"][type="hidden"]');
+                    const hiddenInput = studentForm.querySelector(
+                        'input[name="file-upload"][type="hidden"]');
                     if (hiddenInput) hiddenInput.remove();
                 });
             }
@@ -696,7 +754,7 @@
     <script>
         var uploadedPaymentProofMap = {}
         Dropzone.options.paymentProofDropzone = {
-            url: '{{ route("admin.student-basic-infos.storeMedia") }}',
+            url: '{{ route('admin.student-basic-infos.storeMedia') }}',
             maxFilesize: 2, // MB
             acceptedFiles: '.jpeg,.jpg,.png,.gif',
             addRemoveLinks: true,
@@ -708,11 +766,11 @@
                 width: 4096,
                 height: 4096
             },
-            success: function (file, response) {
+            success: function(file, response) {
                 $('form').append('<input type="hidden" name="payment_proof[]" value="' + response.name + '">')
                 uploadedPaymentProofMap[file.name] = response.name
             },
-            removedfile: function (file) {
+            removedfile: function(file) {
                 console.log(file)
                 file.previewElement.remove()
                 var name = ''
@@ -723,7 +781,7 @@
                 }
                 $('form').find('input[name="payment_proof[]"][value="' + name + '"]').remove()
             },
-            init: function () {
+            init: function() {
                 @if (isset($expense) && $expense->payment_proof)
                     var files = {!! json_encode($expense->payment_proof) !!}
                     for (var i in files) {
@@ -735,8 +793,8 @@
                             '">')
                     }
                 @endif
-                },
-            error: function (file, response) {
+            },
+            error: function(file, response) {
                 if ($.type(response) === 'string') {
                     var message = response //dropzone sends it's own error messages in string
                 } else {
@@ -787,7 +845,7 @@
                 }
             },
             init: function () {
-                @if (isset($studentBasicInfo) && $studentBasicInfo -> image)
+                @if (isset($studentBasicInfo) && $studentBasicInfo->image)
                     var file = {!! json_encode($studentBasicInfo -> image)!!
             }
                         this.options.addedfile.call(this, file)

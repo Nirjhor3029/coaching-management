@@ -159,6 +159,7 @@ class StudentBasicInfoController extends Controller
         $studentDetails = new StudentDetailsInformation();
         $studentDetails->student_id = $studentBasicInfo->id;
         $studentDetails->guardian_name = $request->guardian_name;
+        $studentDetails->guardian_relation = $request->guardian_relation_type == 'Other' ? $request->guardian_relation_other : $request->guardian_relation_type;
         $studentDetails->guardian_contact_number = $request->guardian_contact_number;
         $studentDetails->guardian_email = $request->guardian_email;
         $studentDetails->address = $request->address;
@@ -249,6 +250,7 @@ class StudentBasicInfoController extends Controller
         $studentDetails = $studentBasicInfo->studentDetails()->firstOrCreate(['student_id' => $studentBasicInfo->id]);
         $studentDetails->update([
             'guardian_name' => $request->guardian_name,
+            'guardian_relation' => $request->guardian_relation_type == 'Other' ? $request->guardian_relation_other : $request->guardian_relation_type,
             'guardian_contact_number' => $request->guardian_contact_number,
             'guardian_email' => $request->guardian_email,
             'address' => $request->address,

@@ -62,6 +62,14 @@ class StoreStudentBasicInfoRequest extends FormRequest
                 'string',
                 'required',
             ],
+            'guardian_relation_type' => [
+                'string',
+                'required',
+            ],
+            'guardian_relation_other' => [
+                'string',
+                'nullable',
+            ],
             'guardian_email' => [
                 'email',
                 'nullable',

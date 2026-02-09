@@ -31,13 +31,15 @@
             <!-- Page Header -->
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Edit Student: {{ $studentBasicInfo->first_name }} {{ $studentBasicInfo->last_name }}</h1>
+                    <h1 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Edit Student:
+                        {{ $studentBasicInfo->first_name }} {{ $studentBasicInfo->last_name }}</h1>
                     <p class="mt-1 text-slate-500 dark:text-slate-400">Update the student information below.</p>
                 </div>
             </div>
 
             <!-- Main Form Card -->
-            <form method="POST" action="{{ route('admin.student-basic-infos.update', [$studentBasicInfo->id]) }}" enctype="multipart/form-data"
+            <form method="POST" action="{{ route('admin.student-basic-infos.update', [$studentBasicInfo->id]) }}"
+                enctype="multipart/form-data"
                 class="bg-white dark:bg-[#1a2632] rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
                 @method('PUT')
                 @csrf
@@ -51,7 +53,8 @@
                         <div>
                             <div class="flex items-center">
                                 <input class="h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary"
-                                    type="checkbox" name="need_login" id="need_login" {{ $studentBasicInfo->user_id ? 'checked' : '' }} />
+                                    type="checkbox" name="need_login" id="need_login"
+                                    {{ $studentBasicInfo->user_id ? 'checked' : '' }} />
                                 <label class="ml-2 mb-0 text-sm font-medium text-slate-700 dark:text-slate-300"
                                     for="need_login">
                                     <strong class="text-primary">
@@ -64,38 +67,45 @@
                     <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
                         <!-- Photo Upload -->
                         <div class="md:col-span-4 flex flex-col gap-4">
-                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">Student Photo</label>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">Student
+                                Photo</label>
                             <div id="drop-zone"
                                 class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 dark:border-slate-600 border-dashed rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer group relative overflow-hidden h-48 w-full">
-                                <div class="space-y-1 text-center flex flex-col items-center justify-center w-full h-full bg-cover bg-center" 
-                                     id="photo-preview" 
-                                     style="{{ $studentBasicInfo->image ? 'background-image: url(' . $studentBasicInfo->image->getUrl('preview') . ');' : '' }}">
-                                    
-                                    <div id="photo-placeholder-content" class="{{ $studentBasicInfo->image ? 'hidden' : '' }}">
+                                <div class="space-y-1 text-center flex flex-col items-center justify-center w-full h-full bg-cover bg-center"
+                                    id="photo-preview"
+                                    style="{{ $studentBasicInfo->image ? 'background-image: url(' . $studentBasicInfo->image->getUrl('preview') . ');' : '' }}">
+
+                                    <div id="photo-placeholder-content"
+                                        class="{{ $studentBasicInfo->image ? 'hidden' : '' }}">
                                         <span class="material-symbols-outlined text-slate-400 text-4xl">add_a_photo</span>
                                         <div class="flex text-sm text-slate-600 dark:text-slate-400 justify-center mt-2">
-                                            <label class="relative cursor-pointer bg-white dark:bg-transparent rounded-md font-medium text-primary hover:text-blue-500 focus-within:outline-none">
+                                            <label
+                                                class="relative cursor-pointer bg-white dark:bg-transparent rounded-md font-medium text-primary hover:text-blue-500 focus-within:outline-none">
                                                 <span>Change Photo</span>
-                                                <input class="sr-only" id="file-upload" name="file-upload" type="file" accept="image/*" />
+                                                <input class="sr-only" id="file-upload" name="file-upload" type="file"
+                                                    accept="image/*" />
                                             </label>
                                         </div>
                                         <p class="text-xs text-slate-500">PNG, JPG up to 2MB</p>
                                     </div>
 
                                     <!-- Hidden overlay for hover if image exists -->
-                                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center {{ $studentBasicInfo->image ? '' : 'hidden' }}" id="photo-overlay">
+                                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center {{ $studentBasicInfo->image ? '' : 'hidden' }}"
+                                        id="photo-overlay">
                                         <div class="text-white flex flex-col items-center">
                                             <span class="material-symbols-outlined">edit</span>
                                             <span class="text-xs font-medium">Click to change</span>
                                         </div>
                                     </div>
-                                    
-                                    <input class="sr-only" id="file-upload" name="file-upload" type="file" accept="image/*" />
+
+                                    <input class="sr-only" id="file-upload" name="file-upload" type="file"
+                                        accept="image/*" />
                                 </div>
                             </div>
-                            
+
                             {{-- Field for temporary storage filename --}}
-                            <input type="hidden" name="image" id="image-hidden-input" value="{{ $studentBasicInfo->image ? $studentBasicInfo->image->file_name : '' }}">
+                            <input type="hidden" name="image" id="image-hidden-input"
+                                value="{{ $studentBasicInfo->image ? $studentBasicInfo->image->file_name : '' }}">
                         </div>
 
                         <!-- Inputs -->
@@ -133,7 +143,8 @@
                                 <input
                                     class=" {{ $errors->has('contact_number') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
                                     id="contact_number" name="contact_number" placeholder="e.g. 01685******"
-                                    value="{{ old('contact_number', $studentBasicInfo->contact_number) }}" type="text" required />
+                                    value="{{ old('contact_number', $studentBasicInfo->contact_number) }}" type="text"
+                                    required />
                                 @if ($errors->has('contact_number'))
                                     <div class="invalid-feedback">{{ $errors->first('contact_number') }}</div>
                                 @endif
@@ -158,9 +169,8 @@
                                     for="password">New password (optional)</label>
                                 <input
                                     class=" {{ $errors->has('password') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                    id="password" name="password"
-                                    placeholder="Leave blank to keep current" type="password"
-                                    value="{{ old('password', '') }}" />
+                                    id="password" name="password" placeholder="Leave blank to keep current"
+                                    type="password" value="{{ old('password', '') }}" />
                                 @if ($errors->has('password'))
                                     <div class="invalid-feedback">{{ $errors->first('password') }}</div>
                                 @endif
@@ -172,7 +182,8 @@
                                     for="dob">{{ trans('cruds.studentBasicInfo.fields.dob') }}</label>
                                 <input
                                     class="mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                    id="dob" name="dob" type="date" value="{{ old('dob', $studentBasicInfo->getRawOriginal('dob')) }}" required />
+                                    id="dob" name="dob" type="date"
+                                    value="{{ old('dob', $studentBasicInfo->getRawOriginal('dob')) }}" required />
                                 @if ($errors->has('dob'))
                                     <div class="invalid-feedback">{{ $errors->first('dob') }}</div>
                                 @endif
@@ -187,7 +198,9 @@
                                     id="gender" name="gender" required>
                                     <option value="">Select Gender</option>
                                     @foreach (App\Models\StudentBasicInfo::GENDER_RADIO as $key => $label)
-                                        <option value="{{ $key }}" {{ old('gender', $studentBasicInfo->gender) == $key ? 'selected' : '' }}>{{ $label }}</option>
+                                        <option value="{{ $key }}"
+                                            {{ old('gender', $studentBasicInfo->gender) == $key ? 'selected' : '' }}>
+                                            {{ $label }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -200,8 +213,10 @@
                                     class="mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
                                     id="student_blood_group" name="student_blood_group" required>
                                     <option value="">Select</option>
-                                    @foreach(['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'] as $bg)
-                                        <option value="{{ $bg }}" {{ old('student_blood_group', $studentBasicInfo->studentDetails->student_blood_group ?? '') == $bg ? 'selected' : '' }}>{{ $bg }}</option>
+                                    @foreach (['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'] as $bg)
+                                        <option value="{{ $bg }}"
+                                            {{ old('student_blood_group', $studentBasicInfo->studentDetails->student_blood_group ?? '') == $bg ? 'selected' : '' }}>
+                                            {{ $bg }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -213,8 +228,10 @@
                                 <select
                                     class="mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
                                     id="status" name="status" required>
-                                    @foreach(App\Models\StudentBasicInfo::STATUS_SELECT as $key => $label)
-                                        <option value="{{ $key }}" {{ old('status', $studentBasicInfo->status) == $key ? 'selected' : '' }}>{{ $label }}</option>
+                                    @foreach (App\Models\StudentBasicInfo::STATUS_SELECT as $key => $label)
+                                        <option value="{{ $key }}"
+                                            {{ old('status', $studentBasicInfo->status) == $key ? 'selected' : '' }}>
+                                            {{ $label }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -252,7 +269,8 @@
                                 class="mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
                                 id="class_id" name="class_id">
                                 @foreach ($classes as $id => $entry)
-                                    <option value="{{ $id }}" {{ old('class_id', $studentBasicInfo->class_id) == $id ? 'selected' : '' }}>
+                                    <option value="{{ $id }}"
+                                        {{ old('class_id', $studentBasicInfo->class_id) == $id ? 'selected' : '' }}>
                                         {{ $entry }}
                                     </option>
                                 @endforeach
@@ -268,7 +286,8 @@
                                 class="mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
                                 id="section_id" name="section_id">
                                 @foreach ($sections as $id => $entry)
-                                    <option value="{{ $id }}" {{ old('section_id', $studentBasicInfo->section_id) == $id ? 'selected' : '' }}>
+                                    <option value="{{ $id }}"
+                                        {{ old('section_id', $studentBasicInfo->section_id) == $id ? 'selected' : '' }}>
                                         {{ $entry }}
                                     </option>
                                 @endforeach
@@ -284,7 +303,8 @@
                                 class="mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
                                 id="shift_id" name="shift_id">
                                 @foreach ($shifts as $id => $entry)
-                                    <option value="{{ $id }}" {{ old('shift_id', $studentBasicInfo->shift_id) == $id ? 'selected' : '' }}>
+                                    <option value="{{ $id }}"
+                                        {{ old('shift_id', $studentBasicInfo->shift_id) == $id ? 'selected' : '' }}>
                                         {{ $entry }}
                                     </option>
                                 @endforeach
@@ -297,7 +317,8 @@
                                 for="roll">{{ trans('cruds.studentBasicInfo.fields.roll') }}</label>
                             <input
                                 class="mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                id="roll" name="roll" placeholder="e.g. 15" type="number" value="{{ old('roll', $studentBasicInfo->roll) }}" />
+                                id="roll" name="roll" placeholder="e.g. 15" type="number"
+                                value="{{ old('roll', $studentBasicInfo->roll) }}" />
                         </div>
 
                         {{-- joining_date --}}
@@ -306,7 +327,8 @@
                                 for="joining_date">{{ trans('cruds.studentBasicInfo.fields.joining_date') }}</label>
                             <input
                                 class="mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                id="joining_date" name="joining_date" type="date" value="{{ old('joining_date', $studentBasicInfo->getRawOriginal('joining_date') ? date('Y-m-d', strtotime($studentBasicInfo->getRawOriginal('joining_date'))) : '') }}"
+                                id="joining_date" name="joining_date" type="date"
+                                value="{{ old('joining_date', $studentBasicInfo->getRawOriginal('joining_date') ? date('Y-m-d', strtotime($studentBasicInfo->getRawOriginal('joining_date'))) : '') }}"
                                 required />
                         </div>
 
@@ -316,9 +338,13 @@
                                 {{ trans('cruds.studentBasicInfo.fields.subject') }}
                             </label>
                             <div class="mt-1">
-                                <select class="select2 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm" name="subjects[]" id="subjects" multiple>
-                                    @foreach($subjects as $id => $subject)
-                                        <option value="{{ $id }}" {{ (in_array($id, old('subjects', [])) || $studentBasicInfo->subjects->contains($id)) ? 'selected' : '' }}>{{ $subject }}</option>
+                                <select
+                                    class="select2 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
+                                    name="subjects[]" id="subjects" multiple>
+                                    @foreach ($subjects as $id => $subject)
+                                        <option value="{{ $id }}"
+                                            {{ in_array($id, old('subjects', [])) || $studentBasicInfo->subjects->contains($id) ? 'selected' : '' }}>
+                                            {{ $subject }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -340,7 +366,50 @@
                             <input
                                 class="mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
                                 id="guardian_name" name="guardian_name" placeholder="Full Name" type="text"
-                                value="{{ old('guardian_name', $studentBasicInfo->studentDetails->guardian_name ?? '') }}" required />
+                                value="{{ old('guardian_name', $studentBasicInfo->studentDetails->guardian_name ?? '') }}"
+                                required />
+                        </div>
+
+                        {{-- guardian_relation --}}
+                        @php
+                            $relation = $studentBasicInfo->studentDetails->guardian_relation ?? 'Father';
+                            $isStandard = in_array($relation, ['Father', 'Mother']);
+                        @endphp
+                        <div class="col-span-1 md:col-span-2">
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 required">
+                                Relation with Student
+                            </label>
+                            <div class="mt-2 flex flex-wrap gap-6">
+                                <label class="flex items-center cursor-pointer group">
+                                    <input type="radio" name="guardian_relation_type" value="Father"
+                                        class="w-4 h-4 text-primary border-slate-300 focus:ring-primary dark:border-slate-600 dark:bg-slate-700"
+                                        {{ old('guardian_relation_type', $isStandard ? $relation : '') == 'Father' || (!$isStandard && old('guardian_relation_type') == 'Father') ? 'checked' : '' }}
+                                        required>
+                                    <span class="ml-2 text-sm font-medium text-slate-700 dark:text-slate-300">Father</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer group">
+                                    <input type="radio" name="guardian_relation_type" value="Mother"
+                                        class="w-4 h-4 text-primary border-slate-300 focus:ring-primary dark:border-slate-600 dark:bg-slate-700"
+                                        {{ old('guardian_relation_type', $isStandard ? $relation : '') == 'Mother' || (!$isStandard && old('guardian_relation_type') == 'Mother') ? 'checked' : '' }}>
+                                    <span class="ml-2 text-sm font-medium text-slate-700 dark:text-slate-300">Mother</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer group">
+                                    <input type="radio" name="guardian_relation_type" value="Other"
+                                        id="relation_other"
+                                        class="w-4 h-4 text-primary border-slate-300 focus:ring-primary dark:border-slate-600 dark:bg-slate-700"
+                                        {{ old('guardian_relation_type', $isStandard ? '' : 'Other') == 'Other' ? 'checked' : '' }}>
+                                    <span class="ml-2 text-sm font-medium text-slate-700 dark:text-slate-300">Other</span>
+                                </label>
+                            </div>
+
+                            <div id="other_relation_container"
+                                class="mt-4 {{ old('guardian_relation_type', $isStandard ? '' : 'Other') == 'Other' ? '' : 'hidden' }}">
+                                <input
+                                    class="block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
+                                    id="guardian_relation_other" name="guardian_relation_other"
+                                    placeholder="Specify relation (e.g. Uncle, Aunt, Brother)" type="text"
+                                    value="{{ old('guardian_relation_other', !$isStandard ? $relation : '') }}" />
+                            </div>
                         </div>
 
                         {{-- guardian_email --}}
@@ -350,7 +419,8 @@
                             <input
                                 class="mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
                                 id="guardian_email" name="guardian_email" placeholder="email@example.com"
-                                value="{{ old('guardian_email', $studentBasicInfo->studentDetails->guardian_email ?? '') }}" type="email" />
+                                value="{{ old('guardian_email', $studentBasicInfo->studentDetails->guardian_email ?? '') }}"
+                                type="email" />
                         </div>
 
                         {{-- guardian_contact_number --}}
@@ -360,19 +430,17 @@
                             <input
                                 class="mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
                                 id="guardian_contact_number" name="guardian_contact_number"
-                                value="{{ old('guardian_contact_number', $studentBasicInfo->studentDetails->guardian_contact_number ?? '') }}" placeholder="e.g. 01xxxxxxxxx" type="tel"
-                                required />
+                                value="{{ old('guardian_contact_number', $studentBasicInfo->studentDetails->guardian_contact_number ?? '') }}"
+                                placeholder="e.g. 01xxxxxxxxx" type="tel" required />
                         </div>
 
                         {{-- address --}}
                         <div class="col-span-1 md:col-span-2">
-                            <label
-                                class="block text-sm font-medium text-slate-700 dark:text-slate-300"
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300"
                                 for="address">{{ trans('cruds.studentDetailsInformation.fields.address') }}</label>
                             <textarea
                                 class="mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                id="address" name="address" placeholder="Enter full address..."
-                                rows="3">{{ old('address', $studentBasicInfo->studentDetails->address ?? '') }}</textarea>
+                                id="address" name="address" placeholder="Enter full address..." rows="3">{{ old('address', $studentBasicInfo->studentDetails->address ?? '') }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -398,13 +466,24 @@
 
 @section('scripts')
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             // Need Login Toggle
-            $("#need_login").change(function () {
+            $("#need_login").change(function() {
                 if ($(this).is(":checked")) {
                     $("#password-field").removeClass("d-none").fadeIn();
                 } else {
                     $("#password-field").addClass("d-none").fadeOut();
+                }
+            });
+
+            // Guardian Relation Toggle
+            $('input[name="guardian_relation_type"]').change(function() {
+                if ($(this).val() === 'Other') {
+                    $('#other_relation_container').removeClass('hidden').fadeIn();
+                    $('#guardian_relation_other').attr('required', true);
+                } else {
+                    $('#other_relation_container').addClass('hidden').fadeOut();
+                    $('#guardian_relation_other').attr('required', false);
                 }
             });
 
@@ -438,26 +517,28 @@
                 dropZone.classList.add('opacity-50', 'cursor-wait');
 
                 fetch('{{ route('admin.student-basic-infos.storeMedia') }}', {
-                    method: 'POST',
-                    body: formData,
-                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
-                })
-                .then(response => {
-                    if (!response.ok) throw new Error('Upload failed');
-                    return response.json();
-                })
-                .then(data => {
-                    if (data.name) {
-                        hiddenInput.value = data.name;
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Failed to upload image. Please try again.');
-                })
-                .finally(() => {
-                    dropZone.classList.remove('opacity-50', 'cursor-wait');
-                });
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    })
+                    .then(response => {
+                        if (!response.ok) throw new Error('Upload failed');
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.name) {
+                            hiddenInput.value = data.name;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Failed to upload image. Please try again.');
+                    })
+                    .finally(() => {
+                        dropZone.classList.remove('opacity-50', 'cursor-wait');
+                    });
             }
 
             if (fileUpload) {
@@ -477,19 +558,22 @@
 
                 ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
                     dropZone.addEventListener(eventName, (e) => {
-                        e.preventDefault(); e.stopPropagation();
+                        e.preventDefault();
+                        e.stopPropagation();
                     }, false);
                 });
 
                 ['dragenter', 'dragover'].forEach(eventName => {
                     dropZone.addEventListener(eventName, () => {
-                        dropZone.classList.add('bg-slate-50', 'dark:bg-slate-800/50', 'border-primary');
+                        dropZone.classList.add('bg-slate-50', 'dark:bg-slate-800/50',
+                            'border-primary');
                     }, false);
                 });
 
                 ['dragleave', 'drop'].forEach(eventName => {
                     dropZone.addEventListener(eventName, () => {
-                        dropZone.classList.remove('bg-slate-50', 'dark:bg-slate-800/50', 'border-primary');
+                        dropZone.classList.remove('bg-slate-50', 'dark:bg-slate-800/50',
+                            'border-primary');
                     }, false);
                 });
 
