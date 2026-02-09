@@ -451,9 +451,8 @@
                                 for="fathers_name">{{ trans('cruds.studentDetailsInformation.fields.fathers_name') }}</label>
                             <input
                                 class=" {{ $errors->has('fathers_name') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                id="fathers_name" name="fathers_name"
-                                value="{{ old('fathers_name', '') }}" placeholder="Father's Full Name"
-                                type="text" required />
+                                id="fathers_name" name="fathers_name" value="{{ old('fathers_name', '') }}"
+                                placeholder="Father's Full Name" type="text" required />
                             @if ($errors->has('fathers_name'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('fathers_name') }}
@@ -469,9 +468,8 @@
                                 for="mothers_name">{{ trans('cruds.studentDetailsInformation.fields.mothers_name') }}</label>
                             <input
                                 class=" {{ $errors->has('mothers_name') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                id="mothers_name" name="mothers_name"
-                                value="{{ old('mothers_name', '') }}" placeholder="Mother's Full Name"
-                                type="text" required />
+                                id="mothers_name" name="mothers_name" value="{{ old('mothers_name', '') }}"
+                                placeholder="Mother's Full Name" type="text" required />
                             @if ($errors->has('mothers_name'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('mothers_name') }}
@@ -482,22 +480,7 @@
                         </div>
 
 
-                        {{-- guardian_name --}}
-                        <div class="col-span-1 md:col-span-2">
-                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 required"
-                                for="guardian_name">{{ trans('cruds.studentDetailsInformation.fields.guardian_name') }}</label>
-                            <input
-                                class=" {{ $errors->has('guardian_name') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                id="guardian_name" name="guardian_name" placeholder="Full Name" type="text"
-                                value="{{ old('guardian_name', '') }}" required />
-                            @if ($errors->has('guardian_name'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('guardian_name') }}
-                                </div>
-                            @endif
-                            <span
-                                class="help-block">{{ trans('cruds.studentDetailsInformation.fields.guardian_name_helper') }}</span>
-                        </div>
+
 
                         {{-- guardian_relation --}}
                         <div class="col-span-1 md:col-span-2">
@@ -528,13 +511,50 @@
                             </div>
 
                             <div id="other_relation_container"
-                                class="mt-4 {{ old('guardian_relation_type') == 'Other' ? '' : 'hidden' }}">
-                                <input
-                                    class="block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                    id="guardian_relation_other" name="guardian_relation_other"
-                                    placeholder="Specify relation (e.g. Uncle, Aunt, Brother)" type="text"
-                                    value="{{ old('guardian_relation_other', '') }}" />
+                                class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4 {{ old('guardian_relation_type') == 'Other' ? '' : 'hidden' }}">
+
+                                {{-- guardian_name --}}
+                                <div class="col-span-1">
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 "
+                                        for="guardian_name">{{ trans('cruds.studentDetailsInformation.fields.guardian_name') }}</label>
+                                    <input
+                                        class=" {{ $errors->has('guardian_name') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
+                                        id="guardian_name" name="guardian_name" placeholder="Full Name" type="text"
+                                        value="{{ old('guardian_name', '') }}"  />
+                                    @if ($errors->has('guardian_name'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('guardian_name') }}
+                                        </div>
+                                    @endif
+                                    <span class="help-block">
+                                        {{ trans('cruds.studentDetailsInformation.fields.guardian_name_helper') }}
+                                    </span>
+                                </div>
+
+
+                                {{-- guardian_relation --}}
+                                <div class="col-span-1">
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 "
+                                        for="guardian_relation">{{ trans('cruds.studentDetailsInformation.fields.guardian_relation') }}</label>
+                                    <input
+                                        class="block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
+                                        id="guardian_relation_other" name="guardian_relation_other"
+                                        placeholder="Specify relation (e.g. Uncle, Aunt, Brother)" type="text"
+                                        value="{{ old('guardian_relation_other', '') }}" />
+
+                                    @if ($errors->has('guardian_relation'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('guardian_relation') }}
+                                        </div>
+                                    @endif
+                                    <span class="help-block">
+                                        {{ trans('cruds.studentDetailsInformation.fields.guardian_relation_helper') }}
+                                    </span>
+                                </div>
+                                
                             </div>
+
+
                         </div>
 
                         {{-- guardian_email --}}

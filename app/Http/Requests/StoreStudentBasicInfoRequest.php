@@ -3,9 +3,10 @@
 namespace App\Http\Requests;
 
 use App\Models\StudentBasicInfo;
-use Gate;
+// use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 
 class StoreStudentBasicInfoRequest extends FormRequest
 {
@@ -56,7 +57,8 @@ class StoreStudentBasicInfoRequest extends FormRequest
             ],
             'guardian_name' => [
                 'string',
-                'required',
+                'nullable',
+                // 'required',
             ],
             'guardian_contact_number' => [
                 'string',

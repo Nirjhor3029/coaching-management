@@ -56,7 +56,8 @@ class UpdateStudentBasicInfoRequest extends FormRequest
             ],
             'guardian_name' => [
                 'string',
-                'required',
+                'nullable',
+                // 'required',
             ],
             'guardian_contact_number' => [
                 'string',

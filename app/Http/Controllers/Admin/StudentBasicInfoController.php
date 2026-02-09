@@ -246,12 +246,22 @@ class StudentBasicInfoController extends Controller
             }
         }
 
+        $guardian_name = '';
+        if ($request->guardian_relation_type == 'Father') {
+            $guardian_name = $request->fathers_name;
+        } elseif ($request->guardian_relation_type == 'Mother') {
+            $guardian_name = $request->mothers_name;
+        } else {
+            $guardian_name = $request->guardian_name;
+        }
+
         // Update Student Details
         $studentDetails = $studentBasicInfo->studentDetails()->firstOrCreate(['student_id' => $studentBasicInfo->id]);
+
         $studentDetails->update([
             'fathers_name' => $request->fathers_name,
             'mothers_name' => $request->mothers_name,
-            'guardian_name' => $request->guardian_name,
+            'guardian_name' => $guardian_name,
             'guardian_relation' => $request->guardian_relation_type == 'Other' ? $request->guardian_relation_other : $request->guardian_relation_type,
             'guardian_contact_number' => $request->guardian_contact_number,
             'guardian_email' => $request->guardian_email,
