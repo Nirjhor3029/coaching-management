@@ -109,6 +109,9 @@ class StudentBasicInfoController extends Controller
 
     public function store(StoreStudentBasicInfoRequest $request)
     {
+        // if ($request->need_login) {
+        //     return "need login";
+        // }
         // return $request->all();
         // $studentBasicInfo = StudentBasicInfo::create($request->all());
 
@@ -140,13 +143,20 @@ class StudentBasicInfoController extends Controller
         }
 
         if ($request->need_login) {
-            $user = User::where('email', $request->email)->first();
+            // $user = User::where('email', $request->email)->first();
+            $user = null;
             if (!isset($user)) {
                 $user = User::create([
                     'name' => $request->first_name . ' ' . $request->last_name,
                     'email' => $request->email,
-                    'password' => isset($request->password) && !empty($request->password) ? bcrypt($request->password) : bcrypt($request->email),
+                    'user_name' => $request->user_name ?? null,
+                    'admission_id' => $studentBasicInfo->id_no ?? null,
+                    'password' => isset($request->password) && !empty($request->password) ? bcrypt($request->password) : bcrypt($studentBasicInfo->id_no),
                 ]);
+
+                $user->roles()->sync(\App\Models\Role::whereIn('title', ['Student', 'student'])->first()->id ?? []);
+
+
             }
             $studentBasicInfo->user_id = $user->id;
             $studentBasicInfo->save();

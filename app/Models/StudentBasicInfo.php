@@ -29,7 +29,7 @@ class StudentBasicInfo extends Model implements HasMedia
 
     public const GENDER_RADIO = [
         'male' => 'Male',
-        'memale' => 'Female',
+        'female' => 'Female',
         'others' => 'Others',
     ];
 

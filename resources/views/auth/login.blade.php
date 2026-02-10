@@ -86,8 +86,7 @@
     class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 h-screen overflow-hidden flex flex-col font-display antialiased">
     <div class="flex flex-1 h-full w-full">
         <!-- Left Panel: Branding & Inspiration -->
-        <div class="relative hidden lg:flex w-1/2 flex-col justify-between overflow-hidden "
-            style="--tw-bg-opacity: 1;
+        <div class="relative hidden lg:flex w-1/2 flex-col justify-between overflow-hidden " style="--tw-bg-opacity: 1;
     background-color: rgb(15 23 42 / 67%);">
             <!-- Background Image -->
             <div class="absolute inset-0 h-full w-full bg-cover bg-center opacity-60 mix-blend-overlay transition-opacity duration-1000"
@@ -182,19 +181,21 @@
                 <!-- <form action="#" class="flex flex-col gap-5" method="POST"> -->
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
-                    <!-- Email Input -->
+                    <!-- Identity Input -->
                     <label class="flex flex-col gap-1.5 mb-4">
-                        <span class="text-sm font-medium text-slate-900 dark:text-slate-200">Email Address</span>
+                        <span class="text-sm font-medium text-slate-900 dark:text-slate-200">Email / Username /
+                            Admission ID</span>
                         <div class="relative flex items-center">
                             <span class="absolute left-4 text-slate-400 material-symbols-outlined"
-                                style="font-size: 20px;">mail</span>
+                                style="font-size: 20px;">account_circle</span>
                             <input
                                 class="form-input h-12 w-full rounded-lg border border-slate-200 bg-white pl-11 pr-4 text-sm text-slate-900 placeholder:text-slate-400 focus:border-primary focus:ring-1 focus:ring-primary dark:border-slate-700 dark:bg-slate-800 dark:text-white"
-                                placeholder="name@school.com" required="" type="email" name="email" />
+                                placeholder="Email, Username or ID" required="" type="text" name="login"
+                                value="{{ old('login') }}" />
                         </div>
-                        @if ($errors->has('email'))
+                        @if ($errors->has('login'))
                             <div class="invalid-feedback">
-                                {{ $errors->first('email') }}
+                                {{ $errors->first('login') }}
                             </div>
                         @endif
                     </label>
@@ -249,7 +250,7 @@
         </div>
     </div>
     <script>
-        document.getElementById('togglePassword').addEventListener('click', function() {
+        document.getElementById('togglePassword').addEventListener('click', function () {
             const passwordInput = document.getElementById('password');
             const icon = this.querySelector('.material-symbols-outlined');
 

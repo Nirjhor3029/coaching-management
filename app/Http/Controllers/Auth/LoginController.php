@@ -37,4 +37,38 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    /**
+     * Get the login username to be used by the controller.
+     *
+     * @return string
+     */
+    public function username()
+    {
+        return 'login';
+    }
+
+    /**
+     * Attempt to log the user into the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    protected function attemptLogin(\Illuminate\Http\Request $request)
+    {
+        $loginValue = $request->input($this->username());
+        $password = $request->input('password');
+
+        $user = \App\Models\User::where('email', $loginValue)
+            ->orWhere('user_name', $loginValue)
+            ->orWhere('admission_id', $loginValue)
+            ->first();
+
+        if ($user && \Hash::check($password, $user->password)) {
+            \Illuminate\Support\Facades\Auth::login($user, $request->boolean('remember'));
+            return true;
+        }
+
+        return false;
+    }
 }
