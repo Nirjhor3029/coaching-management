@@ -43,8 +43,7 @@
                                     class="w-full pl-4 pr-10  appearance-none bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-[#2563EB]/20 dark:focus:ring-[#60A5FA]/20 focus:border-[#2563EB] dark:focus:border-[#60A5FA] text-[#1F2937] dark:text-[#F9FAFB] {{ $errors->has('earning_category') ? 'border-red-500' : '' }}">
                                     <!-- <option value="">Select category...</option> -->
                                     @foreach ($earning_categories as $id => $entry)
-                                        <option value="{{ $id }}"
-                                            {{ old('earning_category_id') == $id ? 'selected' : '' }}>
+                                        <option value="{{ $id }}" {{ old('earning_category_id') == $id ? 'selected' : '' }}>
                                             {{ $entry }}
                                         </option>
                                     @endforeach
@@ -66,8 +65,8 @@
                             </label>
                             <input name="title" id="title" required
                                 class="w-full px-4  bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-700 
-                                                            rounded-lg focus:ring-2 focus:ring-[#2563EB]/20 dark:focus:ring-[#60A5FA]/20 
-                                                            focus:border-[#2563EB] dark:focus:border-[#60A5FA] text-[#1F2937] dark:text-[#F9FAFB] mt-0 {{ $errors->has('title') ? 'border-red-500' : '' }}"
+                                                                    rounded-lg focus:ring-2 focus:ring-[#2563EB]/20 dark:focus:ring-[#60A5FA]/20 
+                                                                    focus:border-[#2563EB] dark:focus:border-[#60A5FA] text-[#1F2937] dark:text-[#F9FAFB] mt-0 {{ $errors->has('title') ? 'border-red-500' : '' }}"
                                 placeholder="e.g. Tuition Fee for Grade 10" type="text" value="{{ old('title', '') }}" />
                             @if ($errors->has('title'))
                                 <p class="text-red-500 text-xs mt-1">{{ $errors->first('title') }}</p>
@@ -124,8 +123,7 @@
                                         class="w-full pl-4 pr-10  appearance-none bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-[#2563EB]/20 dark:focus:ring-[#60A5FA]/20 focus:border-[#2563EB] dark:focus:border-[#60A5FA] text-[#1F2937] dark:text-[#F9FAFB]">
                                         <option value="">Select Batch</option>
                                         @foreach ($subjects as $id => $entry)
-                                            <option value="{{ $id }}"
-                                                {{ old('subject_id') == $id ? 'selected' : '' }}>
+                                            <option value="{{ $id }}" {{ old('subject_id') == $id ? 'selected' : '' }}>
                                                 {{ $entry }}
                                             </option>
                                         @endforeach
@@ -153,8 +151,7 @@
                                 </label>
                                 <input name="exam_year" id="exam_year"
                                     class="w-full px-4  bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-[#2563EB]/20 dark:focus:ring-[#60A5FA]/20 focus:border-[#2563EB] dark:focus:border-[#60A5FA] text-[#1F2937] dark:text-[#F9FAFB]"
-                                    placeholder="e.g. 2020, 2021 or 2022" type="text"
-                                    value="{{ old('exam_year', '') }}" />
+                                    placeholder="e.g. 2020, 2021 or 2022" type="text" value="{{ old('exam_year', '') }}" />
                             </div>
                         </div>
                     </div>
@@ -197,12 +194,11 @@
                                 <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">Amount</label>
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                        <span class="text-slate-500 font-semibold">$</span>
+                                        <span class="text-slate-500 font-semibold">৳</span>
                                     </div>
                                     <input name="amount" id="amount" required
                                         class="w-full pl-8 pr-4  bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-[#2563EB]/20 dark:focus:ring-[#60A5FA]/20 focus:border-[#2563EB] dark:focus:border-[#60A5FA] text-[#1F2937] dark:text-[#F9FAFB] font-mono {{ $errors->has('amount') ? 'border-red-500' : '' }}"
-                                        placeholder="0.00" step="0.01" type="number"
-                                        value="{{ old('amount', '') }}" />
+                                        placeholder="0.00" step="0.01" type="number" value="{{ old('amount', '') }}" />
                                 </div>
                                 @if ($errors->has('amount'))
                                     <p class="text-red-500 text-xs mt-1">{{ $errors->first('amount') }}</p>
@@ -238,23 +234,19 @@
                                     <label class="relative cursor-pointer">
                                         <input checked="" class="peer sr-only" name="payment_method" type="radio"
                                             value="cash" />
-                                        <div
-                                            class="flex flex-col items-center justify-center 
-                                            p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white 
-                                            dark:bg-[#111827] peer-checked:border-[#2563EB] 
-                                            dark:peer-checked:border-[#60A5FA] peer-checked:bg-blue-50/50 
-                                            dark:peer-checked:bg-blue-900/20 peer-checked:text-[#2563EB] 
-                                            dark:peer-checked:text-[#60A5FA] transition-all hover:bg-slate-50 dark:hover:bg-slate-800
-                                            text-slate-500"
-                                            
-                                            >
+                                        <div class="flex flex-col items-center justify-center 
+                                                    p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white 
+                                                    dark:bg-[#111827] peer-checked:border-[#2563EB] 
+                                                    dark:peer-checked:border-[#60A5FA] peer-checked:bg-blue-50/50 
+                                                    dark:peer-checked:bg-blue-900/20 peer-checked:text-[#2563EB] 
+                                                    dark:peer-checked:text-[#60A5FA] transition-all hover:bg-slate-50 dark:hover:bg-slate-800
+                                                    text-slate-500">
                                             <span class="material-symbols-outlined mb-1">attach_money</span>
                                             <span class="text-sm font-medium">Cash</span>
                                         </div>
                                     </label>
                                     <label class="relative cursor-pointer">
-                                        <input class="peer sr-only" name="payment_method" type="radio"
-                                            value="bank" />
+                                        <input class="peer sr-only" name="payment_method" type="radio" value="bank" />
                                         <div
                                             class="text-slate-500 flex flex-col items-center justify-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#111827] peer-checked:border-[#2563EB] dark:peer-checked:border-[#60A5FA] peer-checked:bg-blue-50/50 dark:peer-checked:bg-blue-900/20 peer-checked:text-[#2563EB] dark:peer-checked:text-[#60A5FA] transition-all hover:bg-slate-50 dark:hover:bg-slate-800">
                                             <span class="material-symbols-outlined mb-1">account_balance</span>
@@ -271,14 +263,14 @@
                                         </div>
                                     </label>
                                     <!-- <label class="relative cursor-pointer">
-                                                                                                                                                    <input class="peer sr-only" name="payment_method" type="radio"
-                                                                                                                                                        value="check" />
-                                                                                                                                                    <div
-                                                                                                                                                        class="flex flex-col items-center justify-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#111827] peer-checked:border-[#2563EB] dark:peer-checked:border-[#60A5FA] peer-checked:bg-blue-50/50 dark:peer-checked:bg-blue-900/20 peer-checked:text-[#2563EB] dark:peer-checked:text-[#60A5FA] transition-all hover:bg-slate-50 dark:hover:bg-slate-800">
-                                                                                                                                                        <span class="material-symbols-outlined mb-1">check_circle</span>
-                                                                                                                                                        <span class="text-sm font-medium">Check</span>
-                                                                                                                                                    </div>
-                                                                                                                                                </label> -->
+                                                                                                                                                            <input class="peer sr-only" name="payment_method" type="radio"
+                                                                                                                                                                value="check" />
+                                                                                                                                                            <div
+                                                                                                                                                                class="flex flex-col items-center justify-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#111827] peer-checked:border-[#2563EB] dark:peer-checked:border-[#60A5FA] peer-checked:bg-blue-50/50 dark:peer-checked:bg-blue-900/20 peer-checked:text-[#2563EB] dark:peer-checked:text-[#60A5FA] transition-all hover:bg-slate-50 dark:hover:bg-slate-800">
+                                                                                                                                                                <span class="material-symbols-outlined mb-1">check_circle</span>
+                                                                                                                                                                <span class="text-sm font-medium">Check</span>
+                                                                                                                                                            </div>
+                                                                                                                                                        </label> -->
                                 </div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -317,7 +309,8 @@
                                     Proof Details</label>
                                 <textarea name="payment_proof_details" id="payment_proof_details"
                                     class="w-full px-4 py-3 bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-[#2563EB]/20 dark:focus:ring-[#60A5FA]/20 focus:border-[#2563EB] dark:focus:border-[#60A5FA] text-[#1F2937] dark:text-[#F9FAFB] placeholder-slate-400"
-                                    placeholder="Enter bank transaction ID, check number, or any other relevant reference details..." rows="3">{{ old('payment_proof_details', '') }}</textarea>
+                                    placeholder="Enter bank transaction ID, check number, or any other relevant reference details..."
+                                    rows="3">{{ old('payment_proof_details', '') }}</textarea>
                             </div>
                             <div class="space-y-2">
                                 <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">Payment
@@ -454,7 +447,7 @@
     <script>
         Dropzone.autoDiscover = false;
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             // Enhanced Select2 Regular
             $('.select2').select2({
                 width: '100%',
@@ -472,12 +465,12 @@
                     url: '{{ route('admin.students.search') }}',
                     dataType: 'json',
                     delay: 250,
-                    data: function(params) {
+                    data: function (params) {
                         return {
                             term: params.term
                         };
                     },
-                    processResults: function(data) {
+                    processResults: function (data) {
                         return {
                             results: data
                         };
@@ -503,7 +496,7 @@
                 const selectedText = categorySelect.find('option:selected').text().toLowerCase();
 
                 if (selectedText.includes('student') || selectedText.includes('fee') || selectedText.includes(
-                        'tuition')) {
+                    'tuition')) {
                     $('.student-fee-field').slideDown(300);
                 } else {
                     $('.student-fee-field').slideUp(300);
@@ -514,7 +507,7 @@
             $('#earning_category_id').on('change', toggleStudentFeeFields);
 
             // Auto-calculate month and year from earning date
-            $('#earning_date').on('change', function() {
+            $('#earning_date').on('change', function () {
                 const dateValue = $(this).val();
                 if (dateValue) {
                     const date = new Date(dateValue);
@@ -542,13 +535,13 @@
                     previewsContainer: "#dropzone-previews",
                     previewTemplate: document.querySelector('#dropzone-template').innerHTML,
                     clickable: true,
-                    success: function(file, response) {
+                    success: function (file, response) {
                         $('form').append('<input type="hidden" name="payment_proof[]" value="' +
                             response.name + '">')
                         uploadedPaymentProofMap[file.name] = response.name
                         file.previewElement.classList.add('dz-success');
                     },
-                    removedfile: function(file) {
+                    removedfile: function (file) {
                         file.previewElement.remove()
                         var name = ''
                         if (typeof file.file_name !== 'undefined') {
@@ -558,9 +551,9 @@
                         }
                         $('form').find('input[name="payment_proof[]"][value="' + name + '"]').remove()
                     },
-                    init: function() {
+                    init: function () {
                         // Handle custom logic when a file is added
-                        this.on("addedfile", function(file) {
+                        this.on("addedfile", function (file) {
                             if (file.type === 'application/pdf' || file.name.toLowerCase()
                                 .endsWith('.pdf')) {
                                 setTimeout(() => {
@@ -589,8 +582,8 @@
                                 }
                             }
                         @endif
-                    },
-                    error: function(file, response) {
+                            },
+                    error: function (file, response) {
                         if ($.type(response) === 'string') {
                             var message = response
                         } else {

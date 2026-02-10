@@ -2,230 +2,239 @@
 @section('content')
 
     <!-- Page Scroll Container -->
-        <div
-            class="flex-1 overflow-y-auto p-6 lg:px-10 lg:py-8 bg-background-light dark:bg-background-dark transition-colors duration-200">
-            <div class="max-w-[1024px] mx-auto flex flex-col gap-8">
-                <!-- Breadcrumbs -->
-                <nav class="flex items-center gap-2 text-sm">
-                    <a class="text-text-secondary dark:text-gray-400 hover:text-primary transition-colors"
-                        href="{{ route('admin.home') }}">Dashboard</a>
-                    <span class="text-text-secondary dark:text-gray-500">/</span>
-                    <a class="text-text-secondary dark:text-gray-400 hover:text-primary transition-colors" 
-                        href="{{ route('admin.teachers.index') }}">Teachers</a>
-                    <span class="text-text-secondary dark:text-gray-500">/</span>
-                    <span class="text-text-main dark:text-white font-medium">Edit Teacher</span>
-                </nav>
+    <div
+        class="flex-1 overflow-y-auto p-6 lg:px-10 lg:py-8 bg-background-light dark:bg-background-dark transition-colors duration-200">
+        <div class="max-w-[1024px] mx-auto flex flex-col gap-8">
+            <!-- Breadcrumbs -->
+            <nav class="flex items-center gap-2 text-sm">
+                <a class="text-text-secondary dark:text-gray-400 hover:text-primary transition-colors"
+                    href="{{ route('admin.home') }}">Dashboard</a>
+                <span class="text-text-secondary dark:text-gray-500">/</span>
+                <a class="text-text-secondary dark:text-gray-400 hover:text-primary transition-colors"
+                    href="{{ route('admin.teachers.index') }}">Teachers</a>
+                <span class="text-text-secondary dark:text-gray-500">/</span>
+                <span class="text-text-main dark:text-white font-medium">Edit Teacher</span>
+            </nav>
 
-                <!-- Page Heading -->
-                <div class="flex flex-col gap-2">
-                    <h1 class="text-3xl font-bold text-text-main dark:text-white tracking-tight">Edit Teacher: {{ $teacher->name }}</h1>
-                    <p class="text-text-secondary dark:text-gray-400 max-w-2xl">Update the details for this faculty member. Ensure all mandatory fields marked with * are filled correctly.</p>
+            <!-- Page Heading -->
+            <div class="flex flex-col gap-2">
+                <h1 class="text-3xl font-bold text-text-main dark:text-white tracking-tight">Edit Teacher:
+                    {{ $teacher->name }}</h1>
+                <p class="text-text-secondary dark:text-gray-400 max-w-2xl">Update the details for this faculty member.
+                    Ensure all mandatory fields marked with * are filled correctly.</p>
+            </div>
+
+            <!-- Main Form Card -->
+            <form action="{{ route('admin.teachers.update', [$teacher->id]) }}" method="POST" enctype="multipart/form-data"
+                class="bg-card-light dark:bg-card-dark rounded-xl shadow-sm border border-border-light dark:border-border-dark overflow-hidden transition-colors duration-200">
+                @csrf
+                @method('PUT')
+
+                <!-- Section 1: Personal Details -->
+                <div class="p-6 lg:p-8 border-b border-border-light dark:border-border-dark">
+                    <h2 class="text-xl font-bold text-text-main dark:text-white mb-6 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">person</span>
+                        Personal Information
+                    </h2>
+                    <div class="flex flex-col lg:flex-row gap-8">
+                        <!-- Photo Upload -->
+                        <div class="flex-shrink-0 flex flex-col items-center gap-3">
+                            <div id="drop-zone"
+                                class="relative group cursor-pointer size-32 rounded-full bg-background-light dark:bg-background-dark border-2 border-dashed border-border-light dark:border-border-dark flex items-center justify-center overflow-hidden hover:border-primary transition-colors">
+                                <div id="photo-preview" class="absolute inset-0 w-full h-full bg-cover bg-center"
+                                    @if($teacher->profile_img)
+                                    style="background-image: url('{{ $teacher->profile_img->getUrl() }}')" @endif>
+                                </div>
+                                <span id="photo-placeholder-icon"
+                                    class="material-symbols-outlined text-4xl text-text-secondary group-hover:text-primary transition-colors @if($teacher->profile_img) hidden @endif">add_a_photo</span>
+                                <div
+                                    class="absolute inset-0 bg-black/40 hidden group-hover:flex items-center justify-center text-white text-xs font-medium">
+                                    Change</div>
+                                <input class="sr-only" id="file-upload" name="file-upload" type="file" accept="image/*" />
+                            </div>
+                            <span class="text-sm font-medium text-text-secondary dark:text-gray-400">Profile Photo</span>
+                            @if ($errors->has('profile_img'))
+                                <p class="text-xs text-red-500 mt-1">{{ $errors->first('profile_img') }}</p>
+                            @endif
+                        </div>
+                        <!-- Inputs -->
+                        <div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="col-span-1 md:col-span-2">
+                                <label class="block text-sm font-medium text-text-main dark:text-gray-300 mb-1.5">Full
+                                    Name <span class="text-red-500">*</span></label>
+                                <input
+                                    class="w-full rounded-lg border-none bg-background-light dark:bg-background-dark text-text-main dark:text-white py-2.5 px-4 placeholder-text-secondary/50 focus:ring-2 focus:ring-primary {{ $errors->has('name') ? 'ring-2 ring-red-500' : '' }}"
+                                    placeholder="e.g. John Doe" type="text" name="name"
+                                    value="{{ old('name', $teacher->name) }}" required />
+                                @if($errors->has('name'))
+                                    <p class="mt-1 text-xs text-red-500">{{ $errors->first('name') }}</p>
+                                @endif
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-text-main dark:text-gray-300 mb-1.5">Email
+                                    Address <span class="text-red-500">*</span></label>
+                                <input
+                                    class="w-full rounded-lg border-none bg-background-light dark:bg-background-dark text-text-main dark:text-white py-2.5 px-4 placeholder-text-secondary/50 focus:ring-2 focus:ring-primary {{ $errors->has('email') ? 'ring-2 ring-red-500' : '' }}"
+                                    placeholder="john.doe@school.edu" type="email" name="email"
+                                    value="{{ old('email', $teacher->email) }}" required />
+                                @if($errors->has('email'))
+                                    <p class="mt-1 text-xs text-red-500">{{ $errors->first('email') }}</p>
+                                @endif
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-text-main dark:text-gray-300 mb-1.5">Phone
+                                    Number <span class="text-red-500">*</span></label>
+                                <input
+                                    class="w-full rounded-lg border-none bg-background-light dark:bg-background-dark text-text-main dark:text-white py-2.5 px-4 placeholder-text-secondary/50 focus:ring-2 focus:ring-primary {{ $errors->has('phone') ? 'ring-2 ring-red-500' : '' }}"
+                                    placeholder="+1 (555) 000-0000" type="tel" name="phone"
+                                    value="{{ old('phone', $teacher->phone) }}" required />
+                                @if($errors->has('phone'))
+                                    <p class="mt-1 text-xs text-red-500">{{ $errors->first('phone') }}</p>
+                                @endif
+                            </div>
+                            <div class="col-span-1 md:col-span-2">
+                                <label
+                                    class="block text-sm font-medium text-text-main dark:text-gray-300 mb-1.5">Residential
+                                    Address</label>
+                                <textarea name="address"
+                                    class="w-full rounded-lg border-none bg-background-light dark:bg-background-dark text-text-main dark:text-white py-2.5 px-4 placeholder-text-secondary/50 focus:ring-2 focus:ring-primary resize-none {{ $errors->has('address') ? 'ring-2 ring-red-500' : '' }}"
+                                    placeholder="Street address, city, state, zip code"
+                                    rows="2">{{ old('address', $teacher->address) }}</textarea>
+                                @if($errors->has('address'))
+                                    <p class="mt-1 text-xs text-red-500">{{ $errors->first('address') }}</p>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Main Form Card -->
-                <form action="{{ route('admin.teachers.update', [$teacher->id]) }}" method="POST" enctype="multipart/form-data"
-                    class="bg-card-light dark:bg-card-dark rounded-xl shadow-sm border border-border-light dark:border-border-dark overflow-hidden transition-colors duration-200">
-                    @csrf
-                    @method('PUT')
-
-                    <!-- Section 1: Personal Details -->
-                    <div class="p-6 lg:p-8 border-b border-border-light dark:border-border-dark">
-                        <h2 class="text-xl font-bold text-text-main dark:text-white mb-6 flex items-center gap-2">
-                            <span class="material-symbols-outlined text-primary">person</span>
-                            Personal Information
-                        </h2>
-                        <div class="flex flex-col lg:flex-row gap-8">
-                            <!-- Photo Upload -->
-                            <div class="flex-shrink-0 flex flex-col items-center gap-3">
-                                <div id="drop-zone"
-                                    class="relative group cursor-pointer size-32 rounded-full bg-background-light dark:bg-background-dark border-2 border-dashed border-border-light dark:border-border-dark flex items-center justify-center overflow-hidden hover:border-primary transition-colors">
-                                    <div id="photo-preview" class="absolute inset-0 w-full h-full bg-cover bg-center"
-                                        @if($teacher->profile_img) style="background-image: url('{{ $teacher->profile_img->getUrl() }}')" @endif>
-                                    </div>
-                                    <span id="photo-placeholder-icon"
-                                        class="material-symbols-outlined text-4xl text-text-secondary group-hover:text-primary transition-colors @if($teacher->profile_img) hidden @endif">add_a_photo</span>
-                                    <div
-                                        class="absolute inset-0 bg-black/40 hidden group-hover:flex items-center justify-center text-white text-xs font-medium">
-                                        Change</div>
-                                    <input class="sr-only" id="file-upload" name="file-upload" type="file" accept="image/*" />
-                                </div>
-                                <span class="text-sm font-medium text-text-secondary dark:text-gray-400">Profile Photo</span>
-                                @if ($errors->has('profile_img'))
-                                    <p class="text-xs text-red-500 mt-1">{{ $errors->first('profile_img') }}</p>
-                                @endif
-                            </div>
-                            <!-- Inputs -->
-                            <div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div class="col-span-1 md:col-span-2">
-                                    <label class="block text-sm font-medium text-text-main dark:text-gray-300 mb-1.5">Full
-                                        Name <span class="text-red-500">*</span></label>
-                                    <input
-                                        class="w-full rounded-lg border-none bg-background-light dark:bg-background-dark text-text-main dark:text-white py-2.5 px-4 placeholder-text-secondary/50 focus:ring-2 focus:ring-primary {{ $errors->has('name') ? 'ring-2 ring-red-500' : '' }}"
-                                        placeholder="e.g. John Doe" type="text" name="name" value="{{ old('name', $teacher->name) }}"
-                                        required />
-                                    @if($errors->has('name'))
-                                        <p class="mt-1 text-xs text-red-500">{{ $errors->first('name') }}</p>
-                                    @endif
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-text-main dark:text-gray-300 mb-1.5">Email
-                                        Address <span class="text-red-500">*</span></label>
-                                    <input
-                                        class="w-full rounded-lg border-none bg-background-light dark:bg-background-dark text-text-main dark:text-white py-2.5 px-4 placeholder-text-secondary/50 focus:ring-2 focus:ring-primary {{ $errors->has('email') ? 'ring-2 ring-red-500' : '' }}"
-                                        placeholder="john.doe@school.edu" type="email" name="email"
-                                        value="{{ old('email', $teacher->email) }}" required />
-                                    @if($errors->has('email'))
-                                        <p class="mt-1 text-xs text-red-500">{{ $errors->first('email') }}</p>
-                                    @endif
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-text-main dark:text-gray-300 mb-1.5">Phone
-                                        Number <span class="text-red-500">*</span></label>
-                                    <input
-                                        class="w-full rounded-lg border-none bg-background-light dark:bg-background-dark text-text-main dark:text-white py-2.5 px-4 placeholder-text-secondary/50 focus:ring-2 focus:ring-primary {{ $errors->has('phone') ? 'ring-2 ring-red-500' : '' }}"
-                                        placeholder="+1 (555) 000-0000" type="tel" name="phone" value="{{ old('phone', $teacher->phone) }}"
-                                        required />
-                                    @if($errors->has('phone'))
-                                        <p class="mt-1 text-xs text-red-500">{{ $errors->first('phone') }}</p>
-                                    @endif
-                                </div>
-                                <div class="col-span-1 md:col-span-2">
-                                    <label
-                                        class="block text-sm font-medium text-text-main dark:text-gray-300 mb-1.5">Residential
-                                        Address</label>
-                                    <textarea name="address"
-                                        class="w-full rounded-lg border-none bg-background-light dark:bg-background-dark text-text-main dark:text-white py-2.5 px-4 placeholder-text-secondary/50 focus:ring-2 focus:ring-primary resize-none {{ $errors->has('address') ? 'ring-2 ring-red-500' : '' }}"
-                                        placeholder="Street address, city, state, zip code"
-                                        rows="2">{{ old('address', $teacher->address) }}</textarea>
-                                    @if($errors->has('address'))
-                                        <p class="mt-1 text-xs text-red-500">{{ $errors->first('address') }}</p>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Section 2: Employment Information -->
-                    <div
-                        class="p-6 lg:p-8 border-b border-border-light dark:border-border-dark bg-background-light/30 dark:bg-background-dark/30">
-                        <h2 class="text-xl font-bold text-text-main dark:text-white mb-6 flex items-center gap-2">
-                            <span class="material-symbols-outlined text-primary">badge</span>
-                            Employment Details
-                        </h2>
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                            <div>
-                                <label class="block text-sm font-medium text-text-main dark:text-gray-300 mb-1.5">Employee
-                                    Code <span class="text-red-500">*</span></label>
-                                <div class="relative">
-                                    <input
-                                        class="w-full rounded-lg border-none bg-card-light dark:bg-card-dark text-text-main dark:text-white py-2.5 px-4 focus:ring-2 focus:ring-primary font-mono text-sm {{ $errors->has('emloyee_code') ? 'ring-2 ring-red-500' : '' }}"
-                                        readonly="" type="text" name="emloyee_code"
-                                        value="{{ old('emloyee_code', $teacher->emloyee_code) }}" />
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-text-main dark:text-gray-300 mb-1.5">Joining
-                                    Date <span class="text-red-500">*</span></label>
-                                <div class="relative">
-                                    <input
-                                        class="w-full rounded-lg border-none bg-card-light dark:bg-card-dark text-text-main dark:text-white py-2.5 px-4 focus:ring-2 focus:ring-primary [color-scheme:light] dark:[color-scheme:dark] {{ $errors->has('joining_date') ? 'ring-2 ring-red-500' : '' }}"
-                                        type="text" name="joining_date" id="joining_date"
-                                        value="{{ old('joining_date', $teacher->joining_date) }}" />
-                                    @if($errors->has('joining_date'))
-                                        <p class="mt-1 text-xs text-red-500">{{ $errors->first('joining_date') }}</p>
-                                    @endif
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-text-main dark:text-gray-300 mb-1.5">Gender <span
-                                        class="text-red-500">*</span></label>
-                                <select name="gender" id="gender"
-                                    class="w-full rounded-lg border-none bg-card-light dark:bg-card-dark text-text-main dark:text-white py-2.5 px-3 focus:ring-2 focus:ring-primary {{ $errors->has('gender') ? 'ring-2 ring-red-500' : '' }}">
-                                    @foreach(App\Models\Teacher::GENDER_SELECT as $key => $label)
-                                        <option value="{{ $key }}" {{ old('gender', $teacher->gender) == $key ? 'selected' : '' }}>{{ $label }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-text-main dark:text-gray-300 mb-1.5">Status <span class="text-red-500">*</span></label>
-                                <div class="flex items-center h-[46px]">
-                                    <label class="relative inline-flex items-center cursor-pointer">
-                                        <input type="checkbox" name="status" value="1" class="sr-only peer" {{ old('status', $teacher->status) ? 'checked' : '' }}>
-                                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/20 dark:peer-focus:ring-primary/30 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
-                                        <span class="ml-3 text-sm font-medium text-text-main dark:text-gray-300">Active Account</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-text-main dark:text-gray-300 mb-1.5">Salary
-                                    Type</label>
-                                <select name="salary_type" id="salary_type"
-                                    class="w-full rounded-lg border-none bg-card-light dark:bg-card-dark text-text-main dark:text-white py-2.5 px-3 focus:ring-2 focus:ring-primary {{ $errors->has('salary_type') ? 'ring-2 ring-red-500' : '' }}">
-                                    @foreach(App\Models\Teacher::SALARY_TYPE_SELECT as $key => $label)
-                                        <option value="{{ $key }}" {{ old('salary_type', $teacher->salary_type) == $key ? 'selected' : '' }}>{{ $label }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @if($errors->has('salary_type'))
-                                    <p class="mt-1 text-xs text-red-500">{{ $errors->first('salary_type') }}</p>
-                                @endif
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-text-main dark:text-gray-300 mb-1.5">Base
-                                    Salary / Rate</label>
-                                <div class="relative">
-                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary">$</span>
-                                    <input name="salary_amount"
-                                        class="w-full rounded-lg border-none bg-card-light dark:bg-card-dark text-text-main dark:text-white py-2.5 pl-8 pr-4 placeholder-text-secondary/50 focus:ring-2 focus:ring-primary {{ $errors->has('salary_amount') ? 'ring-2 ring-red-500' : '' }}"
-                                        placeholder="0.00" type="number" step="0.01" value="{{ old('salary_amount', $teacher->salary_amount) }}" />
-                                </div>
-                                @if($errors->has('salary_amount'))
-                                    <p class="mt-1 text-xs text-red-500">{{ $errors->first('salary_amount') }}</p>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Section 3: Academic Assignment -->
-                    <div class="p-6 lg:p-8">
-                        <h2 class="text-xl font-bold text-text-main dark:text-white mb-6 flex items-center gap-2">
-                            <span class="material-symbols-outlined text-primary">menu_book</span>
-                            Academic Assignment
-                        </h2>
+                <!-- Section 2: Employment Information -->
+                <div
+                    class="p-6 lg:p-8 border-b border-border-light dark:border-border-dark bg-background-light/30 dark:bg-background-dark/30">
+                    <h2 class="text-xl font-bold text-text-main dark:text-white mb-6 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">badge</span>
+                        Employment Details
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         <div>
-                            <label class="block text-sm font-medium text-text-main dark:text-gray-300 mb-2">Assign
-                                Subjects</label>
-                            <select name="subjects[]" id="subjects" class="form-control select2 w-full" multiple>
-                                @foreach($subjects as $id => $name)
-                                    <option value="{{ $id }}" {{ (in_array($id, old('subjects', [])) || $teacher->subjects->contains($id)) ? 'selected' : '' }}>{{ $name }}
+                            <label class="block text-sm font-medium text-text-main dark:text-gray-300 mb-1.5">Employee
+                                Code <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <input
+                                    class="w-full rounded-lg border-none bg-card-light dark:bg-card-dark text-text-main dark:text-white py-2.5 px-4 focus:ring-2 focus:ring-primary font-mono text-sm {{ $errors->has('emloyee_code') ? 'ring-2 ring-red-500' : '' }}"
+                                    readonly="" type="text" name="emloyee_code"
+                                    value="{{ old('emloyee_code', $teacher->emloyee_code) }}" />
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-text-main dark:text-gray-300 mb-1.5">Joining
+                                Date <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <input
+                                    class="w-full rounded-lg border-none bg-card-light dark:bg-card-dark text-text-main dark:text-white py-2.5 px-4 focus:ring-2 focus:ring-primary [color-scheme:light] dark:[color-scheme:dark] {{ $errors->has('joining_date') ? 'ring-2 ring-red-500' : '' }}"
+                                    type="text" name="joining_date" id="joining_date"
+                                    value="{{ old('joining_date', $teacher->joining_date) }}" />
+                                @if($errors->has('joining_date'))
+                                    <p class="mt-1 text-xs text-red-500">{{ $errors->first('joining_date') }}</p>
+                                @endif
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-text-main dark:text-gray-300 mb-1.5">Gender <span
+                                    class="text-red-500">*</span></label>
+                            <select name="gender" id="gender"
+                                class="w-full rounded-lg border-none bg-card-light dark:bg-card-dark text-text-main dark:text-white py-2.5 px-3 focus:ring-2 focus:ring-primary {{ $errors->has('gender') ? 'ring-2 ring-red-500' : '' }}">
+                                @foreach(App\Models\Teacher::GENDER_SELECT as $key => $label)
+                                    <option value="{{ $key }}" {{ old('gender', $teacher->gender) == $key ? 'selected' : '' }}>
+                                        {{ $label }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-text-main dark:text-gray-300 mb-1.5">Status <span
+                                    class="text-red-500">*</span></label>
+                            <div class="flex items-center h-[46px]">
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" name="status" value="1" class="sr-only peer" {{ old('status', $teacher->status) ? 'checked' : '' }}>
+                                    <div
+                                        class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/20 dark:peer-focus:ring-primary/30 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary">
+                                    </div>
+                                    <span class="ml-3 text-sm font-medium text-text-main dark:text-gray-300">Active
+                                        Account</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-text-main dark:text-gray-300 mb-1.5">Salary
+                                Type</label>
+                            <select name="salary_type" id="salary_type"
+                                class="w-full rounded-lg border-none bg-card-light dark:bg-card-dark text-text-main dark:text-white py-2.5 px-3 focus:ring-2 focus:ring-primary {{ $errors->has('salary_type') ? 'ring-2 ring-red-500' : '' }}">
+                                @foreach(App\Models\Teacher::SALARY_TYPE_SELECT as $key => $label)
+                                    <option value="{{ $key }}" {{ old('salary_type', $teacher->salary_type) == $key ? 'selected' : '' }}>{{ $label }}
                                     </option>
                                 @endforeach
                             </select>
-                            <p class="mt-2 text-xs text-text-secondary dark:text-gray-400">You can assign multiple subjects for
-                                this teacher.</p>
-                            @if($errors->has('subjects'))
-                                <p class="mt-1 text-xs text-red-500">{{ $errors->first('subjects') }}</p>
+                            @if($errors->has('salary_type'))
+                                <p class="mt-1 text-xs text-red-500">{{ $errors->first('salary_type') }}</p>
+                            @endif
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-text-main dark:text-gray-300 mb-1.5">Base
+                                Salary / Rate</label>
+                            <div class="relative">
+                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary">৳</span>
+                                <input name="salary_amount"
+                                    class="w-full rounded-lg border-none bg-card-light dark:bg-card-dark text-text-main dark:text-white py-2.5 pl-8 pr-4 placeholder-text-secondary/50 focus:ring-2 focus:ring-primary {{ $errors->has('salary_amount') ? 'ring-2 ring-red-500' : '' }}"
+                                    placeholder="0.00" type="number" step="0.01"
+                                    value="{{ old('salary_amount', $teacher->salary_amount) }}" />
+                            </div>
+                            @if($errors->has('salary_amount'))
+                                <p class="mt-1 text-xs text-red-500">{{ $errors->first('salary_amount') }}</p>
                             @endif
                         </div>
                     </div>
+                </div>
 
-                    <!-- Footer Actions -->
-                    <div
-                        class="p-6 lg:p-8 bg-background-light/50 dark:bg-black/20 border-t border-border-light dark:border-border-dark flex items-center justify-end gap-4">
-                        <a href="{{ route('admin.teachers.index') }}"
-                            class="px-6 py-2.5 rounded-lg text-sm font-medium text-text-secondary dark:text-gray-300 hover:text-text-main hover:bg-white dark:hover:bg-white/5 transition-colors">
-                            Cancel
-                        </a>
-                        <button
-                            class="px-6 py-2.5 rounded-lg text-sm font-medium text-white bg-primary hover:bg-primary-hover shadow-lg shadow-primary/30 transition-all transform active:scale-95 flex items-center gap-2"
-                            type="submit">
-                            <span class="material-symbols-outlined !text-[20px]">save</span>
-                            Save Changes
-                        </button>
+                <!-- Section 3: Academic Assignment -->
+                <div class="p-6 lg:p-8">
+                    <h2 class="text-xl font-bold text-text-main dark:text-white mb-6 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">menu_book</span>
+                        Academic Assignment
+                    </h2>
+                    <div>
+                        <label class="block text-sm font-medium text-text-main dark:text-gray-300 mb-2">Assign
+                            Subjects</label>
+                        <select name="subjects[]" id="subjects" class="form-control select2 w-full" multiple>
+                            @foreach($subjects as $id => $name)
+                                <option value="{{ $id }}" {{ (in_array($id, old('subjects', [])) || $teacher->subjects->contains($id)) ? 'selected' : '' }}>{{ $name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <p class="mt-2 text-xs text-text-secondary dark:text-gray-400">You can assign multiple subjects for
+                            this teacher.</p>
+                        @if($errors->has('subjects'))
+                            <p class="mt-1 text-xs text-red-500">{{ $errors->first('subjects') }}</p>
+                        @endif
                     </div>
-                </form>
-            </div>
+                </div>
+
+                <!-- Footer Actions -->
+                <div
+                    class="p-6 lg:p-8 bg-background-light/50 dark:bg-black/20 border-t border-border-light dark:border-border-dark flex items-center justify-end gap-4">
+                    <a href="{{ route('admin.teachers.index') }}"
+                        class="px-6 py-2.5 rounded-lg text-sm font-medium text-text-secondary dark:text-gray-300 hover:text-text-main hover:bg-white dark:hover:bg-white/5 transition-colors">
+                        Cancel
+                    </a>
+                    <button
+                        class="px-6 py-2.5 rounded-lg text-sm font-medium text-white bg-primary hover:bg-primary-hover shadow-lg shadow-primary/30 transition-all transform active:scale-95 flex items-center gap-2"
+                        type="submit">
+                        <span class="material-symbols-outlined !text-[20px]">save</span>
+                        Save Changes
+                    </button>
+                </div>
+            </form>
         </div>
+    </div>
 
 @endsection
 
