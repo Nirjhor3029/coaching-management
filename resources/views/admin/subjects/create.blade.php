@@ -89,7 +89,7 @@
                                     for="monthly_fee">{{ trans('cruds.subject.fields.monthly_fee') }}</label>
                                 <div class="relative mt-1">
                                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <span class="text-slate-500 sm:text-sm">৳</span>
+                                        <span class="text-slate-500 sm:text-sm symbol-of-tk">৳</span>
                                     </div>
                                     <input
                                         class="block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 pl-7 pr-3 {{ $errors->has('monthly_fee') ? 'border-red-500 ring-red-500' : '' }}"

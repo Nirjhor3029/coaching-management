@@ -65,8 +65,8 @@
                             </label>
                             <input name="title" id="title" required
                                 class="w-full px-4  bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-700 
-                                                                    rounded-lg focus:ring-2 focus:ring-[#2563EB]/20 dark:focus:ring-[#60A5FA]/20 
-                                                                    focus:border-[#2563EB] dark:focus:border-[#60A5FA] text-[#1F2937] dark:text-[#F9FAFB] mt-0 {{ $errors->has('title') ? 'border-red-500' : '' }}"
+                                                                        rounded-lg focus:ring-2 focus:ring-[#2563EB]/20 dark:focus:ring-[#60A5FA]/20 
+                                                                        focus:border-[#2563EB] dark:focus:border-[#60A5FA] text-[#1F2937] dark:text-[#F9FAFB] mt-0 {{ $errors->has('title') ? 'border-red-500' : '' }}"
                                 placeholder="e.g. Tuition Fee for Grade 10" type="text" value="{{ old('title', '') }}" />
                             @if ($errors->has('title'))
                                 <p class="text-red-500 text-xs mt-1">{{ $errors->first('title') }}</p>
@@ -194,7 +194,7 @@
                                 <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">Amount</label>
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                        <span class="text-slate-500 font-semibold">৳</span>
+                                        <span class="text-slate-500 font-semibold symbol-of-tk">৳</span>
                                     </div>
                                     <input name="amount" id="amount" required
                                         class="w-full pl-8 pr-4  bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-[#2563EB]/20 dark:focus:ring-[#60A5FA]/20 focus:border-[#2563EB] dark:focus:border-[#60A5FA] text-[#1F2937] dark:text-[#F9FAFB] font-mono {{ $errors->has('amount') ? 'border-red-500' : '' }}"
@@ -235,12 +235,12 @@
                                         <input checked="" class="peer sr-only" name="payment_method" type="radio"
                                             value="cash" />
                                         <div class="flex flex-col items-center justify-center 
-                                                    p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white 
-                                                    dark:bg-[#111827] peer-checked:border-[#2563EB] 
-                                                    dark:peer-checked:border-[#60A5FA] peer-checked:bg-blue-50/50 
-                                                    dark:peer-checked:bg-blue-900/20 peer-checked:text-[#2563EB] 
-                                                    dark:peer-checked:text-[#60A5FA] transition-all hover:bg-slate-50 dark:hover:bg-slate-800
-                                                    text-slate-500">
+                                                        p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white 
+                                                        dark:bg-[#111827] peer-checked:border-[#2563EB] 
+                                                        dark:peer-checked:border-[#60A5FA] peer-checked:bg-blue-50/50 
+                                                        dark:peer-checked:bg-blue-900/20 peer-checked:text-[#2563EB] 
+                                                        dark:peer-checked:text-[#60A5FA] transition-all hover:bg-slate-50 dark:hover:bg-slate-800
+                                                        text-slate-500">
                                             <span class="material-symbols-outlined mb-1">attach_money</span>
                                             <span class="text-sm font-medium">Cash</span>
                                         </div>
@@ -263,14 +263,14 @@
                                         </div>
                                     </label>
                                     <!-- <label class="relative cursor-pointer">
-                                                                                                                                                            <input class="peer sr-only" name="payment_method" type="radio"
-                                                                                                                                                                value="check" />
-                                                                                                                                                            <div
-                                                                                                                                                                class="flex flex-col items-center justify-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#111827] peer-checked:border-[#2563EB] dark:peer-checked:border-[#60A5FA] peer-checked:bg-blue-50/50 dark:peer-checked:bg-blue-900/20 peer-checked:text-[#2563EB] dark:peer-checked:text-[#60A5FA] transition-all hover:bg-slate-50 dark:hover:bg-slate-800">
-                                                                                                                                                                <span class="material-symbols-outlined mb-1">check_circle</span>
-                                                                                                                                                                <span class="text-sm font-medium">Check</span>
-                                                                                                                                                            </div>
-                                                                                                                                                        </label> -->
+                                                                                                                                                                <input class="peer sr-only" name="payment_method" type="radio"
+                                                                                                                                                                    value="check" />
+                                                                                                                                                                <div
+                                                                                                                                                                    class="flex flex-col items-center justify-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#111827] peer-checked:border-[#2563EB] dark:peer-checked:border-[#60A5FA] peer-checked:bg-blue-50/50 dark:peer-checked:bg-blue-900/20 peer-checked:text-[#2563EB] dark:peer-checked:text-[#60A5FA] transition-all hover:bg-slate-50 dark:hover:bg-slate-800">
+                                                                                                                                                                    <span class="material-symbols-outlined mb-1">check_circle</span>
+                                                                                                                                                                    <span class="text-sm font-medium">Check</span>
+                                                                                                                                                                </div>
+                                                                                                                                                            </label> -->
                                 </div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -582,7 +582,7 @@
                                 }
                             }
                         @endif
-                            },
+                                },
                     error: function (file, response) {
                         if ($.type(response) === 'string') {
                             var message = response

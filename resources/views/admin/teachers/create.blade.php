@@ -171,7 +171,8 @@
                             <label class="block text-sm font-medium text-text-main dark:text-gray-300 mb-1.5">Base
                                 Salary / Rate</label>
                             <div class="relative">
-                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary">৳</span>
+                                <span
+                                    class="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary symbol-of-tk">৳</span>
                                 <input name="salary_amount"
                                     class="w-full rounded-lg border-none bg-card-light dark:bg-card-dark text-text-main dark:text-white py-2.5 pl-8 pr-4 placeholder-text-secondary/50 focus:ring-2 focus:ring-primary {{ $errors->has('salary_amount') ? 'ring-2 ring-red-500' : '' }}"
                                     placeholder="0.00" type="number" step="0.01" value="{{ old('salary_amount', '') }}" />

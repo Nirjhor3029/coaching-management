@@ -123,7 +123,7 @@
                                     for="amount">Amount <span class="text-red-500">*</span></label>
                                 <div class="relative rounded-md shadow-sm">
                                     <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                                        <span class="text-slate-500 sm:text-sm">৳</span>
+                                        <span class="text-slate-500 sm:text-sm symbol-of-tk">৳</span>
                                     </div>
                                     <input
                                         class="block w-full rounded-lg border-slate-200 bg-slate-50 py-3 pl-7 pr-12 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:bg-white focus:ring-primary dark:border-slate-700 dark:bg-slate-900 dark:text-white sm:text-sm {{ $errors->has('amount') ? 'border-red-500 ring-red-500' : '' }}"
@@ -644,22 +644,22 @@
 
                         // Create Preview Element matching design
                         const previewHtml = `
-                                        <div id="file-${fileId}" class="flex items-center justify-between rounded-lg border border-slate-200 bg-white p-2 dark:border-slate-700 dark:bg-slate-900 animate-fade-in">
-                                            <div class="flex items-center gap-3">
-                                                <div class="flex h-8 w-8 items-center justify-center rounded bg-primary/10 text-primary">
-                                                    <span class="material-icons-round text-sm">${file.type.includes('pdf') ? 'picture_as_pdf' : 'image'}</span>
+                                            <div id="file-${fileId}" class="flex items-center justify-between rounded-lg border border-slate-200 bg-white p-2 dark:border-slate-700 dark:bg-slate-900 animate-fade-in">
+                                                <div class="flex items-center gap-3">
+                                                    <div class="flex h-8 w-8 items-center justify-center rounded bg-primary/10 text-primary">
+                                                        <span class="material-icons-round text-sm">${file.type.includes('pdf') ? 'picture_as_pdf' : 'image'}</span>
+                                                    </div>
+                                                    <div class="flex flex-col">
+                                                        <span class="text-xs font-medium text-slate-900 dark:text-white line-clamp-1">${file.name}</span>
+                                                        <span class="text-[10px] text-slate-500">${(file.size / 1024 / 1024).toFixed(2)} MB</span>
+                                                    </div>
                                                 </div>
-                                                <div class="flex flex-col">
-                                                    <span class="text-xs font-medium text-slate-900 dark:text-white line-clamp-1">${file.name}</span>
-                                                    <span class="text-[10px] text-slate-500">${(file.size / 1024 / 1024).toFixed(2)} MB</span>
-                                                </div>
+                                                <button type="button" class="text-slate-400 hover:text-red-500 transition-colors" onclick="removeFile('${file.name}', 'file-${fileId}')">
+                                                    <span class="material-icons-round text-lg">close</span>
+                                                </button>
+                                                <input type="hidden" name="payment_proof[]" value="${response.name}">
                                             </div>
-                                            <button type="button" class="text-slate-400 hover:text-red-500 transition-colors" onclick="removeFile('${file.name}', 'file-${fileId}')">
-                                                <span class="material-icons-round text-lg">close</span>
-                                            </button>
-                                            <input type="hidden" name="payment_proof[]" value="${response.name}">
-                                        </div>
-                                    `;
+                                        `;
                         $(proofContainer).append(previewHtml);
                     });
 

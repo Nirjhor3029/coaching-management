@@ -123,7 +123,7 @@
                                         for="amount">Amount <span class="text-red-500">*</span></label>
                                     <div class="relative rounded-md shadow-sm">
                                         <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                                            <span class="text-slate-500 sm:text-sm">৳</span>
+                                            <span class="text-slate-500 sm:text-sm symbol-of-tk">৳</span>
                                         </div>
                                         <input
                                             class="block w-full rounded-lg border-slate-200 bg-slate-50 py-3 pl-7 pr-12 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:bg-white focus:ring-primary dark:border-slate-700 dark:bg-slate-900 dark:text-white sm:text-sm {{ $errors->has('amount') ? 'border-red-500 ring-red-500' : '' }}"

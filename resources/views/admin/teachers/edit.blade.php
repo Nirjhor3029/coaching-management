@@ -19,7 +19,8 @@
             <!-- Page Heading -->
             <div class="flex flex-col gap-2">
                 <h1 class="text-3xl font-bold text-text-main dark:text-white tracking-tight">Edit Teacher:
-                    {{ $teacher->name }}</h1>
+                    {{ $teacher->name }}
+                </h1>
                 <p class="text-text-secondary dark:text-gray-400 max-w-2xl">Update the details for this faculty member.
                     Ensure all mandatory fields marked with * are filled correctly.</p>
             </div>
@@ -146,7 +147,8 @@
                                 class="w-full rounded-lg border-none bg-card-light dark:bg-card-dark text-text-main dark:text-white py-2.5 px-3 focus:ring-2 focus:ring-primary {{ $errors->has('gender') ? 'ring-2 ring-red-500' : '' }}">
                                 @foreach(App\Models\Teacher::GENDER_SELECT as $key => $label)
                                     <option value="{{ $key }}" {{ old('gender', $teacher->gender) == $key ? 'selected' : '' }}>
-                                        {{ $label }}</option>
+                                        {{ $label }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -182,7 +184,8 @@
                             <label class="block text-sm font-medium text-text-main dark:text-gray-300 mb-1.5">Base
                                 Salary / Rate</label>
                             <div class="relative">
-                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary">৳</span>
+                                <span
+                                    class="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary symbol-of-tk">৳</span>
                                 <input name="salary_amount"
                                     class="w-full rounded-lg border-none bg-card-light dark:bg-card-dark text-text-main dark:text-white py-2.5 pl-8 pr-4 placeholder-text-secondary/50 focus:ring-2 focus:ring-primary {{ $errors->has('salary_amount') ? 'ring-2 ring-red-500' : '' }}"
                                     placeholder="0.00" type="number" step="0.01"

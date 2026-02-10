@@ -4,6 +4,14 @@
 <head>
     @include('layouts._partials.head')
     @yield('styles')
+    <style>
+        .symbol-of-tk {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: -4px;
+            margin-left: -4px;
+        }
+    </style>
 </head>
 
 <body class="c-app">

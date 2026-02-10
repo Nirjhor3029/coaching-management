@@ -161,7 +161,7 @@
                                 </label>
                                 <div class="relative group/input">
                                     <div
-                                        class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold group-focus-within/input:text-primary transition-colors">
+                                        class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold group-focus-within/input:text-primary transition-colors symbol-of-tk">
                                         ৳
                                     </div>
                                     <input
@@ -501,7 +501,7 @@
                         $('form').append('<input type="hidden" name="payment_proof[]" value="' + file.file_name + '">')
                     }
                 @endif
-                                },
+                                    },
             error: function (file, response) {
                 if ($.type(response) === 'string') {
                     var message = response

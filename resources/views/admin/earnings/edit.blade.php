@@ -194,7 +194,7 @@
                                 <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">Amount</label>
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                        <span class="text-slate-500 font-semibold">৳</span>
+                                        <span class="text-slate-500 font-semibold symbol-of-tk">৳</span>
                                     </div>
                                     <input name="amount" id="amount" required
                                         class="w-full pl-8 pr-4 h-11 bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-[#2563EB]/20 dark:focus:ring-[#60A5FA]/20 focus:border-[#2563EB] dark:focus:border-[#60A5FA] text-[#1F2937] dark:text-[#F9FAFB] font-mono {{ $errors->has('amount') ? 'border-red-500' : '' }}"
