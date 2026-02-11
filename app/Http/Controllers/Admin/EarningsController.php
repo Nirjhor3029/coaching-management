@@ -37,22 +37,25 @@ class EarningsController extends Controller
         $earning_categories = EarningCategory::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         // We don't load all students here anymore, it's handled via Select2 AJAX
-        $students = []; 
+        $students = [];
 
         $subjects = Subject::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.earnings.create', compact('earning_categories', 'students', 'subjects'));
+        // Generate receipt number Format: REC-YYYY-001
+        $receipt_numbers = 'REC-' . date('Y') . '-' . str_pad(Earning::whereYear('earning_date', date('Y'))->count() + 1, 3, '0', STR_PAD_LEFT);
+
+        return view('admin.earnings.create', compact('earning_categories', 'students', 'subjects', 'receipt_numbers'));
     }
 
     public function getStudents(Request $request)
     {
         $search = $request->term;
 
-        $students = StudentBasicInfo::where(function($query) use ($search) {
-                $query->where('first_name', 'LIKE', "%$search%")
-                      ->orWhere('last_name', 'LIKE', "%$search%")
-                      ->orWhere('id_no', 'LIKE', "%$search%");
-            })
+        $students = StudentBasicInfo::where(function ($query) use ($search) {
+            $query->where('first_name', 'LIKE', "%$search%")
+                ->orWhere('last_name', 'LIKE', "%$search%")
+                ->orWhere('id_no', 'LIKE', "%$search%");
+        })
             ->limit(10)
             ->get();
 
