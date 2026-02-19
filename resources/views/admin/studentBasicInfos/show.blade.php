@@ -102,10 +102,8 @@
                             </p>
                         </div>
                         <div>
-                            <p class="text-[#4c739a] text-sm font-medium mb-1 uppercase tracking-tight">Section
-                                &amp; Shift</p>
+                            <p class="text-[#4c739a] text-sm font-medium mb-1 uppercase tracking-tight">Shift</p>
                             <p class="font-bold text-[#0d141b] dark:text-white">
-                                {{ $studentBasicInfo->section->section_name ?? 'N/A' }} •
                                 {{ $studentBasicInfo->shift->shift_name ?? 'N/A' }}
                             </p>
                         </div>
@@ -256,6 +254,41 @@
                         </div>
                     </div>
                 </div>
+                <!-- Assigned Batches -->
+                <div
+                    class="bg-white dark:bg-slate-800 rounded-xl border border-[#e7edf3] dark:border-slate-700 overflow-hidden shadow-sm">
+                    <div class="px-6 py-4 border-b border-[#e7edf3] dark:border-slate-700 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">event_note</span>
+                        <h3 class="font-bold text-lg text-[#0d141b] dark:text-white">Assigned Batches & Class Days</h3>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-4 text-[#0d141b] dark:text-white">
+                            @forelse ($studentBasicInfo->batches as $batch)
+                                <li class="p-4 bg-background-light dark:bg-slate-700/30 rounded-lg">
+                                    <p class="text-sm font-bold">{{ $batch->batch_name }}</p>
+                                    <p class="text-xs text-slate-500 mt-1">
+                                        {{ $batch->subject->name ?? 'N/A' }} | {{ $batch->class->class_name ?? 'N/A' }} |
+                                        {{ \App\Models\Batch::FEE_TYPE_SELECT[$batch->fee_type] ?? $batch->fee_type }}
+                                    </p>
+                                    <p class="text-xs text-slate-600 mt-2">
+                                        <span class="font-semibold">Class Time:</span>
+                                        {{ \Carbon\Carbon::parse($batch->class_time)->format('h:i A') }}
+                                    </p>
+                                    <div class="mt-2 flex flex-wrap gap-2">
+                                        @foreach ($batch->class_days ?? [] as $day)
+                                            <span class="px-2 py-1 bg-primary/10 text-primary text-[11px] font-semibold rounded">
+                                                {{ \App\Models\Batch::CLASS_DAY_SELECT[$day] ?? $day }}
+                                            </span>
+                                        @endforeach
+                                    </div>
+                                </li>
+                            @empty
+                                <p class="text-sm text-slate-500">No batch assigned</p>
+                            @endforelse
+                        </ul>
+                    </div>
+                </div>
+
                 <!-- Enrolled Subjects -->
                 <div
                     class="bg-white dark:bg-slate-800 rounded-xl border border-[#e7edf3] dark:border-slate-700 overflow-hidden shadow-sm">

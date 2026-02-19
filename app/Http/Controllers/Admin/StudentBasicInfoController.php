@@ -9,6 +9,7 @@ use App\Http\Requests\MassDestroyStudentBasicInfoRequest;
 use App\Http\Requests\StoreStudentBasicInfoRequest;
 use App\Http\Requests\UpdateStudentBasicInfoRequest;
 use App\Models\AcademicClass;
+use App\Models\Batch;
 use App\Models\Section;
 use App\Models\Shift;
 use App\Models\StudentBasicInfo;
@@ -103,8 +104,9 @@ class StudentBasicInfoController extends Controller
         $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $subjects = Subject::pluck('name', 'id');
+        $batches = Batch::pluck('batch_name', 'id');
 
-        return view('admin.studentBasicInfos.create', compact('classes', 'sections', 'shifts', 'subjects', 'users'));
+        return view('admin.studentBasicInfos.create', compact('classes', 'sections', 'shifts', 'subjects', 'users', 'batches'));
     }
 
     public function store(StoreStudentBasicInfoRequest $request)
@@ -177,6 +179,7 @@ class StudentBasicInfoController extends Controller
         $studentDetails->save();
 
         $studentBasicInfo->subjects()->sync($request->input('subjects', []));
+        $studentBasicInfo->batches()->sync($request->input('batches', []));
         if ($request->input('file-upload', false)) {
             $studentBasicInfo
                 ->addMedia(storage_path('tmp/uploads/' . basename($request->input('file-upload'))))
@@ -204,10 +207,11 @@ class StudentBasicInfoController extends Controller
         $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $subjects = Subject::pluck('name', 'id');
+        $batches = Batch::pluck('batch_name', 'id');
 
-        $studentBasicInfo->load('class', 'section', 'shift', 'user', 'subjects', 'studentDetails');
+        $studentBasicInfo->load('class', 'section', 'shift', 'user', 'subjects', 'batches', 'studentDetails');
 
-        return view('admin.studentBasicInfos.edit', compact('classes', 'sections', 'shifts', 'studentBasicInfo', 'subjects', 'users'));
+        return view('admin.studentBasicInfos.edit', compact('classes', 'sections', 'shifts', 'studentBasicInfo', 'subjects', 'users', 'batches'));
     }
 
     public function update(UpdateStudentBasicInfoRequest $request, StudentBasicInfo $studentBasicInfo)
@@ -229,6 +233,7 @@ class StudentBasicInfoController extends Controller
         ]);
 
         $studentBasicInfo->subjects()->sync($request->input('subjects', []));
+        $studentBasicInfo->batches()->sync($request->input('batches', []));
 
         // Handle User Login
         if ($request->need_login) {
@@ -306,7 +311,7 @@ class StudentBasicInfoController extends Controller
 
         abort_if(Gate::denies('student_basic_info_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $studentBasicInfo->load('class', 'section', 'shift', 'user', 'subjects', 'studentEarnings', 'studentDetails');
+        $studentBasicInfo->load('class', 'section', 'shift', 'user', 'subjects', 'batches.subject', 'batches.class', 'studentEarnings', 'studentDetails');
 
         $attendancePercent = 0;
         $score = 0;

@@ -90,6 +90,13 @@ class StoreStudentBasicInfoRequest extends FormRequest
             'subjects' => [
                 'array',
             ],
+            'batches.*' => [
+                'integer',
+                'exists:batches,id',
+            ],
+            'batches' => [
+                'array',
+            ],
         ];
     }
 }

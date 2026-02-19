@@ -282,7 +282,8 @@
                             </select>
                         </div>
 
-                        {{-- section_id --}}
+                        {{-- section_id (not needed now) --}}
+                        {{--
                         <div class="col-span-1">
                             <label class="block text-sm font-medium text-slate-700 dark:text-slate-300" for="section_id">
                                 {{ trans('cruds.studentBasicInfo.fields.section') }}
@@ -298,6 +299,7 @@
                                 @endforeach
                             </select>
                         </div>
+                        --}}
 
                         {{-- shift_id --}}
                         <div class="col-span-1">
@@ -350,6 +352,24 @@
                                         <option value="{{ $id }}"
                                             {{ in_array($id, old('subjects', [])) || $studentBasicInfo->subjects->contains($id) ? 'selected' : '' }}>
                                             {{ $subject }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        {{-- batches --}}
+                        <div class="col-span-1 md:col-span-3">
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300" for="batches">
+                                Batches
+                            </label>
+                            <div class="mt-1">
+                                <select
+                                    class="select2 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
+                                    name="batches[]" id="batches" multiple>
+                                    @foreach ($batches as $id => $batch)
+                                        <option value="{{ $id }}"
+                                            {{ in_array($id, old('batches', [])) || $studentBasicInfo->batches->contains($id) ? 'selected' : '' }}>
+                                            {{ $batch }}</option>
                                     @endforeach
                                 </select>
                             </div>
