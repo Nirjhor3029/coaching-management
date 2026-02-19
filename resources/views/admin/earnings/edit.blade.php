@@ -117,12 +117,12 @@
                             <!-- subject_id  -->
                             <div class="space-y-1.5">
                                 <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">
-                                    Batch / Subject
+                                    Subject / Subject
                                 </label>
                                 <div class="relative">
                                     <select name="subject_id" id="subject_id"
                                         class="w-full pl-4 pr-10 h-11 appearance-none bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-[#2563EB]/20 dark:focus:ring-[#60A5FA]/20 focus:border-[#2563EB] dark:focus:border-[#60A5FA] text-[#1F2937] dark:text-[#F9FAFB]">
-                                        <option value="">Select Batch/Subject</option>
+                                        <option value="">Select Subject/Subject</option>
                                         @foreach ($subjects as $id => $entry)
                                             <option value="{{ $id }}"
                                                 {{ (old('subject_id') ? old('subject_id') : $earning->subject->id ?? '') == $id ? 'selected' : '' }}>

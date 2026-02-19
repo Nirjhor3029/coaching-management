@@ -162,7 +162,7 @@
                                         <div
                                             class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-700/30">
                                             <p class="text-xs font-medium text-slate-400 dark:text-slate-500 mb-2">Enrolled
-                                                Batch/Subject</p>
+                                                Subject/Subject</p>
                                             <p class="text-base font-bold text-slate-800 dark:text-slate-100">
                                                 {{ $earning->subject->name ?? 'N/A' }}</p>
                                         </div>
