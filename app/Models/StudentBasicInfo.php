@@ -139,4 +139,9 @@ class StudentBasicInfo extends Model implements HasMedia
         return $this->hasOne(StudentDetailsInformation::class, 'student_id', 'id');
     }
 
+    public function batches()
+    {
+        return $this->belongsToMany(Batch::class);
+    }
+
 }

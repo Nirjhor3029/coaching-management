@@ -58,6 +58,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('academic-classes/process-csv-import', 'AcademicClassController@processCsvImport')->name('academic-classes.processCsvImport');
     Route::resource('academic-classes', 'AcademicClassController');
 
+    // Batch
+    Route::delete('batches/destroy', 'BatchController@massDestroy')->name('batches.massDestroy');
+    Route::resource('batches', 'BatchController');
+
     // Student Basic Info
     Route::delete('student-basic-infos/destroy', 'StudentBasicInfoController@massDestroy')->name('student-basic-infos.massDestroy');
     Route::post('student-basic-infos/media', 'StudentBasicInfoController@storeMedia')->name('student-basic-infos.storeMedia');

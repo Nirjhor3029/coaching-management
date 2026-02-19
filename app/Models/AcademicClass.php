@@ -60,4 +60,9 @@ class AcademicClass extends Model
     {
         return $this->belongsToMany(Shift::class);
     }
+
+    public function classBatches()
+    {
+        return $this->hasMany(Batch::class, 'class_id', 'id');
+    }
 }

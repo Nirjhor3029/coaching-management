@@ -76,7 +76,7 @@
         @endcan
         @can('class_information_access')
             <li
-                class="c-sidebar-nav-dropdown {{ request()->is("admin/academic-classes*") ? "c-show" : "" }} {{ request()->is("admin/sections*") ? "c-show" : "" }} {{ request()->is("admin/shifts*") ? "c-show" : "" }} {{ request()->is("admin/subjects*") ? "c-show" : "" }}">
+                class="c-sidebar-nav-dropdown {{ request()->is("admin/academic-classes*") ? "c-show" : "" }} {{ request()->is("admin/batches*") ? "c-show" : "" }} {{ request()->is("admin/sections*") ? "c-show" : "" }} {{ request()->is("admin/shifts*") ? "c-show" : "" }} {{ request()->is("admin/subjects*") ? "c-show" : "" }}">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="fa-fw far fa-address-book c-sidebar-nav-icon">
 
@@ -92,6 +92,17 @@
 
                                 </i>
                                 {{ trans('cruds.academicClass.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                    @can('batch_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.batches.index") }}"
+                                class="c-sidebar-nav-link {{ request()->is("admin/batches") || request()->is("admin/batches/*") ? "c-active" : "" }}">
+                                <i class="fa-fw fas fa-layer-group c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.batch.title') }}
                             </a>
                         </li>
                     @endcan

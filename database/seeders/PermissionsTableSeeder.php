@@ -475,6 +475,31 @@ class PermissionsTableSeeder extends Seeder
                 'parent_id' => null,
             ],
             [
+                'id'    => 85,
+                'title' => 'batch_access',
+                'parent_id' => null,
+            ],
+            [
+                'id'    => 86,
+                'title' => 'batch_create',
+                'parent_id' => 85,
+            ],
+            [
+                'id'    => 87,
+                'title' => 'batch_edit',
+                'parent_id' => 85,
+            ],
+            [
+                'id'    => 88,
+                'title' => 'batch_show',
+                'parent_id' => 85,
+            ],
+            [
+                'id'    => 89,
+                'title' => 'batch_delete',
+                'parent_id' => 85,
+            ],
+            [
                 'id'    => 83,
                 'title' => 'profile_password_access',
                 'parent_id' => null,
@@ -486,6 +511,6 @@ class PermissionsTableSeeder extends Seeder
             ],
         ];
 
-        Permission::insert($permissions);
+        Permission::upsert($permissions, ['id'], ['title', 'parent_id']);
     }
 }

@@ -47,4 +47,9 @@ class Subject extends Model
     {
         return $this->belongsToMany(StudentBasicInfo::class);
     }
+
+    public function subjectBatches()
+    {
+        return $this->hasMany(Batch::class, 'subject_id', 'id');
+    }
 }
