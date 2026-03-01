@@ -107,7 +107,7 @@
       { data: 'placeholder', name: 'placeholder' },
       { data: 'id', name: 'id' },
       { data: 'batch_name', name: 'batch_name' },
-      { data: 'subject_name', name: 'subject.name' },
+      { data: 'subject_names', name: 'subject_names', searchable: false, sortable: false },
       { data: 'class_class_name', name: 'class.class_name' },
       { data: 'fee_type', name: 'fee_type' },
       { data: 'fee_amount', name: 'fee_amount' },
@@ -130,4 +130,3 @@
 
 </script>
 @endsection
-

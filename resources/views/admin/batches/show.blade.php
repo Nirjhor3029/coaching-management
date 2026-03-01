@@ -32,7 +32,19 @@
                         <div class="p-6 md:p-8 space-y-5">
                             <div>
                                 <label class="text-xs font-bold uppercase tracking-wider text-slate-400">Subject</label>
-                                <p class="mt-1 text-lg font-semibold">{{ $batch->subject->name ?? '-' }}</p>
+                                <div class="mt-2 flex flex-wrap gap-2">
+                                    @php
+                                        $subjectNames = $batch->subjects->pluck('name')->filter()->unique();
+                                        if ($subjectNames->isEmpty() && $batch->subject) {
+                                            $subjectNames = collect([$batch->subject->name]);
+                                        }
+                                    @endphp
+                                    @forelse ($subjectNames as $subjectName)
+                                        <span class="badge badge-info">{{ $subjectName }}</span>
+                                    @empty
+                                        <p class="text-lg font-semibold">-</p>
+                                    @endforelse
+                                </div>
                             </div>
                             <div>
                                 <label class="text-xs font-bold uppercase tracking-wider text-slate-400">Class</label>
@@ -85,4 +97,3 @@
         </div>
     </div>
 @endsection
-

@@ -76,7 +76,7 @@
         @endcan
         @can('class_information_access')
             <li
-                class="c-sidebar-nav-dropdown {{ request()->is("admin/academic-classes*") ? "c-show" : "" }} {{ request()->is("admin/batches*") ? "c-show" : "" }} {{ request()->is("admin/sections*") ? "c-show" : "" }} {{ request()->is("admin/shifts*") ? "c-show" : "" }} {{ request()->is("admin/subjects*") ? "c-show" : "" }}">
+                class="c-sidebar-nav-dropdown {{ request()->is("admin/academic-classes*") ? "c-show" : "" }} {{ request()->is("admin/batches*") ? "c-show" : "" }} {{ request()->is("admin/sections*") ? "c-show" : "" }} {{ request()->is("admin/shifts*") ? "c-show" : "" }} {{ request()->is("admin/subjects*") ? "c-show" : "" }} {{ request()->is("admin/academic-backgrounds*") ? "c-show" : "" }}">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="fa-fw far fa-address-book c-sidebar-nav-icon">
 
@@ -136,6 +136,17 @@
 
                                 </i>
                                 {{ trans('cruds.subject.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                    @can('academic_background_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.academic-backgrounds.index") }}"
+                                class="c-sidebar-nav-link {{ request()->is("admin/academic-backgrounds") || request()->is("admin/academic-backgrounds/*") ? "c-active" : "" }}">
+                                <i class="fa-fw fas fa-graduation-cap c-sidebar-nav-icon">
+
+                                </i>
+                                {{ trans('cruds.academicBackground.title') }}
                             </a>
                         </li>
                     @endcan

@@ -509,6 +509,31 @@ class PermissionsTableSeeder extends Seeder
                 'title' => 'profile_password_edit',
                 'parent_id' => 83,
             ],
+            [
+                'id'    => 90,
+                'title' => 'academic_background_access',
+                'parent_id' => null,
+            ],
+            [
+                'id'    => 91,
+                'title' => 'academic_background_create',
+                'parent_id' => 90,
+            ],
+            [
+                'id'    => 92,
+                'title' => 'academic_background_edit',
+                'parent_id' => 90,
+            ],
+            [
+                'id'    => 93,
+                'title' => 'academic_background_show',
+                'parent_id' => 90,
+            ],
+            [
+                'id'    => 94,
+                'title' => 'academic_background_delete',
+                'parent_id' => 90,
+            ],
         ];
 
         Permission::upsert($permissions, ['id'], ['title', 'parent_id']);

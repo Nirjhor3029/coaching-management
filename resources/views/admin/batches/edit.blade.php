@@ -30,18 +30,24 @@
 
                         <div class="col-span-1">
                             <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 required"
-                                for="subject_id">{{ trans('cruds.batch.fields.subject') }}</label>
+                                for="subjects">{{ trans('cruds.batch.fields.subject') }}</label>
                             <select
-                                class="form-control select2 mt-1 block w-full {{ $errors->has('subject_id') ? 'is-invalid' : '' }}"
-                                name="subject_id" id="subject_id" required>
+                                class="form-control select2 mt-1 block w-full {{ $errors->has('subjects') ? 'is-invalid' : '' }}"
+                                name="subjects[]" id="subjects" multiple required>
+                                @php
+                                    $selectedSubjects = old('subjects', $batch->subjects->pluck('id')->toArray());
+                                    if (empty($selectedSubjects) && $batch->subject_id) {
+                                        $selectedSubjects = [$batch->subject_id];
+                                    }
+                                @endphp
                                 @foreach ($subjects as $id => $entry)
                                     <option value="{{ $id }}"
-                                        {{ (string) old('subject_id', $batch->subject_id) === (string) $id ? 'selected' : '' }}>
+                                        {{ in_array($id, $selectedSubjects, false) ? 'selected' : '' }}>
                                         {{ $entry }}</option>
                                 @endforeach
                             </select>
-                            @if ($errors->has('subject_id'))
-                                <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $errors->first('subject_id') }}</p>
+                            @if ($errors->has('subjects'))
+                                <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $errors->first('subjects') }}</p>
                             @endif
                         </div>
 
@@ -191,4 +197,3 @@
         });
     </script>
 @endsection
-

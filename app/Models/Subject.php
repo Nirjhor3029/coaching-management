@@ -52,4 +52,9 @@ class Subject extends Model
     {
         return $this->hasMany(Batch::class, 'subject_id', 'id');
     }
+
+    public function batches()
+    {
+        return $this->belongsToMany(Batch::class);
+    }
 }

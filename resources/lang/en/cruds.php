@@ -425,6 +425,22 @@ return [
             'deleted_at_helper'  => ' ',
         ],
     ],
+    'academicBackground' => [
+        'title'          => 'Academic Backgrounds',
+        'title_singular' => 'Academic Background',
+        'fields'         => [
+            'id'                => 'ID',
+            'id_helper'         => ' ',
+            'name'              => 'Name',
+            'name_helper'       => 'E.g. Science, Humanities, Business Studies',
+            'created_at'        => 'Created at',
+            'created_at_helper' => ' ',
+            'updated_at'        => 'Updated at',
+            'updated_at_helper' => ' ',
+            'deleted_at'        => 'Deleted at',
+            'deleted_at_helper' => ' ',
+        ],
+    ],
     'teachersPayment' => [
         'title'          => 'Teachers Payment',
         'title_singular' => 'Teachers Payment',

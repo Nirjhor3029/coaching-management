@@ -21,8 +21,12 @@ class StoreBatchRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'subject_id' => [
+            'subjects' => [
                 'required',
+                'array',
+                'min:1',
+            ],
+            'subjects.*' => [
                 'integer',
                 'exists:subjects,id',
             ],

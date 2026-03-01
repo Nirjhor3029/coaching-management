@@ -23,7 +23,7 @@ class BatchController extends Controller
         abort_if(Gate::denies('batch_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Batch::with(['subject', 'class', 'students'])->select(sprintf('%s.*', (new Batch)->table));
+            $query = Batch::with(['subject', 'subjects', 'class', 'students'])->select(sprintf('%s.*', (new Batch)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -50,8 +50,14 @@ class BatchController extends Controller
             $table->editColumn('batch_name', function ($row) {
                 return $row->batch_name ? $row->batch_name : '';
             });
-            $table->addColumn('subject_name', function ($row) {
-                return $row->subject ? $row->subject->name : '';
+            $table->addColumn('subject_names', function ($row) {
+                $subjects = $row->subjects->pluck('name')->filter()->unique()->values();
+
+                if ($subjects->isEmpty() && $row->subject) {
+                    $subjects = collect([$row->subject->name]);
+                }
+
+                return $subjects->implode(', ');
             });
             $table->addColumn('class_class_name', function ($row) {
                 return $row->class ? $row->class->class_name : '';
@@ -96,7 +102,7 @@ class BatchController extends Controller
     {
         abort_if(Gate::denies('batch_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $subjects = Subject::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $subjects = Subject::pluck('name', 'id');
         $classes  = AcademicClass::pluck('class_name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $students = StudentBasicInfo::orderBy('first_name')
             ->get()
@@ -112,7 +118,14 @@ class BatchController extends Controller
 
     public function store(StoreBatchRequest $request)
     {
-        $batch = Batch::create($request->all());
+        $data       = $request->validated();
+        $subjectIds = $request->input('subjects', []);
+        $data['subject_id'] = $subjectIds[0];
+
+        unset($data['subjects']);
+
+        $batch = Batch::create($data);
+        $batch->subjects()->sync($subjectIds);
         $batch->students()->sync($request->input('students', []));
 
         return redirect()->route('admin.batches.index');
@@ -122,7 +135,7 @@ class BatchController extends Controller
     {
         abort_if(Gate::denies('batch_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $subjects = Subject::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $subjects = Subject::pluck('name', 'id');
         $classes  = AcademicClass::pluck('class_name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $students = StudentBasicInfo::orderBy('first_name')
             ->get()
@@ -133,14 +146,21 @@ class BatchController extends Controller
                 return [$student->id => $name . $idNo];
             });
 
-        $batch->load('subject', 'class', 'students');
+        $batch->load('subject', 'subjects', 'class', 'students');
 
         return view('admin.batches.edit', compact('batch', 'subjects', 'classes', 'students'));
     }
 
     public function update(UpdateBatchRequest $request, Batch $batch)
     {
-        $batch->update($request->all());
+        $data       = $request->validated();
+        $subjectIds = $request->input('subjects', []);
+        $data['subject_id'] = $subjectIds[0];
+
+        unset($data['subjects']);
+
+        $batch->update($data);
+        $batch->subjects()->sync($subjectIds);
         $batch->students()->sync($request->input('students', []));
 
         return redirect()->route('admin.batches.index');
@@ -150,7 +170,7 @@ class BatchController extends Controller
     {
         abort_if(Gate::denies('batch_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $batch->load('subject', 'class', 'students');
+        $batch->load('subject', 'subjects', 'class', 'students');
 
         return view('admin.batches.show', compact('batch'));
     }
@@ -175,4 +195,3 @@ class BatchController extends Controller
         return response(null, Response::HTTP_NO_CONTENT);
     }
 }
-

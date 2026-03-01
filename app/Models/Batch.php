@@ -63,6 +63,11 @@ class Batch extends Model
         return $this->belongsTo(Subject::class, 'subject_id');
     }
 
+    public function subjects()
+    {
+        return $this->belongsToMany(Subject::class);
+    }
+
     public function class()
     {
         return $this->belongsTo(AcademicClass::class, 'class_id');
@@ -73,4 +78,3 @@ class Batch extends Model
         return $this->belongsToMany(StudentBasicInfo::class);
     }
 }
-
