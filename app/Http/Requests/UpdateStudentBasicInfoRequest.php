@@ -54,6 +54,11 @@ class UpdateStudentBasicInfoRequest extends FormRequest
                 'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
+            'academic_background_id' => [
+                'nullable',
+                'integer',
+                'exists:academic_backgrounds,id',
+            ],
             'guardian_name' => [
                 'string',
                 'nullable',

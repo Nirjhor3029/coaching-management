@@ -225,6 +225,8 @@ return [
             'section_helper'        => ' ',
             'shift'                 => 'Shift',
             'shift_helper'          => ' ',
+            'academic_background'        => 'Academic Background',
+            'academic_background_helper' => 'Science, Humanities, Business Studies etc.',
             'contact_number'        => 'Contact Number',
             'contact_number_helper' => ' ',
             'email'                 => 'Email',

@@ -102,9 +102,11 @@
                             </p>
                         </div>
                         <div>
-                            <p class="text-[#4c739a] text-sm font-medium mb-1 uppercase tracking-tight">Shift</p>
+                            <p class="text-[#4c739a] text-sm font-medium mb-1 uppercase tracking-tight">
+                                {{ trans('cruds.studentBasicInfo.fields.academic_background') }}
+                            </p>
                             <p class="font-bold text-[#0d141b] dark:text-white">
-                                {{ $studentBasicInfo->shift->shift_name ?? 'N/A' }}
+                                {{ $studentBasicInfo->academicBackground->name ?? 'N/A' }}
                             </p>
                         </div>
                         <div>

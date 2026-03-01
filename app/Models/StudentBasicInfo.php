@@ -55,6 +55,7 @@ class StudentBasicInfo extends Model implements HasMedia
         'class_id',
         'section_id',
         'shift_id',
+        'academic_background_id',
         'user_id',
         'created_at',
         'updated_at',
@@ -122,6 +123,11 @@ class StudentBasicInfo extends Model implements HasMedia
     public function shift()
     {
         return $this->belongsTo(Shift::class, 'shift_id');
+    }
+
+    public function academicBackground()
+    {
+        return $this->belongsTo(AcademicBackground::class, 'academic_background_id');
     }
 
     public function user()

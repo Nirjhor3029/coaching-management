@@ -9,6 +9,7 @@ use App\Http\Requests\MassDestroyStudentBasicInfoRequest;
 use App\Http\Requests\StoreStudentBasicInfoRequest;
 use App\Http\Requests\UpdateStudentBasicInfoRequest;
 use App\Models\AcademicClass;
+use App\Models\AcademicBackground;
 use App\Models\Batch;
 use App\Models\Section;
 use App\Models\Shift;
@@ -33,7 +34,7 @@ class StudentBasicInfoController extends Controller
         abort_if(Gate::denies('student_basic_info_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = StudentBasicInfo::with(['class', 'section', 'shift', 'user', 'subjects'])->select(sprintf('%s.*', (new StudentBasicInfo)->table));
+            $query = StudentBasicInfo::with(['class', 'section', 'shift', 'academicBackground', 'user', 'subjects'])->select(sprintf('%s.*', (new StudentBasicInfo)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -100,13 +101,14 @@ class StudentBasicInfoController extends Controller
         $sections = Section::pluck('section_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $shifts = Shift::pluck('shift_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $academicBackgrounds = AcademicBackground::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $subjects = Subject::pluck('name', 'id');
         $batches = Batch::pluck('batch_name', 'id');
 
-        return view('admin.studentBasicInfos.create', compact('classes', 'sections', 'shifts', 'subjects', 'users', 'batches'));
+        return view('admin.studentBasicInfos.create', compact('classes', 'sections', 'shifts', 'academicBackgrounds', 'subjects', 'users', 'batches'));
     }
 
     public function store(StoreStudentBasicInfoRequest $request)
@@ -132,6 +134,7 @@ class StudentBasicInfoController extends Controller
         $studentBasicInfo->class_id = $request->class_id;
         $studentBasicInfo->section_id = $request->section_id;
         $studentBasicInfo->shift_id = $request->shift_id;
+        $studentBasicInfo->academic_background_id = $request->academic_background_id;
 
         $studentBasicInfo->joining_date = $request->joining_date;
         $studentBasicInfo->status = $request->status ? $request->status : 1;
@@ -203,15 +206,16 @@ class StudentBasicInfoController extends Controller
         $sections = Section::pluck('section_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $shifts = Shift::pluck('shift_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $academicBackgrounds = AcademicBackground::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $subjects = Subject::pluck('name', 'id');
         $batches = Batch::pluck('batch_name', 'id');
 
-        $studentBasicInfo->load('class', 'section', 'shift', 'user', 'subjects', 'batches', 'studentDetails');
+        $studentBasicInfo->load('class', 'section', 'shift', 'academicBackground', 'user', 'subjects', 'batches', 'studentDetails');
 
-        return view('admin.studentBasicInfos.edit', compact('classes', 'sections', 'shifts', 'studentBasicInfo', 'subjects', 'users', 'batches'));
+        return view('admin.studentBasicInfos.edit', compact('classes', 'sections', 'shifts', 'academicBackgrounds', 'studentBasicInfo', 'subjects', 'users', 'batches'));
     }
 
     public function update(UpdateStudentBasicInfoRequest $request, StudentBasicInfo $studentBasicInfo)
@@ -228,6 +232,7 @@ class StudentBasicInfoController extends Controller
             'class_id' => $request->class_id,
             'section_id' => $request->section_id,
             'shift_id' => $request->shift_id,
+            'academic_background_id' => $request->academic_background_id,
             'joining_date' => $request->joining_date,
             'status' => $request->status,
         ]);
@@ -311,7 +316,7 @@ class StudentBasicInfoController extends Controller
 
         abort_if(Gate::denies('student_basic_info_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $studentBasicInfo->load('class', 'section', 'shift', 'user', 'subjects', 'batches.subject', 'batches.class', 'studentEarnings', 'studentDetails');
+        $studentBasicInfo->load('class', 'section', 'shift', 'academicBackground', 'user', 'subjects', 'batches.subject', 'batches.class', 'studentEarnings', 'studentDetails');
 
         $attendancePercent = 0;
         $score = 0;

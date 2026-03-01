@@ -368,28 +368,27 @@
                         --}}
 
 
-                        {{-- shift_id --}}
+                        {{-- academic_background_id --}}
                         <div class="col-span-1">
-                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300" for="shift_id">
-                                {{ trans('cruds.studentBasicInfo.fields.shift') }}
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300"
+                                for="academic_background_id">
+                                {{ trans('cruds.studentBasicInfo.fields.academic_background') }}
                             </label>
                             <select
-                                class="{{ $errors->has('shift') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
-                                id="shift_id" name="shift_id">
-                                @foreach ($shifts as $id => $entry)
-                                    <option value="{{ $id }}" {{ old('shift_id') == $id ? 'selected' : '' }}>
+                                class="{{ $errors->has('academic_background_id') ? 'is-invalid' : '' }} mt-1 block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3"
+                                id="academic_background_id" name="academic_background_id">
+                                @foreach ($academicBackgrounds as $id => $entry)
+                                    <option value="{{ $id }}" {{ old('academic_background_id') == $id ? 'selected' : '' }}>
                                         {{ $entry }}
                                     </option>
                                 @endforeach
-                                {{-- <option>Morning</option>
-                                <option>Afternoon</option> --}}
                             </select>
-                            @if ($errors->has('shift'))
+                            @if ($errors->has('academic_background_id'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('shift') }}
+                                    {{ $errors->first('academic_background_id') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.studentBasicInfo.fields.shift_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.studentBasicInfo.fields.academic_background_helper') }}</span>
                         </div>
 
                         {{-- batches --}}
