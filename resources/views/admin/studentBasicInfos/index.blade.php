@@ -139,7 +139,29 @@
                     },
                     {
                         data: 'joining_date',
-                        name: 'joining_date'
+                        name: 'joining_date',
+                        render: function(data, type, row) {
+                            if (!data) {
+                                return '';
+                            }
+
+                            if (type !== 'display' && type !== 'filter') {
+                                return data;
+                            }
+
+                            let parsed = new Date(data.replace(' ', 'T'));
+                            if (isNaN(parsed.getTime())) {
+                                return data;
+                            }
+
+                            let day = String(parsed.getDate()).padStart(2, '0');
+                            let month = parsed.toLocaleString('en-US', {
+                                month: 'short'
+                            });
+                            let year = parsed.getFullYear();
+
+                            return `${day} ${month}, ${year}`;
+                        }
                     },
                     {
                         data: 'user_name',
